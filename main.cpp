@@ -34,5 +34,9 @@ int main () {
 	--rev_from;
 	std::cout << " | " << *rev_from;
 	std::cout << "\n";
+	std::cout << test.size() << std::endl;
+	std::cout << test.capacity() << std::endl;
+
+
 	return (0);
 }

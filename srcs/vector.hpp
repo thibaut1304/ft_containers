@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/12 18:11:36 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:34:05 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 namespace ft {
 	template<typename T, typename Alloc = std::allocator<T> >
 	class vector {
+		protected:
+			size_type											_size;
+			size_type											_capacity;
 		public:
 			typedef T 											value_type;
 			typedef Alloc 										allocator_type;
@@ -46,7 +49,7 @@ namespace ft {
 			// copy Constructs a container with a copy of each of the elements in x, in the same order.
 			vector (const vector& x);
 			// Destructor
-			~vector();
+			~vector(); // check capaiy and destroys !
 			vector& operator= (const vector& x);
 
 			/****************/
