@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/06/10 10:27:35 by thhusser         ###   ########.fr        #
+#    Updated: 2022/06/12 18:18:35 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,11 @@ $(NAME):	$(OBJS)
 			@echo "$(_GREEN)Generating $(NAME)$(_NC)"
 
 clean:
-			@$(RM) $(NAME)
 			@$(RM) $(OBJS)
 			@echo "$(_GREEN)Deletes objects files $(NAME)$(_NC)"
+
+fclean: 	clean
+			@$(RM) $(NAME)
 			@echo "$(_GREEN)Delete $(NAME)$(_NC)"
 
-re:			clean all
+re:			fclean all
