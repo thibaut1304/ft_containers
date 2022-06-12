@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 09:45:19 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/10 09:47:14 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/12 16:47:33 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ namespace ft
 	template<typename _Tp>
 		struct iterator_traits<_Tp*>
 		{
-			typedef std::random_access_iterator_tag iterator_category;
-			typedef _Tp                         value_type;
-			typedef ptrdiff_t                   difference_type;
-			typedef _Tp*                        pointer;
-			typedef _Tp&                        reference;
+			typedef std::random_access_iterator_tag 	iterator_category;
+			typedef _Tp                         		value_type;
+			typedef ptrdiff_t                   		difference_type;
+			typedef _Tp*                        		pointer;
+			typedef _Tp&                        		reference;
 		};
 
 	/// Partial specialization for const pointer types.
@@ -45,11 +45,11 @@ namespace ft
 	template<typename _Tp>
 		struct iterator_traits<const _Tp*>
 		{
-			typedef std::random_access_iterator_tag iterator_category;
-			typedef _Tp                         value_type;
-			typedef ptrdiff_t                   difference_type;
-			typedef const _Tp*                  pointer;
-			typedef const _Tp&                  reference;
+			typedef std::random_access_iterator_tag 	iterator_category;
+			typedef _Tp                         		value_type;
+			typedef ptrdiff_t                   		difference_type;
+			typedef const _Tp*                 			pointer;
+			typedef const _Tp&                  		reference;
 		};
 }
 
