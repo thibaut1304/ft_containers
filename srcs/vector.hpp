@@ -6,18 +6,23 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/10 12:49:28 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:11:36 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <memory>
+#ifndef _VECTOR_HPP_
+# define _VECTOR_HPP_
+
+// #include <memory>
+# include "reverse_iterator.hpp"
+
 
 namespace ft {
 	template<typename T, typename Alloc = std::allocator<T> >
 	class vector {
 		public:
-			typedef T value_type;
-			typedef Alloc allocator_type;
+			typedef T 											value_type;
+			typedef Alloc 										allocator_type;
 			typedef typename allocator_type::reference			reference;
 			typedef typename allocator_type::pointer			pointeur;
 			typedef typename allocator_type::const_reference	const_reference;
@@ -123,3 +128,4 @@ namespace ft {
 	};
 }
 
+#endif _VECTOR_HPP_
