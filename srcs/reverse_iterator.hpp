@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/12 17:43:28 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:07:34 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ namespace ft {
 			template<typename _It>
 			reverse_iterator(const reverse_iterator<_It> &rev_it) : _current(rev_it.base()) {} ;
 			// rev_it : An iterator of a reverse_iterator type, whose sense of iteration is preserved.
-
+			virtual ~reverse_iterator() {};
 			/****************/
 			/***** BASE *****/
 			/****************/
