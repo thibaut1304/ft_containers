@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/14 12:13:50 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:04:01 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,22 @@ namespace ft {
 					_alloc.construct(_tab + i, x._tab[i]);
 				}
 			}
+			vector& operator= (const vector& x) {
+				if (this != &x) {
+					*this = x;
+				}
+				return (*this);
+			}
 			// Destructor
-			~vector(); // check capacity and destroys !
-			vector& operator= (const vector& x);
-
+			~vector() { // check capacity and destroys !
+			// allocator::destroy -> destructor(value_type)pas dans vector !
+			// allocator::deallocate
+			// vector::clear -> supprime les donnes sauf la capacite
+				clear();
+				if (_capacity != 0)
+					_alloc.deallocate(_tab, _capacity);
+				_capacity = 0;
+			}
 			/****************/
 			/****ITERATOR****/
 			/****************/
