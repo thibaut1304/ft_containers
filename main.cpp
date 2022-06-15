@@ -1,7 +1,7 @@
 
-// #include "vector.hpp"
-#include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
+#include "vector.hpp"
+// #include "iterator_traits.hpp"
+// #include "reverse_iterator.hpp"
 
 #include <vector>
 #include <memory>
@@ -14,40 +14,14 @@ int main () {
 	for (int i = 0; i < 10; i++) {
 		test.push_back(i);
 	}
+	std::vector<int>::iterator it = test.begin();
+	std::vector<int>::iterator itend = test.end();
 
-	typedef std::vector<int>::iterator iter_type;
-
-	iter_type debut(test.begin());
-	iter_type fin(test.end());
-
-	std::reverse_iterator<iter_type> rev_until (debut);
-	std::reverse_iterator<iter_type> rev_from (fin);
-
-	for (test.begin(); debut != fin; *debut++) {
-		std::cout << " " << *debut;
+	for (it = test.begin(); it != itend; it++) {
+		std::cout << *it << " ";
 	}
-	std::cout << "\n\n";
-	// while (rev_until != rev_from) {
-	// 	std::cout << " " << *rev_from++;
-	// }
-	// std::cout << " | " << *rev_from;
-	// *--rev_from;
-	// --rev_from;
-	// std::cout << " | " << *rev_from;
-	// std::cout << "\n";
-	std::cout << test.size() << std::endl;
-	std::cout << test.capacity() << std::endl;
+	ft::vector<int> test2;
+	// ft::vector<int>::iterator it = test2.begin();
 	
-	
-	test.clear();
-
-	std::cout << test.size() << std::endl;
-	std::cout << test.capacity() << std::endl;
-	iter_type it(test.begin());
-	iter_type end(test.end());
-	for (test.begin(); it != end; *it++) {
-		std::cout << " " << *it;
-	}
-	std::cout << "\n\n";
 	return (0);
 }

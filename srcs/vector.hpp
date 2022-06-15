@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/15 12:41:19 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:21:03 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define _VECTOR_HPP_
 
 #include <memory> // --> alloc --> construct & allocator
+#include <cstdlib>
 
 # include "reverse_iterator.hpp"
-# include "randow_access_iterator.hpp"
+# include "random_access_iterator.hpp"
 
 
 namespace ft {
@@ -31,13 +32,12 @@ namespace ft {
 			typedef typename allocator_type::pointer			pointer;
 			typedef typename allocator_type::const_pointer		const_pointer;
 
-			// ft:: ??
-			typedef random_access_iterator<value_type>			iterator;
-			typedef random_access_iterator<const value type>	const_iterator;			
-			typedef reverse_iterator<value_type>				reverse_iterator;
-			typedef reverse_iterator<const value type>			const_reverse_iterator;			
+			typedef ft::random_access_iterator<value_type>			iterator;
+			typedef ft::random_access_iterator<const value_type>	const_iterator;			
+			typedef ft::reverse_iterator<value_type>				reverse_iterator;
+			typedef ft::reverse_iterator<const value_type>			const_reverse_iterator;			
 
-			typedef typename allocator_type::differente_type	differente_type;
+			typedef typename allocator_type::difference_type	difference_type;
 			typedef typename allocator_type::size_type			size_type;
 
 
@@ -45,12 +45,12 @@ namespace ft {
 			/**CONSTRUCTOR***/
 			/****************/
 			// Default Constructs an empty container, with no elements.
-			explicit vector (const allocator_type& alloc = allocator_type()) : _tab(NULL), _alloc(alloc), _size(0), _capacity(0) {}
+			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {}
 			// fill Constructs a container with n elements. Each element is a copy of val.
-			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _size(n), _capacity(n), _alloc(alloc), _tab(NULL) {
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
 				// _tab - allouer à n
 				// _tab le remplir avec val
-				_tab = _alloc.allocator(n);
+				_tab = _alloc.allocate(n);
 				for (size_type i = 0; i < n ; i++) {
 					_alloc.construct(_tab + i, val);
 				}
@@ -65,21 +65,22 @@ namespace ft {
 				}
 				_size = diff;
 				_capacity = diff;
-				_tab = alloc.allocator(_capacity);
+				_tab = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _size; i++) {
 					_alloc.construct(_tab + i, *first);
-					first++:
+					first++;
 				}
 			}
 			// copy Constructs a container with a copy of each of the elements in x, in the same order.
-			vector (const vector& x) : _tab(NULL), _alloc(x._alloc), _size(x._size), _capacity(x._capacity) {
+			vector (const vector& x) :_alloc(x._alloc), _tab(NULL),  _size(x._size), _capacity(x._capacity) {
 				if (x._capacity == 0)
 					_capacity = x._size;
-				_tab = alloc.allocator(x._capacity);
+				_tab = _alloc.allocate(x._capacity);
 				for (size_type i = 0; i < x._size; i++) {
 					_alloc.construct(_tab + i, x._tab[i]);
 				}
 			}
+			
 			vector& operator= (const vector& x) {
 				if (this != &x) {
 					*this = x;
@@ -91,7 +92,7 @@ namespace ft {
 			// allocator::destroy -> destructor(value_type)pas dans vector !
 			// allocator::deallocate
 			// vector::clear -> supprime les donnes sauf la capacite
-				clear();
+				// clear();
 				if (_capacity != 0)
 					_alloc.deallocate(_tab, _capacity);
 				_capacity = 0;
@@ -99,26 +100,57 @@ namespace ft {
 			/****************/
 			/****ITERATOR****/
 			/****************/
-			iterator begin();
-			const_iterator begin() const;
+			iterator begin() {
+				return(iterator(_tab));
+			}
+			
+			const_iterator begin() const {
+				return(const_iterator(_tab));
+			}
 
-			iterator end();
-			const_iterator end() const;
+			iterator end() {
+				return(iterateur(_tab + _size));
+			}
+			const_iterator end() const {
+				return(const_iterator(_tab + _size));
+			}
 
-			reverse_iterator rbegin();
-			const_reverse_iterator rbegin() const;
+			reverse_iterator rbegin() {
+				return(reverse_iterator(_tab + _size));
+			}
+			const_reverse_iterator rbegin() const {
+				return(const_reverse_iterator(_tab + _size));
+			}
 
-			reverse_iterator rend();
-			const_reverse_iterator rend() const;
+			reverse_iterator rend() {
+				return(reverse_iterator(_tab));
+			}
+			
+			const_reverse_iterator rend() const {
+				return(const_reverse_iterator(_tab));
+			}
 
 			/****************/
 			/****CAPACITY****/
 			/****************/
-			size_type size() const;
+			size_type size() const {
+				return (_size);
+			}
 
-			size_type max_size() const;
+			size_type max_size() const {
+				return (_alloc.max_size());
+			}
 
-			void resize (size_type n, value_type val = value_type());
+			void resize (size_type n, value_type val = value_type()) {
+				while (_size > n)
+					pop_back();
+				if (_size < n) {
+					realloc(this, n);
+					for (size_type it = _size; it != n; it++) {
+						_alloc.construct(_tab + it, val);
+					}
+				}
+			}
 
 			size_type capacity() const;
 
@@ -150,9 +182,17 @@ namespace ft {
 			// fill
 			void assign (size_type n, const value_type& val);
 
-			void push_back (const value_type& val);
+			void push_back (const value_type& val) {
+				if (_size == _capacity) {
+					_alloc.allocate(_size * 2);
+					_capacity *= 2;
+				}
+			}
 
-			void pop_back();
+			void pop_back() {
+				_alloc.destroy(&_tab[_size - 1]);
+				_size -= 1;
+			}
 
 			iterator insert (iterator position, const value_type& val);
 			void insert (iterator position, size_type n, const value_type& val);
@@ -164,7 +204,10 @@ namespace ft {
 
 			void swap (vector& x);
 
-			void clear();
+			void clear() {
+				while (_size > 0)
+					pop_back();
+			}
 
 			/****************/
 			/****ALLOCATOR***/
@@ -179,4 +222,4 @@ namespace ft {
 	};
 }
 
-#endif _VECTOR_HPP_
+#endif

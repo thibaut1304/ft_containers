@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/14 13:10:38 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:47:04 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,51 +103,99 @@ namespace ft {
 			reference operator[] (difference_type n) const {
 				return (_current.base()[-n-1]);
 			}
+			
+			template <class _It>
+			friend bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_It> &rhs);
+			template <class _It>
+			friend bool operator!= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+			template <class _It>
+			friend bool operator<  (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+			template <class _It>
+			friend bool operator<= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+			template <class _It>
+			friend bool operator>  (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+			template <class _It>
+			friend bool operator>= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+			template <class _It>
+			friend reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it);
+			template <class _It>
+			friend typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
 	};
-		/****************/
-		/** OVERLOADS ***/
-		/****************/
-		template <class _It>
-		bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_It> &rhs) {
-			return (lhs.base() == rhs.base());			// --> coder BASE ! renvoie l'iterateur courant !
-		}
+	
+	/****************/
+	/** OVERLOADS ***/
+	/****************/
+	template <class _It>
+	bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_It> &rhs) {
+		return (lhs.base() == rhs.base());			// --> coder BASE ! renvoie l'iterateur courant !
+	}
 
-		template <class _It>
-		bool operator!= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-			return (lhs.base() != rhs.base());
-		}
+	template <class _It>
+	bool operator!= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
 
-		template <class _It>
-		bool operator<  (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-			return (rhs.base() < lhs.base());
-		}
+	template <class _It>
+	bool operator<  (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
+		return (rhs.base() < lhs.base());
+	}
 
-		template <class _It>
-		bool operator<= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-			return (rhs.base() <= lhs.base());
-		}
+	template <class _It>
+	bool operator<= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
+		return (rhs.base() <= lhs.base());
+	}
 
-		template <class _It>
-		bool operator>  (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-			return (rhs.base() > lhs.base());
-		}
+	template <class _It>
+	bool operator>  (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
+		return (rhs.base() > lhs.base());
+	}
 
-		template <class _It>
-		bool operator>= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-			return (rhs.base() >= lhs.base());
-		}
+	template <class _It>
+	bool operator>= (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
+		return (rhs.base() >= lhs.base());
+	}
+
+	/*                      NON FIRENDS               */
+	template <class _It, class _Iter>
+	bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_Iter> &rhs) {
+		return (lhs.base() == rhs.base());			// --> coder BASE ! renvoie l'iterateur courant !
+	}
+
+	template <class _It, class _Iter>
+	bool operator!= (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
+	
+	template <class _It, class _Iter>
+	bool operator<  (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
+		return (rhs.base() < lhs.base());
+	}
+
+	template <class _It, class _Iter>
+	bool operator<= (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
+		return (rhs.base() <= lhs.base());
+	}
+	
+	template <class _It, class _Iter>
+	bool operator>  (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
+		return (rhs.base() > lhs.base());
+	}
+
+	template <class _It, class _Iter>
+	bool operator>= (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
+		return (rhs.base() >= lhs.base());
+	}
+	
+	template <class _It>
+	reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it) {
+		return (rev_it += n);
+	}
 
 
-		template <class _It>
-		reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it) {
-			return (rev_it._current -= n);
-		}
-
-
-		template <class _It>
-		typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-			return (lhs._current -= rhs._current);
-		}
+	template <class _It>
+	typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
+		return (lhs -= rhs);
+	}
 
 }
 #endif
