@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/14 13:04:01 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:58:06 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ namespace ft {
 				}
 				_size = diff;
 				_capacity = diff;
-				_tab = alloc.allocator(_size);
+				_tab = alloc.allocator(_capacity);
 				for (size_type i = 0; i < _size; i++) {
 					_alloc.construct(_tab + i, *first);
 					first++:
@@ -67,7 +67,7 @@ namespace ft {
 			vector (const vector& x) : _tab(NULL), _alloc(x._alloc), _size(x._size), _capacity(x._capacity) {
 				if (x._capacity == 0)
 					_capacity = x._size;
-				_tab = alloc.allocator(x._size);
+				_tab = alloc.allocator(x._capacity);
 				for (size_type i = 0; i < x._size; i++) {
 					_alloc.construct(_tab + i, x._tab[i]);
 				}

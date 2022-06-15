@@ -4,6 +4,7 @@
 #include "reverse_iterator.hpp"
 
 #include <vector>
+#include <memory>
 #include <iterator>
 #include <iostream>
 
@@ -26,17 +27,27 @@ int main () {
 		std::cout << " " << *debut;
 	}
 	std::cout << "\n\n";
-	while (rev_until != rev_from) {
-		std::cout << " " << *rev_from++;
-	}
-	std::cout << " | " << *rev_from;
-	*--rev_from;
-	--rev_from;
-	std::cout << " | " << *rev_from;
-	std::cout << "\n";
+	// while (rev_until != rev_from) {
+	// 	std::cout << " " << *rev_from++;
+	// }
+	// std::cout << " | " << *rev_from;
+	// *--rev_from;
+	// --rev_from;
+	// std::cout << " | " << *rev_from;
+	// std::cout << "\n";
 	std::cout << test.size() << std::endl;
 	std::cout << test.capacity() << std::endl;
+	
+	
+	test.clear();
 
-
+	std::cout << test.size() << std::endl;
+	std::cout << test.capacity() << std::endl;
+	iter_type it(test.begin());
+	iter_type end(test.end());
+	for (test.begin(); it != end; *it++) {
+		std::cout << " " << *it;
+	}
+	std::cout << "\n\n";
 	return (0);
 }
