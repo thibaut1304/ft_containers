@@ -6,15 +6,17 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/14 14:58:06 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:41:19 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _VECTOR_HPP_
 # define _VECTOR_HPP_
 
-#include <memory> // --> alloc --> construct
+#include <memory> // --> alloc --> construct & allocator
+
 # include "reverse_iterator.hpp"
+# include "randow_access_iterator.hpp"
 
 
 namespace ft {
@@ -28,6 +30,12 @@ namespace ft {
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			pointer;
 			typedef typename allocator_type::const_pointer		const_pointer;
+
+			// ft:: ??
+			typedef random_access_iterator<value_type>			iterator;
+			typedef random_access_iterator<const value type>	const_iterator;			
+			typedef reverse_iterator<value_type>				reverse_iterator;
+			typedef reverse_iterator<const value type>			const_reverse_iterator;			
 
 			typedef typename allocator_type::differente_type	differente_type;
 			typedef typename allocator_type::size_type			size_type;
