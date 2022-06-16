@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/16 14:14:07 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:10:18 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ namespace ft {
 				while (_size > n)
 					pop_back();
 				if (_size < n) {
-					realloc(this, n);
-					for (size_type it = _size; it != n; it++) {
-						_alloc.construct(_tab + it, val);
+					reserve(n);
+					for (size_type old_size = _size; old_size != n; old_size++) {
+						_alloc.construct(_tab + old_size, val);
 					}
 				}
 			}
@@ -157,7 +157,20 @@ namespace ft {
 
 			bool empty() const;
 
-			void reserve (size_type n);
+			void reserve (size_type n) {
+				if (n > _capacity)
+				{
+					T			*prev_ptr = _tab;
+					size_type	prev_size = _size;
+					size_type	prev_capacity = _capacity;
+					
+					_tab = _alloc.allocate(n);
+					_capacity = n;
+					for(size_type i = 0; i < prev_size; i++)
+						_alloc.construct(_tab + i, *(prev_ptr + i));
+					_alloc.deallocate(prev_ptr, prev_capacity);
+				}
+			}
 
 			/****************/
 			/*****ACCESS*****/
@@ -184,11 +197,14 @@ namespace ft {
 			void assign (size_type n, const value_type& val);
 
 			void push_back (const value_type& val) {
-				if (_size == _capacity) {
-					_alloc.allocate(_size * 2);
-					_capacity *= 2;
-				}
-				_alloc.construct(_size + 1, val);
+				// std::cout << "Size     : " << _size << std::endl; 
+				// std::cout << "Capacity : " << _capacity << std::endl; 
+				if (_capacity == 0)
+					reserve(1);
+				if (_size == _capacity)
+					reserve(_capacity * 2);
+				_alloc.construct(_tab + _size, val);
+				_size++;
 			}
 
 			void pop_back() {
