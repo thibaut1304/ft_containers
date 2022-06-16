@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/16 16:10:18 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:44:44 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,16 +146,26 @@ namespace ft {
 				while (_size > n)
 					pop_back();
 				if (_size < n) {
-					reserve(n);
+					if (_capacity * 2 < n)
+						reserve(n);
+					else if (_capacity < n)
+						reserve(_capacity * 2);
 					for (size_type old_size = _size; old_size != n; old_size++) {
 						_alloc.construct(_tab + old_size, val);
 					}
+					_size = n;
 				}
 			}
 
-			size_type capacity() const;
+			size_type capacity() const {
+				return (_capacity);
+			}
 
-			bool empty() const;
+			bool empty() const {
+				if (!_size)
+					return (true);
+				return (false);
+			}
 
 			void reserve (size_type n) {
 				if (n > _capacity)

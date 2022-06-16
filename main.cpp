@@ -31,11 +31,19 @@ void	print_officiel_vector(std::vector<int> test) {
 }
 
 void	officiel_vector() {
-	std::vector<int> test(5, 25);
+	std::vector<int> test(5, 10);
 
 	print_officiel_vector(test);
-	test.resize(6, -1);
+		for (int i = 0; i < 5;i++) {
+		test.push_back(i);
+	}
+	test.resize(30, 9);
 	print_officiel_vector(test);
+	std::cout << "Size     : " << test.size() << std::endl; 
+	std::cout << "Capacity : " << test.capacity() << std::endl; 
+	std::cout << "Empty    :" << test.empty() << std::endl;
+	test.clear();
+	std::cout << "Empty    :" << test.empty() << std::endl;
 	std::cout << "Size     : " << test.size() << std::endl; 
 	std::cout << "Capacity : " << test.capacity() << std::endl; 
 }
@@ -48,11 +56,18 @@ void	my_vector(void) {
 	for (int i = 0; i < 5;i++) {
 		test2.push_back(i);
 	}
-	test2.resize(11);
+	test2.resize(30, 9);
 	print_vector(test2);
+	std::cout << "Size     : " << test2.size() << std::endl; 
+	std::cout << "Capacity : " << test2.capacity() << std::endl; 
+	std::cout << "Empty    :" << test2.empty() << std::endl;
+	test2.clear();
+	std::cout << "Empty    :" << test2.empty() << std::endl;
+	std::cout << "Size     : " << test2.size() << std::endl; 
+	std::cout << "Capacity : " << test2.capacity() << std::endl; 
 }
 int main () {
-	// officiel_vector();
+	officiel_vector();
 	my_vector();
 	// ft::vector<int>::iterator it = test2.begin();
 	
