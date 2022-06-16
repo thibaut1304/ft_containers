@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/16 16:44:44 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:36:41 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 #include <iostream>
 #include <type_traits>
 #include <memory> // --> alloc --> construct & allocator
-#include <cstdlib>
+// #include <cstdlib> --> realloc finlement pas utilisé
+#include <limits> // --> std::numeric_limits
+#include <stdexcept> // --> execption Element access: at !
 
 # include "reverse_iterator.hpp"
 # include "random_access_iterator.hpp"
@@ -93,7 +95,7 @@ namespace ft {
 			// allocator::destroy -> destructor(value_type)pas dans vector !
 			// allocator::deallocate
 			// vector::clear -> supprime les donnes sauf la capacite
-				// clear();
+				clear();
 				if (_capacity != 0)
 					_alloc.deallocate(_tab, _capacity);
 				_capacity = 0;
@@ -185,26 +187,65 @@ namespace ft {
 			/****************/
 			/*****ACCESS*****/
 			/****************/
-			reference operator[] (size_type n);
-			const_reference operator[] (size_type n) const;
+			reference operator[] (size_type n) {
+				return *(_tab + n);
+			}
+			const_reference operator[] (size_type n) const {
+				return *(_tab + n);
+			}
 
-			reference at (size_type n);
-			const_reference at (size_type n) const;
+			reference at (size_type n) {
+				if (n >= _size)
+					throw std::out_of_range("at:: out of range index");
+				return *(_tab + n);
+			}
+			const_reference at (size_type n) const {
+				if (n >= _size)
+					throw std::out_of_range("at:: out of range index");
+				return *(_tab + n);
+			}
 
-			reference front();
-			const_reference front() const;
+			reference front() {
+				return *(_tab);
+			}
+			const_reference front() const {
+				return *(_tab);
+			}
 
-			reference back();
-			const_reference back() const;
+			reference back() {
+				return *(_tab + _size - 1);
+			}
+			const_reference back() const {
+				return *(_tab + _size - 1);
+			}
 
 			/****************/
 			/****MODIFIERS***/
 			/****************/
 			// range
 			template <class _InputIterator>
-			void assign (_InputIterator first, _InputIterator last);
+			void assign(typename std::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
+			// void assign (_InputIterator first, _InputIterator last) {
+				size_type	diff = 0;
+				for (_InputIterator tmp = first; tmp != last; tmp++) {
+					diff++;
+				}
+				std::cout << "je suis diff     :" << diff << std::endl;
+				std::cout << "je suis capacity :" << _capacity << std::endl;
+				clear();
+				resize(diff);
+				while (first != last) {
+					_alloc.construct(_tab + _size++, *first++);
+				}
+			}
 			// fill
-			void assign (size_type n, const value_type& val);
+			void assign (size_type n, const value_type& val) {
+				clear();
+				resize(n);
+				for (size_type it = 0; it != n; it++) {
+					_alloc.construct(_tab + it, val);
+				}
+			}
 
 			void push_back (const value_type& val) {
 				// std::cout << "Size     : " << _size << std::endl; 
@@ -240,7 +281,9 @@ namespace ft {
 			/****************/
 			/****ALLOCATOR***/
 			/****************/
-			allocator_type get_allocator() const;
+			allocator_type get_allocator() const {
+				return (_alloc);
+			}
 			
 		protected:
 			Alloc												_alloc;

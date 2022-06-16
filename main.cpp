@@ -31,13 +31,12 @@ void	print_officiel_vector(std::vector<int> test) {
 }
 
 void	officiel_vector() {
-	std::vector<int> test(5, 10);
-
-	print_officiel_vector(test);
+	std::vector<int> test;
 		for (int i = 0; i < 5;i++) {
 		test.push_back(i);
 	}
-	test.resize(30, 9);
+	test.assign(test.begin(), test.end());
+	// test.resize(30, 9);
 	print_officiel_vector(test);
 	std::cout << "Size     : " << test.size() << std::endl; 
 	std::cout << "Capacity : " << test.capacity() << std::endl; 
@@ -49,14 +48,12 @@ void	officiel_vector() {
 }
 
 void	my_vector(void) {
-	ft::vector<int> test2(5, 10);
-
-	print_vector(test2);
-	
+	ft::vector<int> test2;
 	for (int i = 0; i < 5;i++) {
 		test2.push_back(i);
 	}
-	test2.resize(30, 9);
+	test2.assign(test2.begin(), test2.end());
+	// test2.resize(30, 9);
 	print_vector(test2);
 	std::cout << "Size     : " << test2.size() << std::endl; 
 	std::cout << "Capacity : " << test2.capacity() << std::endl; 
