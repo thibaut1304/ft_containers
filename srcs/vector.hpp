@@ -6,13 +6,15 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/15 17:21:03 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:14:07 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _VECTOR_HPP_
 # define _VECTOR_HPP_
 
+#include <iostream>
+#include <type_traits>
 #include <memory> // --> alloc --> construct & allocator
 #include <cstdlib>
 
@@ -54,12 +56,11 @@ namespace ft {
 				for (size_type i = 0; i < n ; i++) {
 					_alloc.construct(_tab + i, val);
 				}
-				
 			}
 			// range Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
 			template <class _InputIterator>
-			vector (_InputIterator first, _InputIterator last, const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL) {
-				size_type	diff;
+			vector (_InputIterator first, _InputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<_InputIterator>::value, _InputIterator>::type* = NULL) : _alloc(alloc), _tab(NULL) {
+				size_type	diff = 0;
 				for (_InputIterator tmp = 0; tmp != last; tmp++) {
 					diff++;
 				}
@@ -67,7 +68,7 @@ namespace ft {
 				_capacity = diff;
 				_tab = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _size; i++) {
-					_alloc.construct(_tab + i, *first);
+					_alloc.construct(_tab + i, first);
 					first++;
 				}
 			}
@@ -109,7 +110,7 @@ namespace ft {
 			}
 
 			iterator end() {
-				return(iterateur(_tab + _size));
+				return(iterator(_tab + _size));
 			}
 			const_iterator end() const {
 				return(const_iterator(_tab + _size));
@@ -187,6 +188,7 @@ namespace ft {
 					_alloc.allocate(_size * 2);
 					_capacity *= 2;
 				}
+				_alloc.construct(_size + 1, val);
 			}
 
 			void pop_back() {
