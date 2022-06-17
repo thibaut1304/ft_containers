@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/06/17 01:06:43 by thhusser         ###   ########.fr        #
+#    Updated: 2022/06/17 12:38:30 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ _WHITE=\033[0;37m
 NAME	=	debug
 
 HEADER 	=	-I ./srcs/
+
 
 SRCS		= $(addprefix ./tests/, ${SRCS_FILES})
 

@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/17 01:01:12 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:15:41 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define _VECTOR_HPP_
 
 #include <iostream>
-#include <type_traits>
+// #include <type_traits>
 #include <memory> // --> alloc --> construct & allocator
 // #include <cstdlib> --> realloc finlement pas utilisé
 #include <limits> // --> std::numeric_limits
@@ -38,8 +38,8 @@ namespace ft {
 
 			typedef ft::random_access_iterator<value_type>			iterator;
 			typedef ft::random_access_iterator<const value_type>	const_iterator;
-			typedef ft::reverse_iterator<value_type>				reverse_iterator;
-			typedef ft::reverse_iterator<const value_type>			const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
 			typedef typename allocator_type::difference_type	difference_type;
 			typedef typename allocator_type::size_type			size_type;
@@ -119,10 +119,10 @@ namespace ft {
 			}
 
 			reverse_iterator rbegin() {
-				return(reverse_iterator(_tab + _size));
+				return(reverse_iterator(end()));
 			}
 			const_reverse_iterator rbegin() const {
-				return(const_reverse_iterator(_tab + _size));
+				return(const_reverse_iterator(end()));
 			}
 
 			reverse_iterator rend() {

@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/15 14:47:04 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:09:37 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 namespace ft {
 	template<typename _Iterator>
 	class reverse_iterator {
-		protected:
-			_Iterator				_current;
 		public:
 			typedef					_Iterator										iterator_type;
 			typedef	typename		iterator_traits<_Iterator>::iterator_category	category;
@@ -32,12 +30,20 @@ namespace ft {
 			/* CONSTRUCTEUR */
 			/****************/
 			// 3 constructeur : default,  initalization, copy
-			reverse_iterator() {};
-			reverse_iterator(_Iterator it) : _current(it) {};
+			reverse_iterator() : _current() {}
+			explicit reverse_iterator(iterator_type it) : _current(it) {}
 			// it : An iterator, whose sense of iteration is inverted in the constructed object.
 			// it : Member type iterator_type is the underlying bidirectional iterator type (the class template parameter: Iterator).
 			template<typename _It>
-			reverse_iterator(const reverse_iterator<_It> &rev_it) : _current(rev_it.base()) {} ;
+			reverse_iterator(const reverse_iterator<_It> &rev_it) : _current(rev_it.base()) {}
+			template<typename _It>
+			reverse_iterator &operator=(reverse_iterator<_It> const &rhs)
+			{
+				if (this == &rhs)
+					return (*this);
+				_current = rhs._current;
+				return (*this);
+			}
 			// rev_it : An iterator of a reverse_iterator type, whose sense of iteration is preserved.
 			virtual ~reverse_iterator() {};
 			/****************/
@@ -53,7 +59,7 @@ namespace ft {
 			reference operator*() const {
 				_Iterator newref(this->_current);
 				newref--;
-				return (*newref);
+				return *(newref);
 			};
 
 			reverse_iterator operator+ (difference_type n) const {
@@ -103,7 +109,7 @@ namespace ft {
 			reference operator[] (difference_type n) const {
 				return (_current.base()[-n-1]);
 			}
-			
+
 			template <class _It>
 			friend bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_It> &rhs);
 			template <class _It>
@@ -120,8 +126,11 @@ namespace ft {
 			friend reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it);
 			template <class _It>
 			friend typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+
+			protected:
+				_Iterator				_current;
 	};
-	
+
 	/****************/
 	/** OVERLOADS ***/
 	/****************/
@@ -165,7 +174,7 @@ namespace ft {
 	bool operator!= (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
-	
+
 	template <class _It, class _Iter>
 	bool operator<  (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
 		return (rhs.base() < lhs.base());
@@ -175,7 +184,7 @@ namespace ft {
 	bool operator<= (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
 		return (rhs.base() <= lhs.base());
 	}
-	
+
 	template <class _It, class _Iter>
 	bool operator>  (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
 		return (rhs.base() > lhs.base());
@@ -185,7 +194,7 @@ namespace ft {
 	bool operator>= (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
 		return (rhs.base() >= lhs.base());
 	}
-	
+
 	template <class _It>
 	reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it) {
 		return (rev_it += n);
