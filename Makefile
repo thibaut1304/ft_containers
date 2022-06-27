@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/06/17 12:38:30 by thhusser         ###   ########.fr        #
+#    Updated: 2022/06/27 03:37:23 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ RM		= rm -f
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror
+FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 .cpp.o:
 			@printf "$(_WHITE)Generating $(NAME) objects... %-33.33s\r$(_NC)" $@

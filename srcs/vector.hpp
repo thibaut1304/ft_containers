@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/17 15:15:41 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/27 03:58:49 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # include "reverse_iterator.hpp"
 # include "random_access_iterator.hpp"
+# include "enable_if.hpp"
+# include "is_integral.hpp"
 
 
 namespace ft {
@@ -61,7 +63,7 @@ namespace ft {
 			}
 			// range Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
 			template <class _InputIterator>
-			vector (_InputIterator first, _InputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<_InputIterator>::value, _InputIterator>::type* = NULL) : _alloc(alloc), _tab(NULL) {
+			vector (_InputIterator first, _InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<_InputIterator>::value, _InputIterator>::type* = NULL) : _alloc(alloc), _tab(NULL) {
 
 				size_type	diff = 0;
 				for (_InputIterator tmp = first; tmp != last; tmp++) {
@@ -170,7 +172,9 @@ namespace ft {
 			}
 
 			void reserve (size_type n) {
-				if (n > _capacity)
+				if (n > this->max_size())
+					throw (std::length_error("vector::reserve"));
+				else if (n > _capacity)
 				{
 					T			*prev_ptr = _tab;
 					size_type	prev_size = _size;
@@ -224,7 +228,7 @@ namespace ft {
 			/****************/
 			// range
 			template <class _InputIterator>
-			void assign(typename std::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
+			void assign(typename ft::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
 			// void assign (_InputIterator first, _InputIterator last) {
 				size_type	diff = 0;
 					// std::cout << "TEST : ";
