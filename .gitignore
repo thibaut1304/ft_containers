@@ -1,4 +1,6 @@
 debug
+./srcs/containers_test/
+
 # Prerequisites
 *.d
 
