@@ -17,7 +17,7 @@ int		main(void)
 	for (int i = 2; i < start_size; ++i)
 		it[i] = (start_size - i) * 3;
 	printSize(vct, true);
-
+	// std::cout << "is here" << std::endl;
 	vct.resize(10, 42);
 	printSize(vct, true);
 
