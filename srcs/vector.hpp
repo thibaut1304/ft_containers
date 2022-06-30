@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/30 18:01:12 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:14:08 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ namespace ft {
 				// _tab - allouer à n
 				// _tab le remplir avec val
 
-				std::cout << "TEST" << std::endl;
 
 				_tab = _alloc.allocate(n);
 				for (size_type i = 0; i < n ; i++) {
@@ -83,7 +82,7 @@ namespace ft {
 			vector (const vector& x) :_alloc(x._alloc), _tab(NULL),  _size(x._size), _capacity(x._capacity) {
 				if (x._capacity == 0)
 					_capacity = x._size;
-				_tab = _alloc.allocate(_size);
+				_tab = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < x._size; i++) {
 					_alloc.construct(_tab + i, x._tab[i]);
 				}
@@ -166,7 +165,7 @@ namespace ft {
 				if (_size < n) {
 					if (_capacity * 2 < n)
 						reserve(n);
-					else if (_capacity < n)
+					else if (_capacity * 2 >= n)
 						reserve(_capacity * 2);
 					for (size_type old_size = _size; old_size != n; old_size++) {
 						_alloc.construct(_tab + old_size, val);

@@ -1,6 +1,6 @@
 size: 7
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -11,10 +11,9 @@ Content is:
 - 6
 - 3
 ###############################################
-is here
 size: 10
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -30,7 +29,7 @@ Content is:
 ###############################################
 size: 18
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -54,7 +53,7 @@ Content is:
 ###############################################
 size: 10
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -70,7 +69,7 @@ Content is:
 ###############################################
 size: 23
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -99,7 +98,7 @@ Content is:
 ###############################################
 size: 5
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -110,7 +109,7 @@ Content is:
 ###############################################
 size: 5
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -121,7 +120,7 @@ Content is:
 ###############################################
 size: 5
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -134,7 +133,7 @@ is_empty: 1
 is_empty: 0
 size: 5
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -145,7 +144,7 @@ Content is:
 ###############################################
 size: 5
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 - 20
@@ -157,7 +156,7 @@ Content is:
 is_empty: 1
 size: 0
 capacity: OK
-max_size: 2305843009213693951
+max_size: 4611686018427387903
 
 Content is:
 ###############################################

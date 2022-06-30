@@ -29,9 +29,9 @@ void ft_push_back() {
 	for (int i = 0; i < 10; i++) {
 		ft_vector.push_back("A");
 	}
-	print_the_vector(std_vector);
-	print_my_vector(ft_vector);
-	// print_vector(std_vector, ft_vector);
+	// print_the_vector(std_vector);
+	// print_my_vector(ft_vector);
+	print_vector(std_vector, ft_vector);
 }
 
 int main () {
