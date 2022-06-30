@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 01:08:21 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/17 15:21:04 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:05:35 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void R_begin_and_end() {
 	ft_iterator ft_it = ft_vector.rbegin();
 	std_iterator std_it = std_vector.rbegin();
 
-	ft_iterator ft_itend = ft_vector.rend();
-	std_iterator std_itend = std_vector.rend();
+	// ft_iterator ft_itend = ft_vector.rend();
+	// std_iterator std_itend = std_vector.rend();
 
 	std::cout << "ft_vector : rbegin : " << *ft_it << std::endl;
 	std::cout << "std_vector : rbegin : " << *std_it << std::endl;
-	std::cout << "ft_vector : rend : " << *ft_itend << std::endl;
-	std::cout << "std_vector : rend : " << *std_itend << std::endl << std::endl;
+	// std::cout << "ft_vector : rend : " << *ft_itend << std::endl;
+	// std::cout << "std_vector : rend : " << *std_itend << std::endl << std::endl;
 
 	ft_it++;
 	std_it++;

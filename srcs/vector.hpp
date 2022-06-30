@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/17 15:15:41 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:00:13 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ namespace ft {
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
 				// _tab - allouer à n
 				// _tab le remplir avec val
+
+				std::cout << "TEST" << std::endl;
+
 				_tab = _alloc.allocate(n);
 				for (size_type i = 0; i < n ; i++) {
 					_alloc.construct(_tab + i, val);
@@ -78,7 +81,7 @@ namespace ft {
 			vector (const vector& x) :_alloc(x._alloc), _tab(NULL),  _size(x._size), _capacity(x._capacity) {
 				if (x._capacity == 0)
 					_capacity = x._size;
-				_tab = _alloc.allocate(x._capacity);
+				_tab = _alloc.allocate(_size);
 				for (size_type i = 0; i < x._size; i++) {
 					_alloc.construct(_tab + i, x._tab[i]);
 				}
@@ -86,7 +89,15 @@ namespace ft {
 
 			vector& operator= (const vector& x) {
 				if (this != &x) {
-					*this = x;
+				size_type current_capacity = this->_capacity;
+				this->~vector();
+				this->_size = x._size;
+				this->_capacity = current_capacity;
+				if (x._size > this->_capacity)
+					this->_capacity = x._size;
+				_tab = _alloc.allocate(_size);
+				for (size_type i = 0; i < _size; i++)
+					_alloc.construct(_tab + i, x._tab[i]);
 				}
 				return (*this);
 			}
@@ -96,8 +107,11 @@ namespace ft {
 			// allocator::deallocate
 			// vector::clear -> supprime les donnes sauf la capacite
 				clear();
-				if (_capacity != 0)
-					_alloc.deallocate(_tab, _capacity);
+				if (_capacity != 0) {
+					// for(size_type i = 0;i < _capacity; i++) {
+						_alloc.deallocate(_tab, _capacity);
+					// }
+				}
 				_capacity = 0;
 			}
 			/****************/
@@ -170,15 +184,24 @@ namespace ft {
 			}
 
 			void reserve (size_type n) {
-				if (n > _capacity)
+				if (n > this->max_size())
+					throw (std::length_error("vector::reserve"));
+				else if (n > _capacity)
 				{
-					T			*prev_ptr = _tab;
-					size_type	prev_size = _size;
-					size_type	prev_capacity = _capacity;
-
+					// T *tmp = _alloc.allocate(n);
+					// size_type current_size = _size;
+					// for (size_type i = 0; i < _size; i++)
+					// 	_alloc.construct(tmp + i, _tab[i]);
+					// this->~vector();
+					// this->_tab = tmp;
+					// this->_size = current_size;
+					// this->_capacity = n;
+					value_type	*prev_ptr = _tab;
+					std::size_t	prev_size = _size;
+					std::size_t	prev_capacity = _capacity;
 					_tab = _alloc.allocate(n);
 					_capacity = n;
-					for(size_type i = 0; i < prev_size; i++)
+					for(std::size_t i = 0; i < prev_size; i++)
 						_alloc.construct(_tab + i, *(prev_ptr + i));
 					_alloc.deallocate(prev_ptr, prev_capacity);
 				}
@@ -261,11 +284,9 @@ namespace ft {
 			}
 
 			void push_back (const value_type& val) {
-				// std::cout << "Size     : " << _size << std::endl;
-				// std::cout << "Capacity : " << _capacity << std::endl;
 				if (_capacity == 0)
 					reserve(1);
-				if (_size == _capacity)
+				else if (_size == _capacity)
 					reserve(_capacity * 2);
 				_alloc.construct(_tab + _size, val);
 				_size++;
@@ -287,7 +308,7 @@ namespace ft {
 			void swap (vector& x);
 
 			void clear() {
-				while (_size > 0)
+				while (!empty())
 					pop_back();
 			}
 
