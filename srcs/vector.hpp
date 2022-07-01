@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/30 18:14:08 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:31:15 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 # include "enable_if.hpp"
 # include "is_integral.hpp"
 
+# include <stdlib.h>
+
 
 namespace ft {
-	template<typename T, typename Alloc = std::allocator<T> >
+	template<class T, class Alloc = std::allocator<T> >
 	class vector {
 		public:
 			typedef T 											value_type;
@@ -40,7 +42,7 @@ namespace ft {
 
 			typedef ft::random_access_iterator<value_type>			iterator;
 			typedef ft::random_access_iterator<const value_type>	const_iterator;
-			typedef ft::reverse_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_iterator<iterator>					reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
 			typedef typename allocator_type::difference_type	difference_type;
@@ -51,17 +53,22 @@ namespace ft {
 			/**CONSTRUCTOR***/
 			/****************/
 			// Default Constructs an empty container, with no elements.
-			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {}
+			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {
+				std::cout << "Constructeur par default" << std::endl;
+			}
 			// fill Constructs a container with n elements. Each element is a copy of val.
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
+				// this->assign(n, val);
 				// _tab - allouer à n
 				// _tab le remplir avec val
 
-
+				std::cout << "Constructeur fill" << std::endl;
 				_tab = _alloc.allocate(n);
+				std::cout << "Adresse     : " << _tab << std::endl;
 				for (size_type i = 0; i < n ; i++) {
 					_alloc.construct(_tab + i, val);
 				}
+				// std::cout << "Adresse : " << _tab << std::endl;
 			}
 			// range Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
 			template <class _InputIterator>
@@ -80,6 +87,7 @@ namespace ft {
 			}
 			// copy Constructs a container with a copy of each of the elements in x, in the same order.
 			vector (const vector& x) :_alloc(x._alloc), _tab(NULL),  _size(x._size), _capacity(x._capacity) {
+				// std::cout << "ololololololol" << std::endl;
 				if (x._capacity == 0)
 					_capacity = x._size;
 				_tab = _alloc.allocate(_capacity);
@@ -107,13 +115,13 @@ namespace ft {
 			// allocator::destroy -> destructor(value_type)pas dans vector !
 			// allocator::deallocate
 			// vector::clear -> supprime les donnes sauf la capacite
+			std::cout << "Destructeur : " << _tab << std::endl;
 				clear();
 				if (_capacity != 0) {
-					// for(size_type i = 0;i < _capacity; i++) {
-						_alloc.deallocate(_tab, _capacity);
-					// }
+					std::cout << "capacity in destructeur " << _capacity << std::endl;
+					_alloc.deallocate(_tab, _capacity);
+					_capacity = 0;
 				}
-				_capacity = 0;
 			}
 			/****************/
 			/****ITERATOR****/
@@ -261,8 +269,6 @@ namespace ft {
 				// 	std::cout << " " << *first++;
 				// 	diff++;
 				// }
-				std::cout << std::endl;
-				// std::cout << std::endl;
 				// std::cout << "je suis diff     :" << diff << std::endl;
 				// std::cout << "je suis capacity :" << _capacity << std::endl;
 				// clear();
@@ -298,7 +304,24 @@ namespace ft {
 				_size -= 1;
 			}
 
-			iterator insert (iterator position, const value_type& val);
+			iterator insert (iterator position, const value_type& val) {
+				if (_size == _capacity) {
+					// Cela provoque une réallocation automatique de l'espace de stockage alloué si -et seulement si- la nouvelle taille du vecteur dépasse la capacité actuelle du vecteur .
+					reserve(_capacity * 2);
+				}
+
+				T	*tmp = _tab;
+				size_type i = 0;
+				_tab = allocate(_capacity);
+				for (iterator index = 0; index != end(); index++, i++) {
+					if (index == position) {
+						_tab = construct(_tab + i, val);
+						i++;
+					}
+					 _tab = construct(_tab + i, *index);
+				}
+			}
+
 			void insert (iterator position, size_type n, const value_type& val);
 			template <class _InputIterator>
 			void insert (iterator position, _InputIterator first, _InputIterator last);

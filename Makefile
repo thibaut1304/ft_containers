@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/06/30 18:06:04 by thhusser         ###   ########.fr        #
+#    Updated: 2022/07/01 14:19:58 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ RM		= rm -f
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror
+FLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g3
 
 FLAGS_SAN = -Wall -Wextra -Werror -fsanitize=address -g3
 
@@ -44,10 +44,10 @@ FLAGS_SAN = -Wall -Wextra -Werror -fsanitize=address -g3
 
 all:		$(NAME)
 
-san:		$(OBJS)
-			@echo ""
-			@$(CC) $(FLAGS_SAN) $(HEADER) $(OBJS) -o $(NAME)
-			@echo "$(_GREEN)Generating $(NAME)$(_NC)"
+# san:		$(OBJS)
+# 			@echo ""
+# 			@$(CC) $(FLAGS_SAN) $(HEADER) $(OBJS) -o $(NAME)
+# 			@echo "$(_GREEN)Generating $(NAME)$(_NC)"
 
 $(NAME):	$(OBJS)
 			@echo ""
