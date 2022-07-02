@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/01 14:31:15 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/02 13:41:54 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ namespace ft {
 			/****************/
 			// Default Constructs an empty container, with no elements.
 			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {
-				std::cout << "Constructeur par default" << std::endl;
+				// std::cout << "Constructeur par default" << std::endl;
 			}
 			// fill Constructs a container with n elements. Each element is a copy of val.
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
@@ -62,9 +62,9 @@ namespace ft {
 				// _tab - allouer à n
 				// _tab le remplir avec val
 
-				std::cout << "Constructeur fill" << std::endl;
+				// std::cout << "Constructeur fill" << std::endl;
 				_tab = _alloc.allocate(n);
-				std::cout << "Adresse     : " << _tab << std::endl;
+				// std::cout << "Adresse     : " << _tab << std::endl;
 				for (size_type i = 0; i < n ; i++) {
 					_alloc.construct(_tab + i, val);
 				}
@@ -115,10 +115,10 @@ namespace ft {
 			// allocator::destroy -> destructor(value_type)pas dans vector !
 			// allocator::deallocate
 			// vector::clear -> supprime les donnes sauf la capacite
-			std::cout << "Destructeur : " << _tab << std::endl;
+			// std::cout << "Destructeur : " << _tab << std::endl;
 				clear();
 				if (_capacity != 0) {
-					std::cout << "capacity in destructeur " << _capacity << std::endl;
+					// std::cout << "capacity in destructeur " << _capacity << std::endl;
 					_alloc.deallocate(_tab, _capacity);
 					_capacity = 0;
 				}
