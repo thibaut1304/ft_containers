@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/02 13:59:22 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:45:33 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,27 +304,52 @@ namespace ft {
 				_size -= 1;
 			}
 
-			iterator insert (iterator position, const value_type& val) { //surement un leaks
-				if (_size == _capacity) {
+			iterator insert (iterator position, const value_type& val) {
+				if (_size >= _capacity) {
 					// Cela provoque une réallocation automatique de l'espace de stockage alloué si -et seulement si- la nouvelle taille du vecteur dépasse la capacité actuelle du vecteur .
 					reserve(_capacity * 2);
 				}
-
-				T	*tmp = _tab;
-				size_type i = 0;
-				_tab = allocate(_capacity);
-				for (iterator index = 0; index != end(); index++, i++) {
-					if (index == position) {
-						_tab = construct(_tab + i, val);
-						i++;
-					}
-					 _tab = construct(_tab + i, *index);
+				
+				T			*tmp = _tab;
+				size_type 	i = 0;
+				size_type 	y = 0;
+				iterator index = begin();
+				_tab = _alloc.allocate(_capacity);
+				_size++;
+				for (; i < size(); i++, index++, y++) {
+					if (index == position) 
+						_alloc.construct(_tab + i++, val);
+					_alloc.construct(_tab + i, tmp[y]);
 				}
+				_alloc.deallocate(tmp, _capacity);
+				return (position);
 			}
 
-			void insert (iterator position, size_type n, const value_type& val);
-			template <class _InputIterator>
-			void insert (iterator position, _InputIterator first, _InputIterator last);
+			void insert (iterator position, size_type n, const value_type& val) {
+				if (_size + n >= _capacity * 2) 
+						reserve(_capacity + n);
+				else if (_size >= _capacity)
+					reserve(_capacity * 2);
+				
+				T			*tmp = _tab;
+				size_type 	i = 0;
+				size_type 	y = 0;
+				iterator index = begin();
+				_tab = _alloc.allocate(_capacity);
+				_size += n;
+				for (; i < size(); i++, index++, y++) {
+					if (index == position) {
+						size_type nb = -1;
+						while (++nb < n)
+							_alloc.construct(_tab + i++, val);
+					}
+					_alloc.construct(_tab + i, tmp[y]);
+				}
+				_alloc.deallocate(tmp, _capacity);
+			}
+			
+			// template <class _InputIterator>
+			// void insert (iterator position, _InputIterator first, _InputIterator last);
 
 			iterator erase (iterator position);
 			iterator erase (iterator first, iterator last);

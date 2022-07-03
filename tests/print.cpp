@@ -6,13 +6,13 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 01:04:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/01 11:33:59 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/03 16:19:10 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 template <typename T>
 void	print_my_vector(ft::vector<T> ft_my_vector) {
-	std::cout << "--------- Print vector ---------" << std::endl;
+	std::cout << "--------- Print ft_vector ---------" << std::endl;
 	typedef typename ft::vector<T>::iterator iterator;
 	iterator it = ft_my_vector.begin() ;
 	iterator itend = ft_my_vector.end();
@@ -25,7 +25,7 @@ void	print_my_vector(ft::vector<T> ft_my_vector) {
 
 template <typename T>
 void	print_the_vector(std::vector<T> ft_my_vector) {
-	std::cout << "--------- Print vector ---------" << std::endl;
+	std::cout << "--------- Print std_vector ---------" << std::endl;
 	typedef typename std::vector<T>::iterator iterator;
 	iterator it = ft_my_vector.begin() ;
 	iterator itend = ft_my_vector.end();

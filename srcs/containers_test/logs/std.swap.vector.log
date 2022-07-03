@@ -2,7 +2,7 @@ BEFORE SWAP
 foo contains:
 size: 3
 capacity: OK
-max_size: 4611686018427387903
+max_size: 2305843009213693951
 
 Content is:
 - 15
@@ -12,7 +12,7 @@ Content is:
 bar contains:
 size: 5
 capacity: OK
-max_size: 4611686018427387903
+max_size: 2305843009213693951
 
 Content is:
 - 42
@@ -25,7 +25,7 @@ AFTER SWAP
 foo contains:
 size: 5
 capacity: OK
-max_size: 4611686018427387903
+max_size: 2305843009213693951
 
 Content is:
 - 42
@@ -37,7 +37,7 @@ Content is:
 bar contains:
 size: 3
 capacity: OK
-max_size: 4611686018427387903
+max_size: 2305843009213693951
 
 Content is:
 - 15
