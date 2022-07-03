@@ -13,8 +13,8 @@
 void ft_push_back() {
 	std::vector<int>std_vector(5);
 	ft::vector<int>	ft_vector(5);
-//	std::cout << "Max size ft : " << ft_vector.max_size() << std::endl;
-//	std::cout << "Max size st : " << std_vector.max_size() << std::endl;
+	std::cout << "Max size ft : " << ft_vector.max_size() << std::endl;
+	std::cout << "Max size st : " << std_vector.max_size() << std::endl;
 
 	std::vector<int>::iterator it = std_vector.begin();
 
@@ -23,10 +23,10 @@ void ft_push_back() {
 	// ft_vector.reserve(2);
 	ft::vector<int>::iterator ft_it = ft_vector.begin();
 	// std::cout << ft_vector.size();
-	// for (unsigned long int i = 0; i < ft_vector.size(); ++i) {
-		int i = 1;
+	for (unsigned long int i = 0; i < ft_vector.size(); ++i) {
+		// int i = 1;
 		ft_it[i] = i + 65;
-	// }
+	}
 	// ft_vector.assign(5, 10);
 	{
 		// ft_vector.get_allocator().allocate(5);
@@ -51,49 +51,42 @@ void ft_push_back() {
 
 int main () {
 
-	// std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
-	// std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
-	// constructor();
-	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
-	// std::cout << " - - - - Rbegin and Rend - - - -" << std::endl << std::endl;
-	// R_begin_and_end();
-	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
+	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
+	constructor();
+	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	std::cout << " - - - - Rbegin and Rend - - - -" << std::endl << std::endl;
+	R_begin_and_end();
+	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
 
-	// ft::vector<int> test(2, 5);
+	ft::vector<int> test(2, 5);
 
-	// for (int i = 0;i < 10; i++) {
-	// 	test.push_back(i);
-	// }
-	// ft::vector<int> test2 = test;
-	// print_my_vector(test2);
-	// std::cout << "SIZE     : " << test.size() << std::endl;
-	// std::cout << "SIZE    2: " << test2.size() << std::endl;
-	// std::cout << "CAPACITY : " << test.capacity() << std::endl;
-	// std::cout << "CAPACITY2: " << test2.capacity() << std::endl;
-	// std::cout << " - - - - - PUSH_BACK - - - - - -" << std::endl << std::endl;
+	for (int i = 0;i < 10; i++) {
+		test.push_back(i);
+	}
+	ft::vector<int> test2 = test;
+	print_my_vector(test2);
+	std::cout << "SIZE     : " << test.size() << std::endl;
+	std::cout << "SIZE    2: " << test2.size() << std::endl;
+	std::cout << "CAPACITY : " << test.capacity() << std::endl;
+	std::cout << "CAPACITY2: " << test2.capacity() << std::endl;
+	std::cout << " - - - - - PUSH_BACK - - - - - -" << std::endl << std::endl;
 	ft_push_back();
-//	ft::vector<std::string>ft_vector(5);
-	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	// ft::vector<std::string>ft_vector(5);
+	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
 
 
-	// std::vector<int>std_vector(5);
-	// ft::vector<int>	ft_vector(5);
-//	std::cout << "Max size ft : " << ft_vector.max_size() << std::endl;
-//	std::cout << "Max size st : " << std_vector.max_size() << std::endl;
+	std::vector<int>std_vector(5);
+	ft::vector<int>	ft_vector(5);
+	std::cout << "Max size ft : " << ft_vector.max_size() << std::endl;
+	std::cout << "Max size st : " << std_vector.max_size() << std::endl;
 
 	// std::vector<int>::iterator it = std_vector.begin();
 
-//	for (unsigned long int i = 0; i < std_vector.size(); ++i)
-		// it[1] = 45;
-
 		// it[i] = std::string((std_vector.size() - i), i + 65);
-	// ft_vector.reserve(2);
+	ft_vector.reserve(2);
 	// ft::vector<int>::iterator ft_it = ft_vector.begin();
 
-	// for (unsigned long int i = 0; i < 5; ++i)
-	// {
-		// ft_vector.get_allocator().allocate(5);
-		// ft_it[1] = 45;
 
 	return (0);
 }

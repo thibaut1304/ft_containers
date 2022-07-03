@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/02 13:41:54 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/02 13:59:22 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ namespace ft {
 				_size -= 1;
 			}
 
-			iterator insert (iterator position, const value_type& val) {
+			iterator insert (iterator position, const value_type& val) { //surement un leaks
 				if (_size == _capacity) {
 					// Cela provoque une réallocation automatique de l'espace de stockage alloué si -et seulement si- la nouvelle taille du vecteur dépasse la capacité actuelle du vecteur .
 					reserve(_capacity * 2);
