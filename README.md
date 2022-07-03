@@ -6,3 +6,4 @@ Par default un constructeur est dit de conversion, avec le mot clé "explicit" p
 
 enable_if -> assign et constructor vector
 is_integral -> constructor vector !
+

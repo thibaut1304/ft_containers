@@ -64,20 +64,41 @@ void	ft_insert() {
 			break;
 	}
 	print_vector(std_vector, ft_vector);
-
-	// print_the_vector(std_vector);
-	// std_vector.insert(it, 0);
-	// print_the_vector(std_vector);
-	// print_my_vector(ft_vector);
-	// ft_vector.insert(ft_it, 0);
-	// print_my_vector(ft_vector);
-	// print_vector(std_vector, ft_vector);
 	ft_vector.insert(ft_it, 5, 0);
 	std_vector.insert(it, 5, 0);
 	print_vector(std_vector, ft_vector);
+
+}
+
+void	ft_insert_mli() {
+	ft::vector<int> ft_(10);
+	std::vector<int> std_(10);
+
+	for (unsigned long int i = 0; i < ft_.size(); i++)
+		ft_[i] = (ft_.size() - i) * 3;
+	for (unsigned long int i = 0; i < std_.size(); i++)
+		std_[i] = (std_.size() - i) * 3;
+
+	// print_vector(std_, ft_);
+
+	ft::vector<int> ft_vector;
+	std::vector<int> std_vector;
+
+	std_vector.insert(std_vector.end(), 42);
+	std_vector.insert(std_vector.begin(), 2, 21);
+	print_the_vector(std_vector);
+
+	ft_vector.insert(ft_vector.end(), 42);
+	ft_vector.insert(ft_vector.begin() + 1, 54);
+	ft_vector.insert(ft_vector.end(), 42);
+	ft_vector.insert(ft_vector.end(), 42);
+	// ft_vector.insert(ft_vector.begin(), 2, 21);
+	print_my_vector(ft_vector);
 }
 
 int main () {
+	ft_insert_mli();
+	exit(0);
 	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
 	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
 	constructor();

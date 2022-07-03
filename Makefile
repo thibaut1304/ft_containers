@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/07/02 14:02:24 by thhusser         ###   ########.fr        #
+#    Updated: 2022/07/03 21:52:44 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,16 +36,13 @@ CC		=	c++
 
 FLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g3
 
+
 .cpp.o:
 			@printf "$(_WHITE)Generating $(NAME) objects... %-33.33s\r$(_NC)" $@
 			@$(CC) $(FLAGS) $(HEADER) -c $< -o $(<:.cpp=.o)
 
 all:		$(NAME)
 
-# san:		$(OBJS)
-# 			@echo ""
-# 			@$(CC) $(FLAGS_SAN) $(HEADER) $(OBJS) -o $(NAME)
-# 			@echo "$(_GREEN)Generating $(NAME)$(_NC)"
 
 $(NAME):	$(OBJS)
 			@echo ""

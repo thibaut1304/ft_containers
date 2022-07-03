@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/03 18:45:33 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/03 22:54:51 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,25 @@ namespace ft {
 				// std::cout << "ololololololol" << std::endl;
 				if (x._capacity == 0)
 					_capacity = x._size;
-				_tab = _alloc.allocate(_capacity);
-				for (size_type i = 0; i < x._size; i++) {
-					_alloc.construct(_tab + i, x._tab[i]);
+				if (_capacity != 0) {
+					_tab = _alloc.allocate(_capacity);
+					for (size_type i = 0; i < x._size; i++) {
+						_alloc.construct(_tab + i, x._tab[i]);
+					}
 				}
 			}
 
 			vector& operator= (const vector& x) {
 				if (this != &x) {
-				size_type current_capacity = this->_capacity;
-				this->~vector();
-				this->_size = x._size;
-				this->_capacity = current_capacity;
-				if (x._size > this->_capacity)
-					this->_capacity = x._size;
-				_tab = _alloc.allocate(_size);
-				for (size_type i = 0; i < _size; i++)
-					_alloc.construct(_tab + i, x._tab[i]);
+					size_type current_capacity = this->_capacity;
+					this->~vector();
+					this->_size = x._size;
+					this->_capacity = current_capacity;
+					if (x._size > this->_capacity)
+						this->_capacity = x._size;
+					_tab = _alloc.allocate(_size);
+					for (size_type i = 0; i < _size; i++)
+						_alloc.construct(_tab + i, x._tab[i]);
 				}
 				return (*this);
 			}
@@ -305,32 +307,41 @@ namespace ft {
 			}
 
 			iterator insert (iterator position, const value_type& val) {
+				size_type	old_capacity = _capacity;
+				if (_capacity == 0)
+					reserve(1);
 				if (_size >= _capacity) {
 					// Cela provoque une réallocation automatique de l'espace de stockage alloué si -et seulement si- la nouvelle taille du vecteur dépasse la capacité actuelle du vecteur .
 					reserve(_capacity * 2);
 				}
-				
+				// if (empty()) {  //patch tout pourrie sa mere
+				// 	_size++;
+				// 	_alloc.construct(_tab + 0, val);
+				// 	return (position);
+				// }	
 				T			*tmp = _tab;
 				size_type 	i = 0;
 				size_type 	y = 0;
-				iterator index = begin();
 				_tab = _alloc.allocate(_capacity);
-				_size++;
+				iterator index = begin();
+				_size += 1;
 				for (; i < size(); i++, index++, y++) {
-					if (index == position) 
-						_alloc.construct(_tab + i++, val);
-					_alloc.construct(_tab + i, tmp[y]);
+					if (index == position) {
+						_alloc.construct(_tab + i++, val);	
+					}
+					if (i < size())
+						_alloc.construct(_tab + i, tmp[y]);
 				}
-				_alloc.deallocate(tmp, _capacity);
+				_alloc.deallocate(tmp, old_capacity);
 				return (position);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val) {
+				size_type	old_capacity = _capacity;
 				if (_size + n >= _capacity * 2) 
 						reserve(_capacity + n);
 				else if (_size >= _capacity)
 					reserve(_capacity * 2);
-				
 				T			*tmp = _tab;
 				size_type 	i = 0;
 				size_type 	y = 0;
@@ -345,16 +356,47 @@ namespace ft {
 					}
 					_alloc.construct(_tab + i, tmp[y]);
 				}
-				_alloc.deallocate(tmp, _capacity);
+				_alloc.deallocate(tmp, old_capacity);
 			}
 			
-			// template <class _InputIterator>
-			// void insert (iterator position, _InputIterator first, _InputIterator last);
+			template <class _InputIterator>
+			void insert (iterator position, typename ft::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
+				size_type	old_capacity = _capacity;
+				size_type	diff = 0;
+				for (_InputIterator tmp = first; tmp != last; tmp++) {
+					diff++;
+				}
+				if (_size + diff >= _capacity * 2) 
+						reserve(_capacity + diff);
+				else if (_size >= _capacity)
+					reserve(_capacity * 2);
+					
+				_size += diff;
+				size_type 			i = 0;
+				size_type 			y = 0;
+				iterator index = 	begin();
+				T 				*tmp = _tab;
+				_tab = _alloc.allocate(_capacity);
+				for(; i < size() ; i++, index++, y++) {
+					if (index == position) {
+						for(; first != last; first++, i++) {
+							_alloc.construct(_tab + i, *first);
+						}
+					}
+					_alloc.construct(_tab + i, tmp[y]);
+				}
+				_alloc.deallocate(tmp, old_capacity);	
+			}
 
 			iterator erase (iterator position);
 			iterator erase (iterator first, iterator last);
 
-			void swap (vector& x);
+			void swap (vector& x) { //suis null mdrr
+				T	*tmp = x;
+				
+				_alloc.deallocate(_tab, _capacity);
+				_tab = tmp;
+			}
 
 			void clear() {
 				while (!empty())
