@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:11:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/03 16:45:07 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:18:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ namespace ft {
 
 			random_access_iterator() : _ptr(NULL) {}
 			random_access_iterator(pointer ptr) : _ptr(ptr) {}
-			random_access_iterator(random_access_iterator  const &rhs) : _ptr(rhs._ptr) {}
+			random_access_iterator(random_access_iterator  const &rhs) : _ptr(rhs._ptr) {
+				// std::cout << "copy constru called\n";
+				// if (*this == rhs)
+					// std::cout << "Coucou hina ! " << std::endl;
+				}
 			random_access_iterator &operator=(random_access_iterator const &rhs) {
 				if (this != &rhs) {
 					this->_ptr = rhs._ptr;
@@ -44,7 +48,7 @@ namespace ft {
 			operator random_access_iterator<value_type const>() const {
 				return random_access_iterator<value_type const>(_ptr);
 			}
-			
+
 			virtual ~random_access_iterator() {}
 			template<typename _Iterator>
 			friend bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs);
@@ -131,6 +135,7 @@ namespace ft {
 
 	template<typename _Iterator>
 	bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs){
+		std::cout << "comparing : " << lhs._ptr << " and " << rhs._ptr << "\n";
 		return (lhs._ptr == rhs._ptr);
 	}
 
