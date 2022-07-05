@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:11:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/04 17:18:17 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/05 20:04:40 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ namespace ft {
 
 	template<typename _Iterator>
 	bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs){
-		std::cout << "comparing : " << lhs._ptr << " and " << rhs._ptr << "\n";
+		// std::cout << "comparing : " << lhs._ptr << " and " << rhs._ptr << "\n";
 		return (lhs._ptr == rhs._ptr);
 	}
 

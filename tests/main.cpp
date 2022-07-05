@@ -81,26 +81,41 @@ void	ft_insert_mli() {
 
 	// print_vector(std_, ft_);
 
-	ft::vector<int> ft_vector(1, 9);
+	ft::vector<int> ft_vector;
 	std::vector<int> std_vector;
 
+
 	std_vector.insert(std_vector.end(), 42);
-	// std_vector.insert(std_vector.begin(), 2, 21);
-	print_the_vector(std_vector);
-
-// if (ft_vector.begin() == ft_vector.end())
-					// std::cout << "je suis la " << std::endl;
-
+	std_vector.insert(std_vector.begin(), 2, 21);
 	ft_vector.insert(ft_vector.end(), 42);
-	// ft_vector.insert(ft_vector.begin(), 42);
-	// if (ft_vector.begin() == ft_vector.begin())
-		// return ;
-	// std::cout << "HWELLOOOOO     " << *(ft_vector.begin()) << std::endl;
-	// ft_vector.insert(ft_vector.begin() + 1, 54);
-	// ft_vector.insert(ft_vector.end(), 42);
-	// ft_vector.insert(ft_vector.end(), 42);
 	ft_vector.insert(ft_vector.begin(), 2, 21);
-	print_my_vector(ft_vector);
+	print_vector(std_vector, ft_vector);
+
+	ft_vector.insert(ft_vector.end() - 2, 42);
+	std_vector.insert(std_vector.end() - 2, 42);
+	print_vector(std_vector, ft_vector);
+
+	ft_vector.insert(ft_vector.end(), 2, 84);
+	std_vector.insert(std_vector.end(), 2, 84);
+	print_vector(std_vector, ft_vector);
+
+	ft_vector.resize(4);
+	std_vector.resize(4);
+	print_vector(std_vector, ft_vector);
+
+	ft_vector.insert(ft_vector.begin() + 2, ft_vector.begin(), ft_vector.end());
+	std_vector.insert(std_vector.begin() + 2, std_vector.begin(), std_vector.end());
+	// std::cout << "Print : " << *(std_vector.begin() + 2) << std::endl;
+	print_vector(std_vector, ft_vector);
+	// ft_vector.clear();
+	// std_vector.clear();
+	// print_vector(std_vector, ft_vector);
+
+
+
+
+
+
 }
 
 int main () {
