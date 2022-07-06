@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 14:48:18 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:05:20 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,6 +307,11 @@ namespace ft {
 			}
 
 			iterator insert (iterator position, const value_type& val) {
+				iterator hina = begin();
+
+				size_type offset = 0;
+				for (; hina != position; hina++)
+					offset++;
 				if (_size + 1 <= _capacity) {
 					iterator index = begin();
 					size_type ol = 0;
@@ -316,12 +321,12 @@ namespace ft {
 						}
 					}
 					_size += 1;
-					return (position);
+					return (_tab + offset);
 				}
 				ft::vector<T> tmp = *this;
 
-				std::cout << "Adresse tmp : " << tmp._tab << std::endl;
-				std::cout << "Adresse tab : " << this->_tab << std::endl;
+				// std::cout << "Adresse tmp : " << tmp._tab << std::endl;
+				// std::cout << "Adresse tab : " << this->_tab << std::endl;
 				if (_capacity == 0)
 					tmp.reserve(1);
 				if (_size >= _capacity) {
@@ -342,7 +347,7 @@ namespace ft {
 				}
 				this->~vector();
 				*this = tmp;
-				return (ft_it);
+				return (_tab + offset);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val) {
@@ -391,7 +396,6 @@ namespace ft {
 				for (_InputIterator tmp = first; tmp != last; tmp++) {
 					diff++;
 				}
-				// std::cout << "Diff : " << diff << std::endl;
 				if (_size + diff <= _capacity) {
 					iterator it = begin();
 					size_type ol = 0;
