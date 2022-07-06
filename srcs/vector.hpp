@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 19:48:23 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:55:30 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,66 +437,31 @@ namespace ft {
 				*this = tmp;
 			}
 
-	iterator erase(iterator position)
-	{
-		_alloc.destroy(&*position);
+			iterator erase (iterator position) {
+				_alloc.destroy(&*position);
+				for (iterator tmp = position; tmp + 1 != end(); tmp++)
+				{
+					_alloc.construct(&*tmp, *(tmp + 1));
+					_alloc.destroy(&*(tmp + 1));
+				}
+				_size--;
+				return (position);
+			}
 
-		for (iterator pos = position; pos + 1 != end(); pos++)
-		{
-			_alloc.construct(&*pos, *(pos + 1));
-			_alloc.destroy(&*(pos + 1));
-		}
-		_size--;
-		return (position);
-	}
+			iterator erase (iterator first, iterator last) {
+				size_type diff = 0;
 
-	iterator erase(iterator first, iterator last)
-	{
-		size_type diff = 0;
-		for (iterator tmp = first; tmp != last; tmp++)
-		{
-			diff++;
-		}
-
-		for (iterator pos = first; pos != last; pos++)
-		{
-			_alloc.destroy(&*pos);
-		}
-		for (iterator pos = first; pos + diff != end(); pos++)
-		{
-			_alloc.construct(&*pos, *(pos + diff));
-			_alloc.destroy(&*(pos + diff));
-		}
-		_size -= diff;
-		return (first);
-	}
-
-
-			// iterator erase (iterator position) {
-			// 	_alloc.destroy(&*position);
-			// 	for (iterator pos = position; pos + 1 != end(); pos++)
-			// 	{
-			// 		_alloc.construct(&*pos, *(pos + 1));
-			// 		_alloc.destroy(&*(pos + 1));
-			// 	}
-			// 	_size--;
-			// 	return (position);
-			// }
-
-			// iterator erase (iterator first, iterator last) {
-			// 	size_type diff = 0;
-
-			// 	for (iterator tmp = first; first != last; tmp++)
-			// 		diff++;
-			// 	for (iterator tmp = first; tmp != last; tmp++)
-			// 		_alloc.destroy(&*tmp);
-			// 	for (iterator tmp = first; tmp + diff != end(); tmp++) {
-			// 		_alloc.construct(&*tmp, *(tmp + 1));
-			// 		_alloc.destroy(&*(tmp + diff));
-			// 	}
-			// 	_size -= diff;
-			// 	return (first);
-			// }
+				for (iterator tmp = first; tmp != last; tmp++)
+					diff++;
+				for (iterator tmp = first; tmp != last; tmp++)
+					_alloc.destroy(&*tmp);
+				for (iterator tmp = first; tmp + diff != end(); tmp++) {
+					_alloc.construct(&*tmp, *(tmp + diff));
+					_alloc.destroy(&*(tmp + diff));
+				}
+				_size -= diff;
+				return (first);
+			}
 
 			void swap (vector& x) { //suis null mdrr
 				T	*tmp = x;
