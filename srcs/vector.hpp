@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/05 20:05:42 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/06 14:48:18 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,15 +307,27 @@ namespace ft {
 			}
 
 			iterator insert (iterator position, const value_type& val) {
+				if (_size + 1 <= _capacity) {
+					iterator index = begin();
+					size_type ol = 0;
+					for (; ol < _capacity; index++, ol++) {
+						if (index == position) {
+							*index = val;
+						}
+					}
+					_size += 1;
+					return (position);
+				}
 				ft::vector<T> tmp = *this;
 
+				std::cout << "Adresse tmp : " << tmp._tab << std::endl;
+				std::cout << "Adresse tab : " << this->_tab << std::endl;
 				if (_capacity == 0)
 					tmp.reserve(1);
 				if (_size >= _capacity) {
 					// Cela provoque une réallocation automatique de l'espace de stockage alloué si -et seulement si- la nouvelle taille du vecteur dépasse la capacité actuelle du vecteur .
 					tmp.reserve(_capacity * 2);
 				}
-
 				iterator ft_it = begin();
 
 				tmp._tab = _alloc.allocate(tmp._capacity);
@@ -328,14 +340,27 @@ namespace ft {
 					if (i < tmp.size())
 						_alloc.construct(tmp._tab + i, *ft_it);
 				}
-				// std::cout << tmp._tab[0] << std::endl;
 				this->~vector();
 				*this = tmp;
-				// std::cout << _tab[0] << std::endl;
 				return (ft_it);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val) {
+				if (_size + n <= _capacity) {
+					iterator index = begin();
+					size_type ol = 0;
+					for (; ol < _capacity; index++, ol++) {
+						if (index == position) {
+							size_type nb = -1;
+							while (++nb < n) {
+								*index = val;
+								index++;
+							}
+						}
+					}
+					_size += n;
+					return ;
+				}
 				ft::vector<T> tmp = *this;
 
 				if (_size + n >= _capacity * 2)
@@ -354,7 +379,7 @@ namespace ft {
 							_alloc.construct(tmp._tab + i++, val);
 					}
 					if (i < tmp.size())
-					_alloc.construct(tmp._tab + i, _tab[y]);
+						_alloc.construct(tmp._tab + i, _tab[y]);
 				}
 				this->~vector();
 				*this = tmp;
@@ -362,12 +387,27 @@ namespace ft {
 
 			template <class _InputIterator>
 			void insert (iterator position, typename ft::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
-				ft::vector<T> tmp = *this;
-
 				size_type	diff = 0;
 				for (_InputIterator tmp = first; tmp != last; tmp++) {
 					diff++;
 				}
+				// std::cout << "Diff : " << diff << std::endl;
+				if (_size + diff <= _capacity) {
+					iterator it = begin();
+					size_type ol = 0;
+					for (; ol < _capacity; it++, ol++) {
+						if (it == position) {
+							size_type nb = -1;
+							while (++nb < diff) {
+								*it++ = *first++;
+							}
+						}
+					}
+					_size += diff;
+					return ;
+				}
+				ft::vector<T> tmp = *this;
+
 				if (_size + diff >= _capacity * 2)
 						tmp.reserve(_capacity + diff);
 				else if (_size >= _capacity)

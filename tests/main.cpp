@@ -81,32 +81,37 @@ void	ft_insert_mli() {
 
 	// print_vector(std_, ft_);
 
-	ft::vector<int> ft_vector;
-	std::vector<int> std_vector;
+	ft::vector<int> ft_vector(8, 9);
+	std::vector<int> std_vector(8, 9);
 
+	for (int i = 0; i < 5; i++) {
+		ft_vector.pop_back();
+		std_vector.pop_back();
 
-	std_vector.insert(std_vector.end(), 42);
-	std_vector.insert(std_vector.begin(), 2, 21);
-	ft_vector.insert(ft_vector.end(), 42);
-	ft_vector.insert(ft_vector.begin(), 2, 21);
+	}
+	// std_vector.insert(std_vector.end()-2, 42);
+	// ft_vector.insert(ft_vector.end() -2, 42);
+	// std_vector.insert(std_vector.begin(), 2, 21);
+	ft_vector.insert(ft_vector.begin(), ft_vector.begin(), ft_vector.end());
+	std_vector.insert(std_vector.begin(), std_vector.begin(), std_vector.end());
+	// ft_vector.insert(ft_vector.begin(), 2, 21);
 	print_vector(std_vector, ft_vector);
 
-	ft_vector.insert(ft_vector.end() - 2, 42);
-	std_vector.insert(std_vector.end() - 2, 42);
-	print_vector(std_vector, ft_vector);
+	// ft_vector.insert(ft_vector.end() - 2, 42);
+	// std_vector.insert(std_vector.end() - 2, 42);
+	// print_vector(std_vector, ft_vector);
 
-	ft_vector.insert(ft_vector.end(), 2, 84);
-	std_vector.insert(std_vector.end(), 2, 84);
-	print_vector(std_vector, ft_vector);
+	// ft_vector.insert(ft_vector.end(), 2, 84);
+	// std_vector.insert(std_vector.end(), 2, 84);
+	// print_vector(std_vector, ft_vector);
 
-	ft_vector.resize(4);
-	std_vector.resize(4);
-	print_vector(std_vector, ft_vector);
+	// ft_vector.resize(4);
+	// std_vector.resize(4);
+	// print_vector(std_vector, ft_vector);
 
-	ft_vector.insert(ft_vector.begin() + 2, ft_vector.begin(), ft_vector.end());
-	std_vector.insert(std_vector.begin() + 2, std_vector.begin(), std_vector.end());
-	// std::cout << "Print : " << *(std_vector.begin() + 2) << std::endl;
-	print_vector(std_vector, ft_vector);
+	// ft_vector.insert(ft_vector.begin() + 2, ft_vector.begin(), ft_vector.end());
+	// std_vector.insert(std_vector.begin() + 2, std_vector.begin(), std_vector.end());
+	// print_vector(std_vector, ft_vector);
 	// ft_vector.clear();
 	// std_vector.clear();
 	// print_vector(std_vector, ft_vector);
