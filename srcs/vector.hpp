@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 18:04:07 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:48:23 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 # include "random_access_iterator.hpp"
 # include "enable_if.hpp"
 # include "is_integral.hpp"
+# include "equal.hpp"
+# include "lexicographical_compare.hpp"
 
 # include <stdlib.h>
-
 
 namespace ft {
 	template<class T, class Alloc = std::allocator<T> >
@@ -522,6 +523,37 @@ namespace ft {
 			size_type											_size;
 			size_type											_capacity;
 	};
+
+	template <class T, class Alloc>
+  	bool operator==(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs) {
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+
+	template <class T, class Alloc>
+  	bool operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return (!(lhs == rhs));
+	}
+		template <class T, class Alloc>
+	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template <class T, class Alloc>
+	bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return (rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return (!(rhs < lhs));
+	}
+
+	template <class T, class Alloc>
+	bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return (!(lhs < rhs));
+	}
 }
 
 #endif
