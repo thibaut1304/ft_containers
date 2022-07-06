@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/06/17 15:09:37 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:59:38 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ namespace ft {
 			};
 
 			reverse_iterator operator+ (difference_type n) const {
-				return(_current - n);		// il doit etre un random access
+				return(reverse_iterator<_Iterator>(_current - n));		// il doit etre un random access
 			}
 
 			reverse_iterator& operator++() {  // --> pré-incrementation
@@ -84,7 +84,7 @@ namespace ft {
 
 			reverse_iterator operator- (difference_type n) const {
 				// faut que l'iterateur soir un random access
-				return (_current + n);
+				return (reverse_iterator<_Iterator>(_current + n));
 			}
 
 			reverse_iterator& operator--() { // --> pré-incrementation
