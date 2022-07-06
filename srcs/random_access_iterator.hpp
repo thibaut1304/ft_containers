@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:11:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 14:28:12 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:14:55 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ namespace ft {
 				return (tmp);
 			}
 
-			random_access_iterator operator+(difference_type const n) {
+			random_access_iterator operator+(difference_type const n) const {
 				return (random_access_iterator<T>( _ptr + n));
 			}
 
-			random_access_iterator operator-(difference_type const n) {
+			random_access_iterator operator-(difference_type const n) const {
 				return (random_access_iterator<T>(_ptr - n));
 			}
 
-			difference_type operator-(random_access_iterator const rhs) {
+			difference_type operator-(random_access_iterator const rhs) const {
 				return (_ptr - rhs._ptr);
 			}
 
