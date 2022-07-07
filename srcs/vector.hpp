@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 19:55:30 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:55:55 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -464,10 +464,17 @@ namespace ft {
 			}
 
 			void swap (vector& x) { //suis null mdrr
-				T	*tmp = x;
+				T*	tmp_tab = _tab;
+				_tab = x._tab;
+				x._tab = tmp_tab;
 
-				_alloc.deallocate(_tab, _capacity);
-				_tab = tmp;
+				size_type tmp_size = _size;
+				_size = x._size;
+				x._size = tmp_size;
+
+				size_type tmp_capacity = _capacity;
+				_capacity = x._capacity;
+				x._capacity = tmp_capacity;
 			}
 
 			void clear() {

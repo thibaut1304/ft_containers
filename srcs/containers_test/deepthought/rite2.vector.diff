@@ -1,8 +1,4 @@
-1,17d0
-< 5
-< 10
-< const_ite +=/-=: 15 | 25
-< (it == const_it): 0
+5,17d4
 < (const_ite - it): -3
 < (ite + 3 == it): 1
 < size: 5

@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 19:59:38 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:52:39 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ namespace ft {
 			template<typename _It>
 			reverse_iterator(const reverse_iterator<_It> &rev_it) : _current(rev_it.base()) {}
 			template<typename _It>
-			reverse_iterator &operator=(reverse_iterator<_It> const &rhs)
+			reverse_iterator &operator=(reverse_iterator const &rhs)
 			{
-				if (this == &rhs)
-					return (*this);
-				_current = rhs._current;
+				if (this != &rhs) {
+					_current = rhs._current;
+				}
 				return (*this);
 			}
 			// rev_it : An iterator of a reverse_iterator type, whose sense of iteration is preserved.
@@ -107,7 +107,7 @@ namespace ft {
 			}
 
 			reference operator[] (difference_type n) const {
-				return (_current.base()[-n-1]);
+				return (_current[-n-1]);
 			}
 
 			template <class _It>
@@ -126,6 +126,8 @@ namespace ft {
 			friend reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it);
 			template <class _It>
 			friend typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs);
+			template <class _It, typename _Iter>
+			friend typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs);
 
 			protected:
 				_Iterator				_current;
@@ -197,13 +199,18 @@ namespace ft {
 
 	template <class _It>
 	reverse_iterator<_It> operator+ (typename reverse_iterator<_It>::difference_type n, const reverse_iterator<_It>& rev_it) {
-		return (rev_it += n);
+		return (rev_it + n);
 	}
 
 
 	template <class _It>
 	typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-		return (lhs -= rhs);
+		return (lhs -=rhs);
+	}
+
+	template <class _It, typename _Iter>
+	typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
+		return (lhs - rhs);
 	}
 
 }
