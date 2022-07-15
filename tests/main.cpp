@@ -134,7 +134,6 @@ void	ft_erase() {
 
 int main () {
 	ft_erase();
-	exit(0);
 	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
 	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
 	constructor();
