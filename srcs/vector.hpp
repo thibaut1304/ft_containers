@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 14:45:14 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:14:43 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ namespace ft {
 				if (_capacity == 0)
 					reserve(1);
 				else if (_size == _capacity)
-					reserve(_capacity * 2);
+					reserve(_capacity + 1);
 				_alloc.construct(_tab + _size, val);
 				_size++;
 			}
@@ -437,6 +437,7 @@ namespace ft {
 					_alloc.destroy(&*(tmp + 1));
 				}
 				_size--;
+				_capacity--;
 				return (position);
 			}
 
@@ -452,6 +453,7 @@ namespace ft {
 					_alloc.destroy(&*(tmp + diff));
 				}
 				_size -= diff;
+				_capacity -= diff;
 				return (first);
 			}
 
