@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/15 20:51:11 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 14:45:14 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,14 +200,6 @@ namespace ft {
 					throw (std::length_error("vector::reserve"));
 				else if (n > _capacity)
 				{
-					// T *tmp = _alloc.allocate(n);
-					// size_type current_size = _size;
-					// for (size_type i = 0; i < _size; i++)
-					// 	_alloc.construct(tmp + i, _tab[i]);
-					// this->~vector();
-					// this->_tab = tmp;
-					// this->_size = current_size;
-					// this->_capacity = n;
 					value_type	*prev_ptr = _tab;
 					std::size_t	prev_size = _size;
 					std::size_t	prev_capacity = _capacity;
@@ -336,7 +328,7 @@ namespace ft {
 				}
 				iterator ft_it = begin();
 
-				tmp._tab = _alloc.allocate(tmp._capacity);
+				// tmp._tab = _alloc.allocate(tmp._capacity);
 				size_type 	i = 0;
 				tmp._size += 1;
 				for (; i < tmp.size(); i++, ft_it++) {
@@ -376,7 +368,7 @@ namespace ft {
 				size_type 	i = 0;
 				size_type 	y = 0;
 				iterator index = begin();
-				tmp._tab = _alloc.allocate(tmp._capacity);
+				// tmp._tab = _alloc.allocate(tmp._capacity);
 				tmp._size += n;
 				for (; i < tmp.size(); i++, index++, y++) {
 					if (index == position) {
@@ -423,7 +415,7 @@ namespace ft {
 				size_type 			y = 0;
 				iterator index = 	begin();
 
-				tmp._tab = _alloc.allocate(tmp._capacity);
+				// tmp._tab = _alloc.allocate(tmp._capacity);
 				for(; i < tmp.size() ; i++, index++, y++) {
 					if (index == position) {
 						for(; first != last; first++, i++) {
