@@ -6,13 +6,15 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 01:04:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 16:43:48 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:16:28 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define _NC "\033[0;0m"
 #define _RED "\033[0;31m"
 #define _GREEN "\033[0;32m"
+
+static int	global = 0;
 
 template <typename T>
 int		verif(std::vector<T> std_vector, ft::vector<T> ft_vector, int erase = 0) {
@@ -24,6 +26,7 @@ int		verif(std::vector<T> std_vector, ft::vector<T> ft_vector, int erase = 0) {
 		if (*std_it != *ft_it) {
 			std::cout << _RED << "Diff vector" << _NC << std::endl;
 			ret = 1;
+			global++;
 			break ;
 		}
 	}
@@ -32,10 +35,12 @@ int		verif(std::vector<T> std_vector, ft::vector<T> ft_vector, int erase = 0) {
 		i++;
 	if (i != 0) {
 		std::cout << _RED << "Diff vector" << _NC << std::endl;
+		global++;
 		ret = 1;
 	}
 	if (ft_vector.size() != std_vector.size()) {
 		std::cout << _RED << "Diff size vector" << _NC << std::endl;
+		global++;
 		ret = 1;
 	}
 	if (ft_vector.capacity() != std_vector.capacity() && erase == 0) {

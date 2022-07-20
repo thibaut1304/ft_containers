@@ -10,6 +10,16 @@
 #include "constructor.cpp"
 #include "R_begin_and_end.cpp"
 #include "insert.cpp"
+#include "resize.cpp"
+
+#define _NC "\033[0;0m"
+#define _RED "\033[0;31m"
+#define _GREEN "\033[0;32m"
+#define _YELLOW "\033[0;33m"
+#define _BLUE "\033[0;34m"
+#define _PURPLE "\033[0;95m"
+#define _CYAN "\033[0;36m"
+#define _WHITE "\033[0;37m"
 
 void ft_push_back() {
 	std::vector<std::string>std_vector(5);
@@ -50,6 +60,26 @@ void	ft_erase() {
 	print_vector(std_vector, ft_vector, 1);
 }
 
+void	ft_swap() {
+	std::vector<int> std_vector(10, 99);
+	ft::vector<int> ft_vector(10, 99);
+	std::vector<int> std_vector_swap;
+	ft::vector<int> ft_vector_swap;
+
+	for (int i = 0; i < 10; i++) {
+		std_vector.push_back(i);
+		ft_vector.push_back(i);
+	}
+	std_vector.insert(std_vector.end() - 5, 5, 42);
+	ft_vector.insert(ft_vector.end() - 5, 5, 42);
+	std::cout << _PURPLE << " - - - - - BEFORE SWAP - - - - -" << _NC <<std::endl << std::endl;
+	print_vector(std_vector_swap, ft_vector_swap);
+	std::cout << _PURPLE << " - - - - - AFTER SWAP  - - - - -" << _NC << std::endl << std::endl;
+	std_vector_swap.swap(std_vector);
+	ft_vector_swap.swap(ft_vector);
+	print_vector(std_vector_swap, ft_vector_swap);
+}
+
 int main () {
 	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
 	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
@@ -80,7 +110,14 @@ int main () {
 	std::cout << " - - - - - - ERASE - - - - - - -" << std::endl << std::endl;
 	ft_erase();
 	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
-
+	std::cout << " - - - - - - RESIZE  - - - - - -" << std::endl << std::endl;
+	ft_resize();
+	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	std::cout << " - - - - - - SWAP  - - - - - - -" << std::endl << std::endl;
+	ft_swap();
+	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	if (global != 0)
+		std::cout << _RED << "NB error : " << global << _NC << std::endl;
 	return (0);
 }
 

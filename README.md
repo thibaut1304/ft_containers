@@ -4,8 +4,19 @@ Code source itérator_traits : https://code.woboq.org/gcc/libstdc++-v3/include/b
 
 edit: leaks regle sur insert ! double allocate de tmp !
 
-Insert n'a pas le comportement atendu avec ite + val + val ! Mon test ne passe pas mais MLi oui
+pb de capacite sur erase std::vector decrement et resize idem
 
-Mauvais calcul de capacité sur vector !
+correction assign ne pas realloc si pas besoin ok
 
-leaks avec erase !
+## Testeur Vector
+- [x] Constructeur
+- [x] Rbegin and rend
+- [x] Push_back
+- [x] Insert
+- [x] erase
+- [x] resize
+- [x] reserve -- je l'utilise partout donc oui forcement
+- [ ] assign
+- [x] pop_back
+- [x] swap
+- [x] clear
