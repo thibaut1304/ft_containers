@@ -6,13 +6,9 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 01:04:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 17:16:28 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 19:52:25 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#define _NC "\033[0;0m"
-#define _RED "\033[0;31m"
-#define _GREEN "\033[0;32m"
 
 static int	global = 0;
 
