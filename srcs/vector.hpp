@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 16:15:50 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:57:27 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,37 +252,33 @@ namespace ft {
 			// range
 			template <class _InputIterator>
 			void assign(typename ft::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
-			// void assign (_InputIterator first, _InputIterator last) {
 				size_type	diff = 0;
-					// std::cout << "TEST : ";
 				for (_InputIterator tmp = first; tmp != last; tmp++) {
-					// std::cout << " " << *first++;
 					diff++;
 				}
-				// std::cout << std::endl;
-				// for (_InputIterator tmp = first; tmp != last; tmp++) {
-				// 	std::cout << " " << *first++;
-				// 	diff++;
-				// }
-				// std::cout << "je suis diff     :" << diff << std::endl;
-				// std::cout << "je suis capacity :" << _capacity << std::endl;
-				// clear();
-				// std::cout << "Je suis _SIZE !!: " << _size << std::endl;
-				resize(diff);
-				// std::cout << "Je suis first !!: " << *first + 5 << std::endl;
+				size_type i = 0;
+				if (_capacity < diff)
+					i = 1;
+				clear();
+				if (i)
+					resize(diff);
 				for (size_type tmp = 0; tmp != diff; tmp++) {
 					_alloc.construct(_tab + tmp, *first++);
-				// std::cout << "Je suis first !!: " << *first + 1 << std::endl;
-				// first += 1;
 				}
+				_size = diff;
 			}
 			// fill
 			void assign (size_type n, const value_type& val) {
+				size_type i = 0;
+				if (_capacity < n)
+					i = 1;
 				clear();
-				resize(n);
+				if (i)
+					resize(n);
 				for (size_type it = 0; it != n; it++) {
 					_alloc.construct(_tab + it, val);
 				}
+				_size = n;
 			}
 
 			void push_back (const value_type& val) {
