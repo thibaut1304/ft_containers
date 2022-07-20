@@ -39,8 +39,9 @@ void	test_string_map() {
 	typename std::vector<std::string>::iterator std_vector_it = std_vector.begin();
 	print_the_vector(std_vector);
 	int i = 100;
-	for (; std_vector_it != std_vector.end(); i++, std_vector_it++)
+	for (; std_vector_it != std_vector.end(); i++, std_vector_it++) {
 		std_map.insert(std::pair<std::string, int>(*std_vector_it, i));
+	}
 	
 	print_the_map(std_map);
 	print_ascii(std_map);
