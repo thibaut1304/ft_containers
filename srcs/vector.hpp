@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 15:14:43 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:15:50 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,7 +437,6 @@ namespace ft {
 					_alloc.destroy(&*(tmp + 1));
 				}
 				_size--;
-				_capacity--;
 				return (position);
 			}
 
@@ -453,7 +452,6 @@ namespace ft {
 					_alloc.destroy(&*(tmp + diff));
 				}
 				_size -= diff;
-				_capacity -= diff;
 				return (first);
 			}
 

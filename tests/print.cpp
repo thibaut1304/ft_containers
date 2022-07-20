@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 01:04:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 15:08:42 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:43:48 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define _GREEN "\033[0;32m"
 
 template <typename T>
-int		verif(std::vector<T> std_vector, ft::vector<T> ft_vector) {
+int		verif(std::vector<T> std_vector, ft::vector<T> ft_vector, int erase = 0) {
 	int ret = 0;
 	typename std::vector<T>::iterator std_it = std_vector.begin();
 	typename ft::vector<T>::iterator ft_it = ft_vector.begin();
@@ -38,7 +38,7 @@ int		verif(std::vector<T> std_vector, ft::vector<T> ft_vector) {
 		std::cout << _RED << "Diff size vector" << _NC << std::endl;
 		ret = 1;
 	}
-	if (ft_vector.capacity() != std_vector.capacity()) {
+	if (ft_vector.capacity() != std_vector.capacity() && erase == 0) {
 		std::cout << _RED << "Diff capacity vector" << _NC << std::endl;
 		ret = 1;
 	}
@@ -77,10 +77,12 @@ void	print_the_vector(std::vector<T> ft_my_vector) {
 }
 
 template <typename T>
-void	print_vector(std::vector<T> std_vector, ft::vector<T> ft_vector) {
+void	print_vector(std::vector<T> std_vector, ft::vector<T> ft_vector, int i = 0) {
 	std::cout << "--------- Print std_vector -- >> ";
 	std::cout << "Size : " << std_vector.size() << "\t";
-	std::cout << "Capa : " << std_vector.capacity() << std::endl;
+	if (i == 0)
+		std::cout << "Capa : " << std_vector.capacity();
+	std::cout << std::endl;
 	typedef typename std::vector<T>::iterator std_iterator;
 	std_iterator std_it = std_vector.begin();
 	std_iterator std_itend = std_vector.end();
@@ -91,7 +93,9 @@ void	print_vector(std::vector<T> std_vector, ft::vector<T> ft_vector) {
 	std::cout << std::endl;
 	std::cout << "--------- Print ft_vector  -- >> ";
 	std::cout << "Size : " << ft_vector.size() << "\t";
-	std::cout << "Capa : " << ft_vector.capacity() << std::endl;
+	if (i == 0)
+		std::cout << "Capa : " << ft_vector.capacity();
+	std::cout << std::endl;
 	typedef typename ft::vector<T>::iterator ft_iterator;
 	ft_iterator ft_it = ft_vector.begin();
 	ft_iterator ft_itend = ft_vector.end();
@@ -100,7 +104,7 @@ void	print_vector(std::vector<T> std_vector, ft::vector<T> ft_vector) {
 		std::cout << *ft_it << " ";
 	}
 	std::cout << std::endl;
-	if (!verif(std_vector, ft_vector))
+	if (!verif(std_vector, ft_vector, i))
 		std::cout << _GREEN << "No diff vector" << _NC << std::endl;
 	std::cout << std::endl;
 }

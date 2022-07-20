@@ -32,33 +32,25 @@ void ft_push_back() {
 	for (int i = 0; i < 10; i++) {
 		ft_vector.push_back("A");
 	}
-	// print_the_vector(std_vector);
-	// print_my_vector(ft_vector);
 	print_vector(std_vector, ft_vector);
 }
 
 void	ft_erase() {
-	std::vector<int> std_vector(2, 9);
-	ft::vector<int> ft_vector(2, 9);
+	std::vector<int> std_vector(100, 9);
+	ft::vector<int> ft_vector(100, 9);
 
-	// std_vector.push_back(5);
-	// ft_vector.push_back(5);
 
-	print_vector(std_vector, ft_vector);
+
+	print_vector(std_vector, ft_vector, 1);
 	std_vector.erase(std_vector.end() - 2);
 	ft_vector.erase(ft_vector.end() - 2);
-	print_vector(std_vector, ft_vector);
+	print_vector(std_vector, ft_vector, 1);
 	std_vector.erase(std_vector.begin(), std_vector.end());
 	ft_vector.erase(ft_vector.begin(), ft_vector.end());
-	print_vector(std_vector, ft_vector);
+	print_vector(std_vector, ft_vector, 1);
 }
 
 int main () {
-	// test_capa_insert();
-	// ft_insert();
-	// ft_insert_mli();
-	ft_erase();
-	exit(0);
 	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
 	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
 	constructor();
@@ -82,8 +74,11 @@ int main () {
 	ft_push_back();
 	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
 	std::cout << " - - - - - INSERT - - - - -" << std::endl << std::endl;
-	// ft_insert();
-	// ft_insert_mli();
+	ft_insert();
+	ft_insert_mli();
+	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	std::cout << " - - - - - - ERASE - - - - - - -" << std::endl << std::endl;
+	ft_erase();
 	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
 
 	return (0);
