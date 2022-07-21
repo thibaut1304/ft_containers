@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:33:12 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/15 21:46:28 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:39:10 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,21 @@ namespace ft {
 		// par défaut (1)
 		pair();
 		// copie (2)
-		template<class U, class V> pair (const pair<U,V>& pr);
+		template<class U, class V>
+		pair (const pair<U,V>& pr);
 		// initialisation (3)
-		pair (const first_type& a, const second_type& b);
+		pair (const first_type& a, const second_type& b) : first(a), second(b) {
+		}
 
 		// déclaré implicitement :
 		// copie (1)
-		pair& operator= (const pair& pr);
+		pair& operator= (const pair& pr) {
+			if (this != &pr) {
+				this->first = pr.first;
+				this->second = pr.second;
+			}
+			return (*this);
+		}
 	};
 
 	// (1)

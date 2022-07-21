@@ -21,7 +21,10 @@
 #include "insert.cpp"
 #include "resize.cpp"
 
+
 #include <map>
+// #include "map.hpp"
+# include "pair.hpp"
 #include "test_map.cpp"
 
 
