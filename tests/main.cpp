@@ -23,8 +23,7 @@
 
 
 #include <map>
-// #include "map.hpp"
-# include "pair.hpp"
+#include "map.hpp"
 #include "test_map.cpp"
 
 

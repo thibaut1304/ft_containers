@@ -84,8 +84,6 @@ void	test_pair() {
 		std::cout << "P3 == p2" << std::endl;
 	if (p3 != p2)
 		std::cout << "P3 != p2" << std::endl;
-	if (p3 != p2)
-		std::cout << "P3 != p2" << std::endl;
 }
 
 void	test_map() {
