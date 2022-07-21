@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/07/20 14:45:40 by thhusser         ###   ########.fr        #
+#    Updated: 2022/07/21 15:17:14 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ RM		= rm -f
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g3
+# -std=c++98
+
+FLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
 
 
 .cpp.o:
