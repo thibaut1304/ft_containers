@@ -20,3 +20,6 @@ correction assign ne pas realloc si pas besoin ok
 - [x] pop_back
 - [x] swap
 - [x] clear
+
+
+### Note Map

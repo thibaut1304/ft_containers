@@ -25,6 +25,7 @@
 #include <map>
 #include "map.hpp"
 #include "test_map.cpp"
+#include "debug_map.cpp"
 
 
 
@@ -89,6 +90,7 @@ void	ft_swap() {
 
 int main () {
 	test_map();
+	constructor_map();
 	exit(0);
 	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
 	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
