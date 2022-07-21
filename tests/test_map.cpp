@@ -25,27 +25,27 @@ void	print_the_map(std::map<T, TT>std_map) {
 	std::cout << "SIZE : " << std_map.size() << std::endl;
 }
 
-void	test_string_map() {
-	std::map<std::string, int> std_map;
-	std::vector<std::string> std_vector = { "zzz",
-											"je", 
-											"suis", 
-											"un",
-											"test",
-											"aaa",
-											"aza",
-											"az"};
+// void	test_string_map() {
+// 	std::map<std::string, int> std_map;
+// 	std::vector<std::string> std_vector = { "zzz",
+// 											"je", 
+// 											"suis", 
+// 											"un",
+// 											"test",
+// 											"aaa",
+// 											"aza",
+// 											"az"};
 
-	typename std::vector<std::string>::iterator std_vector_it = std_vector.begin();
-	print_the_vector(std_vector);
-	int i = 100;
-	for (; std_vector_it != std_vector.end(); i++, std_vector_it++) {
-		std_map.insert(std::pair<std::string, int>(*std_vector_it, i));
-	}
+// 	typename std::vector<std::string>::iterator std_vector_it = std_vector.begin();
+// 	print_the_vector(std_vector);
+// 	int i = 100;
+// 	for (; std_vector_it != std_vector.end(); i++, std_vector_it++) {
+// 		std_map.insert(std::pair<std::string, int>(*std_vector_it, i));
+// 	}
 	
-	print_the_map(std_map);
-	// print_ascii(std_map);
-}
+// 	print_the_map(std_map);
+// 	// print_ascii(std_map);
+// }
 
 void	test_int_map() {
 	std::map<int, int> std_map;
@@ -55,7 +55,7 @@ void	test_int_map() {
 		std_vector.push_back(i);
 	}
 	
-	typename std::vector<int>::iterator std_vector_it = std_vector.begin();
+	std::vector<int>::iterator std_vector_it = std_vector.begin();
 	
 	for (int i = 1; i < 27; i++, std_vector_it++)
 		std_map.insert(std::pair<int, int>(i, *std_vector_it));
@@ -65,12 +65,14 @@ void	test_int_map() {
 	print_the_map(std_map);
 }
 
-void	test_pair() {
-	std::pair <std::string, int> p1;
-	std::pair <std::string, int> p2("shoes", 100);
-	std::pair <std::string, int> p3(p2);
+#define TEST std
 
-	p1 = std::make_pair(std::string("t-shirt"), 10);
+void	test_pair() {
+	TEST::pair <std::string, int> p1;
+	TEST::pair <std::string, int> p2("shoes", 100);
+	TEST::pair <std::string, int> p3(p2);
+
+	p1 = TEST::make_pair(std::string("t-shirt"), 10);
 
 	p2.first = "pant";
 	p2.second = 30;
@@ -78,15 +80,12 @@ void	test_pair() {
 	std::cout << "Product 1 : " << p1.first << "\t" << "Cost : " << p1.second << std::endl;
 	std::cout << "Product 2 : " << p2.first << "\t" << "Cost : " << p2.second << std::endl;
 	std::cout << "Product 3 : " << p3.first << "\t" << "Cost : " << p3.second << std::endl;
-}
-
-void	test_my_pair() {
-	std::cout << std::endl << "My pair :" << std::endl;
-	ft::pair <std::string, int> p1("Laptop", 42);
-	ft::pair <std::string, int> p2(p1);
-
-	std::cout << "Product 1 : " << p1.first << "\t" << "Cost : " << p1.second << std::endl;
-	std::cout << "Product 2 : " << p2.first << "\t" << "Cost : " << p2.second << std::endl;
+	if (p3 == p2)
+		std::cout << "P3 == p2" << std::endl;
+	if (p3 != p2)
+		std::cout << "P3 != p2" << std::endl;
+	if (p3 != p2)
+		std::cout << "P3 != p2" << std::endl;
 }
 
 void	test_map() {
@@ -98,7 +97,7 @@ void	test_map() {
 		std_vector.push_back(i);
 	}
 	
-	typename std::vector<int>::iterator std_vector_it = std_vector.begin();
+	std::vector<int>::iterator std_vector_it = std_vector.begin();
 	
 	for (; letter <= 'z'; letter++, std_vector_it++)
 		std_map.insert(std::pair<char, int>(letter, *std_vector_it));
@@ -109,5 +108,4 @@ void	test_map() {
 	// test_int_map();
 	// test_string_map();
 	test_pair();
-	test_my_pair();
 }
