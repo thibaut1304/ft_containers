@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/23 16:42:51 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:39:45 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # include "reverse_iterator.hpp"
 # include "pair.hpp"
-# include "bidirectional_iterator.hpp" 
+# include "bidirectional_iterator.hpp"
 
 // # include <cstddef> // ptrdiff -->  dans iterator_traits
 
@@ -31,10 +31,10 @@
 namespace ft {
 	template < class Key,                                  // map::key_type
 			class T,                                       // map::mapped_type
-			class Compare = std::less<Key>,                     // map::key_compare      --> check si a recoder LESS --> NOP
+			class Compare = std::less<Key>,                // map::key_compare      --> check si a recoder LESS --> NOP
 			class Alloc = std::allocator<ft::pair<const Key,T> > >  // map::allocator_type   --> recoder PAIR --> ok
 			class map {
-				
+
 				public:
 
 					typedef	Key 														key_type;
@@ -57,13 +57,19 @@ namespace ft {
 
 				private:
 
+					// Beosin de alloc key et T
+					// Alloc 			_alloc;
+					// key_type			_key;
+					// mapped_type		_type;
+
+
 					// key_type 	_my_key;
 					// mapped_type 	_my_mapped;  -->NOP
 					// value_type	_val;
 					// Alloc		_alloc
-					
+
 				public:
-				
+
 					// empty (1)
 					explicit map	(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
 
@@ -74,7 +80,7 @@ namespace ft {
 					// copy (3)
 					map	(const map& x); //{
 					// 	if (this != &map) {
-							
+
 					// 	}
 					// }
 
