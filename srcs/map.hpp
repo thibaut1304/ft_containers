@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/10 15:11:21 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/19 22:17:55 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ namespace ft {
 			class Compare = std::less<Key>,                // map::key_compare      --> check si a recoder LESS --> NOP
 			class Alloc = std::allocator<ft::pair<const Key,T> > >  // map::allocator_type   --> recoder PAIR --> ok
 			class map {
-				private:
-					typedef typename allocator_type::template rebind<nodeType>::other 	alloc_node;
+				// private:
+					// typedef typename allocator_type::template rebind<nodeType>::other 	alloc_node;
 				public:
 
 					typedef	Key 														key_type;

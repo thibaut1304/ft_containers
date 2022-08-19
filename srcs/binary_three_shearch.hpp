@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/19 22:07:31 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/19 22:55:06 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,62 +24,66 @@
 
 namespace ft {
 	
-	template<typename T>
+	// template<typename T>
+	template<class KEY, class T>
 	struct 	s_node {
-		T 			_data;
-		s_node<T>	*left;
-		s_node<T>	*right;
+		// T 			_data;
+
+		pair<KEY, T>	_data;
+		s_node<KEY, T>	*left;
+		s_node<KEY, T>	*right;
 	};
 	
-	// template<class KEY, class T>
-	template<class T>
+	// template<class T>
+	template<class KEY, class T>
 	class node {
 		public:
 			typedef T 											value_type;
 		private:
-			s_node<T>	*_root;
+			s_node<KEY, T>	*_root;
 			int			_compteur;
 			
-			s_node<T>	*createNode(const T& value) {
-				s_node<T>	*tmp = new s_node <T>;
-				tmp->_data = value;
+			s_node<KEY, T>	*createNode(const T& value, const KEY& key) {
+				s_node<KEY, T>	*tmp = new s_node<KEY, T>;
+				tmp->_data.first = key;
+				tmp->_data.second = value;
 				tmp->left = NULL;
 				tmp->right = NULL;
 				return (tmp);
 			}
 			
-			void		destroy(s_node<T> *ptr) {
+			void		destroy(s_node<KEY, T> *ptr) {
 				if (!ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				delete ptr;
 			}
 			
-			void		insert(const T& value, s_node<T>*& ptr) {
+			void		insert(const KEY& key, const T& value, s_node<KEY, T>*& ptr) {
 				if (!ptr) {
-					ptr = createNode(value);
+					ptr = createNode(value, key);
 					return ;
 				}
-				else if (value < ptr->_data) {
-					insert(value, ptr->left);
+				else if (key < ptr->_data.first) {
+					insert(key, value, ptr->left);
 				}
 				else {
-					insert(value, ptr->right);
+					insert(key, value, ptr->right);
 				}
 			}
 			
-			void		infixe(s_node<T> *ptr) const {
+			void		infixe(s_node<KEY, T> *ptr) const {
 				if (!ptr) {return;}
 				
 				infixe(ptr->left);
-				std::cout << ptr->_data << "\t";	
+				std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n";	
 				infixe(ptr->right);	
 			}
 			
-			s_node<T> 	*successeur(s_node<T> *ptr, s_node<T> *&parent) const {
+			s_node<KEY, T> 	*successeur(s_node<KEY, T> *ptr, s_node<KEY, T> *&parent) const {
 				if (!ptr) {return (NULL);}
 				
-				s_node<T> *curent = ptr;
+				s_node<KEY, T> *curent = ptr;
 				while (curent->left != 0) {
 					parent = curent;
 					curent = curent->left;
@@ -87,10 +91,10 @@ namespace ft {
 				return (curent);
 			}
 			
-			s_node<T>	*predecesseur (s_node<T> *ptr, s_node<T>*& parent) const {
+			s_node<KEY, T>	*predecesseur (s_node<KEY, T> *ptr, s_node<KEY, T>*& parent) const {
 				if (!ptr) {return (NULL);}
 
-				s_node<T> *curent = ptr;
+				s_node<KEY, T> *curent = ptr;
 				while (curent->right != 0) {
 					parent = curent;
 					curent = curent->droit;
@@ -98,9 +102,9 @@ namespace ft {
 				return (curent);
 			}
 			
-			void		toDelete(s_node<T> *ptr, s_node<T> *parent) {
+			void		toDelete(s_node<KEY, T> *ptr, s_node<KEY, T> *parent) {
 				if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
-					std::cout << ptr->_data << parent->_data << std::endl;
+					std::cout << "Value key : " << ptr->_data.first << " - Value key parent : " << parent->_data.first << std::endl;
 					if (ptr != _root) {
 						if (parent->left == ptr) {
 							parent->left = NULL;
@@ -115,14 +119,14 @@ namespace ft {
 					delete ptr;
 				}
 				else if (ptr->left && ptr->right) { // Dans le cas ou lest eet right est pas null
-					s_node<T>	*pere = ptr;
-					s_node<T>	*succ = successeur(ptr->right, pere);
-					int val  = succ->_data;									// A check avec le type !
+					s_node<KEY, T>	*pere = ptr;
+					s_node<KEY, T>	*succ = successeur(ptr->right, pere);
+					pair<KEY, T> val  = succ->_data;									// A check avec le type !
 					toDelete(succ, pere);
 					ptr->_data = val;
 				}
 				else {
-					s_node<T>	*child = (ptr->left) ? ptr->left : ptr->right;
+					s_node<KEY, T>	*child = (ptr->left) ? ptr->left : ptr->right;
 					
 					if (ptr != _root) {
 						if (ptr == parent->left) {
@@ -139,45 +143,45 @@ namespace ft {
 				}
 			}
 			
-			s_node<T>	*find(const T& value, s_node<T> *ptr, s_node<T> *&parent) const {
+			s_node<KEY, T>	*find(const KEY& key, s_node<KEY, T> *ptr, s_node<KEY, T> *&parent) const {
 				if (!ptr) {
 					return (NULL);
 				}
-				else if ((ptr->_data)  == value) {
+				else if ((ptr->_data.first)  == key) {
 					return (ptr);
 				}
-				else if (value < (ptr->_data)) {
+				else if (key < (ptr->_data.first)) {
 					parent = ptr;
-					return (find(value, ptr->left, parent));
+					return (find(key, ptr->left, parent));
 				}
 				else {
 					parent = ptr;
-					return (find(value, ptr->right, parent));
+					return (find(key, ptr->right, parent));
 				}
 			}
 		public:
 			node() : _root(0), _compteur(0) {}
 			~node() { destroy(_root); }
-			void		insert(const T& value) {
-				insert(value, _root);
+			void		insert(const KEY& key, const T& value) {
+				insert(key, value, _root);
 				_compteur++;
 			}
-			// void		detroy();
 			
-			void		toDelete(const T& value) {
-				s_node<T>	*parent = 0;
-				s_node<T>	*del = find(value, _root, parent);
+			void		toDelete(const KEY& key) {
+				s_node<KEY, T>	*parent = 0;
+				s_node<KEY, T>	*del = find(key, _root, parent);
 				if (!del) {
 					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
 				}
 				else {
 					toDelete(del, parent);
+					_compteur--;
 				}
 			}
 			
-			s_node<T>	*find(const T& value) const {
-				s_node<T>	*parent = 0;
-				return (find(value, _root));
+			s_node<KEY, T>	*find(const KEY& key, const T& value) const {
+				s_node<KEY, T>	*parent = 0;
+				return (find(key, value, _root));
 			}
 			
 			void		infixe() const {
