@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/19 22:55:06 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:52:53 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,46 @@
 # include <iostream>
 # include <memory>
 
+#include <stdio.h>
+
 # include "pair.hpp"
 
 // creer ici pair clé / valeur ?
 // ou juste les recup independament ?
 
+
+// alouer avec _alloc en premier pair et apres s_node
+
 namespace ft {
 	
-	// template<typename T>
 	template<class KEY, class T>
 	struct 	s_node {
-		// T 			_data;
-
-		pair<KEY, T>	_data;
+		pair<KEY, T>	*_data;
 		s_node<KEY, T>	*left;
 		s_node<KEY, T>	*right;
 	};
 	
-	// template<class T>
-	template<class KEY, class T>
+	template<class KEY, class T, class Alloc = std::allocator<ft::pair<KEY, T> > >
 	class node {
 		public:
-			typedef T 											value_type;
+			typedef Alloc																allocator_type;
+			typedef typename allocator_type::template rebind<s_node<KEY, T> >::other 	alloc_node;
+			typedef T 																	value_type;
 		private:
-			s_node<KEY, T>	*_root;
-			int			_compteur;
+			allocator_type		_alloc;
+			alloc_node			_alloc_node;
+			s_node<KEY, T>		*_root;
+			int					_compteur;
 			
 			s_node<KEY, T>	*createNode(const T& value, const KEY& key) {
-				s_node<KEY, T>	*tmp = new s_node<KEY, T>;
-				tmp->_data.first = key;
-				tmp->_data.second = value;
+				pair<KEY, T>		*_pair = _alloc.allocate(1);
+				s_node<KEY, T>	*tmp = _alloc_node.allocate(1);
+				// ft::pair<KEY, T>temp(key,value);
+				// tmp->_data = temp;
+				// std::cout << sizeof(tmp->_data.second) << std::endl << "\n";
+				tmp->_data = _pair;
+				tmp->_data->first = key;
+				tmp->_data->second = value;
 				tmp->left = NULL;
 				tmp->right = NULL;
 				return (tmp);
@@ -56,7 +66,10 @@ namespace ft {
 				if (!ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
-				delete ptr;
+				_alloc.destroy(ptr->_data);
+				_alloc.deallocate(ptr->_data, 1);
+				_alloc_node.destroy(ptr);
+				_alloc_node.deallocate(ptr, 1);
 			}
 			
 			void		insert(const KEY& key, const T& value, s_node<KEY, T>*& ptr) {
@@ -64,7 +77,11 @@ namespace ft {
 					ptr = createNode(value, key);
 					return ;
 				}
-				else if (key < ptr->_data.first) {
+				else if (key == ptr->_data->first) {
+					_compteur--;
+					return;
+				}
+				else if (key < ptr->_data->first) {
 					insert(key, value, ptr->left);
 				}
 				else {
@@ -76,7 +93,7 @@ namespace ft {
 				if (!ptr) {return;}
 				
 				infixe(ptr->left);
-				std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n";	
+				std::cout << "KEY : " << ptr->_data->first << " - T : " << ptr->_data->second << "\n";	
 				infixe(ptr->right);	
 			}
 			
@@ -104,7 +121,7 @@ namespace ft {
 			
 			void		toDelete(s_node<KEY, T> *ptr, s_node<KEY, T> *parent) {
 				if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
-					std::cout << "Value key : " << ptr->_data.first << " - Value key parent : " << parent->_data.first << std::endl;
+					std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
 					if (ptr != _root) {
 						if (parent->left == ptr) {
 							parent->left = NULL;
@@ -116,9 +133,12 @@ namespace ft {
 					else {
 						_root = NULL;
 					}
-					delete ptr;
+					_alloc.destroy(ptr->_data);
+					_alloc.deallocate(ptr->_data, 1);
+					_alloc_node.destroy(ptr);
+					_alloc_node.deallocate(ptr, 1);
 				}
-				else if (ptr->left && ptr->right) { // Dans le cas ou lest eet right est pas null
+				else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
 					s_node<KEY, T>	*pere = ptr;
 					s_node<KEY, T>	*succ = successeur(ptr->right, pere);
 					pair<KEY, T> val  = succ->_data;									// A check avec le type !
@@ -139,7 +159,10 @@ namespace ft {
 					else {
 						_root = child;
 					}
-					delete ptr;
+					_alloc.destroy(ptr->_data);
+					_alloc.deallocate(ptr->_data, 1);
+					_alloc_node.destroy(ptr);
+					_alloc_node.deallocate(ptr, 1);
 				}
 			}
 			
@@ -159,13 +182,10 @@ namespace ft {
 					return (find(key, ptr->right, parent));
 				}
 			}
+			
 		public:
 			node() : _root(0), _compteur(0) {}
 			~node() { destroy(_root); }
-			void		insert(const KEY& key, const T& value) {
-				insert(key, value, _root);
-				_compteur++;
-			}
 			
 			void		toDelete(const KEY& key) {
 				s_node<KEY, T>	*parent = 0;
@@ -180,8 +200,13 @@ namespace ft {
 			}
 			
 			s_node<KEY, T>	*find(const KEY& key, const T& value) const {
-				s_node<KEY, T>	*parent = 0;
-				return (find(key, value, _root));
+				s_node<KEY, T>	*parent = find(key, value);
+				return (parent);
+			}
+
+			void		insert(const KEY& key, const T& value) {
+				_compteur++;
+				insert(key, value, _root);
 			}
 			
 			void		infixe() const {
