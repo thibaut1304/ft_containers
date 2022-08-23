@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/22 17:52:53 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:50:45 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,42 @@
 
 namespace ft {
 	
-	template<class KEY, class T>
+	template<class M>
 	struct 	s_node {
-		pair<KEY, T>	*_data;
-		s_node<KEY, T>	*left;
-		s_node<KEY, T>	*right;
+		M			*_data;
+		s_node<M>	*left;
+		s_node<M>	*right;
 	};
 	
-	template<class KEY, class T, class Alloc = std::allocator<ft::pair<KEY, T> > >
+	template<class KEY, class T, class Alloc = std::allocator<ft::pair<const KEY, T> > >
 	class node {
 		public:
-			typedef Alloc																allocator_type;
-			typedef typename allocator_type::template rebind<s_node<KEY, T> >::other 	alloc_node;
-			typedef T 																	value_type;
+			typedef Alloc																				allocator_type;
+			typedef ft::pair<const KEY, T>																M;
+			typedef typename allocator_type::template rebind<s_node<ft::pair<const KEY, T> > >::other 	alloc_node;
+			typedef T 																					value_type;
 		private:
 			allocator_type		_alloc;
 			alloc_node			_alloc_node;
-			s_node<KEY, T>		*_root;
+			s_node<M>			*_root;
 			int					_compteur;
 			
-			s_node<KEY, T>	*createNode(const T& value, const KEY& key) {
-				pair<KEY, T>		*_pair = _alloc.allocate(1);
-				s_node<KEY, T>	*tmp = _alloc_node.allocate(1);
+			s_node<M>	*createNode(const T& value, const KEY& key) {
+				ft::pair<const KEY, T>	*_pair = _alloc.allocate(1);
+				_alloc.construct(_pair, ft::make_pair(key, value));
+				s_node<M>			*tmp = _alloc_node.allocate(1);
 				// ft::pair<KEY, T>temp(key,value);
 				// tmp->_data = temp;
 				// std::cout << sizeof(tmp->_data.second) << std::endl << "\n";
 				tmp->_data = _pair;
-				tmp->_data->first = key;
-				tmp->_data->second = value;
+				// tmp->_data->first = key;
+				// tmp->_data->second = value;
 				tmp->left = NULL;
 				tmp->right = NULL;
 				return (tmp);
 			}
 			
-			void		destroy(s_node<KEY, T> *ptr) {
+			void		destroy(s_node<M> *ptr) {
 				if (!ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
@@ -72,7 +74,7 @@ namespace ft {
 				_alloc_node.deallocate(ptr, 1);
 			}
 			
-			void		insert(const KEY& key, const T& value, s_node<KEY, T>*& ptr) {
+			void		insert(const KEY& key, const T& value, s_node<M>*& ptr) {
 				if (!ptr) {
 					ptr = createNode(value, key);
 					return ;
@@ -89,7 +91,7 @@ namespace ft {
 				}
 			}
 			
-			void		infixe(s_node<KEY, T> *ptr) const {
+			void		infixe(s_node<M> *ptr) const {
 				if (!ptr) {return;}
 				
 				infixe(ptr->left);
@@ -97,10 +99,10 @@ namespace ft {
 				infixe(ptr->right);	
 			}
 			
-			s_node<KEY, T> 	*successeur(s_node<KEY, T> *ptr, s_node<KEY, T> *&parent) const {
+			s_node<M> 	*successeur(s_node<M> *ptr, s_node<M> *&parent) const {
 				if (!ptr) {return (NULL);}
 				
-				s_node<KEY, T> *curent = ptr;
+				s_node<M> *curent = ptr;
 				while (curent->left != 0) {
 					parent = curent;
 					curent = curent->left;
@@ -108,10 +110,10 @@ namespace ft {
 				return (curent);
 			}
 			
-			s_node<KEY, T>	*predecesseur (s_node<KEY, T> *ptr, s_node<KEY, T>*& parent) const {
+			s_node<M>	*predecesseur (s_node<M> *ptr, s_node<M>*& parent) const {
 				if (!ptr) {return (NULL);}
 
-				s_node<KEY, T> *curent = ptr;
+				s_node<M> *curent = ptr;
 				while (curent->right != 0) {
 					parent = curent;
 					curent = curent->droit;
@@ -119,7 +121,7 @@ namespace ft {
 				return (curent);
 			}
 			
-			void		toDelete(s_node<KEY, T> *ptr, s_node<KEY, T> *parent) {
+			void		toDelete(s_node<M> *ptr, s_node<M> *parent) {
 				if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
 					std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
 					if (ptr != _root) {
@@ -139,14 +141,14 @@ namespace ft {
 					_alloc_node.deallocate(ptr, 1);
 				}
 				else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
-					s_node<KEY, T>	*pere = ptr;
-					s_node<KEY, T>	*succ = successeur(ptr->right, pere);
-					pair<KEY, T> val  = succ->_data;									// A check avec le type !
+					s_node<M>	*pere = ptr;
+					s_node<M>	*succ = successeur(ptr->right, pere);
+					// pair<const KEY, T> val  = *succ->_data;
 					toDelete(succ, pere);
-					ptr->_data = val;
+					ptr = succ;
 				}
 				else {
-					s_node<KEY, T>	*child = (ptr->left) ? ptr->left : ptr->right;
+					s_node<M>	*child = (ptr->left) ? ptr->left : ptr->right;
 					
 					if (ptr != _root) {
 						if (ptr == parent->left) {
@@ -166,14 +168,14 @@ namespace ft {
 				}
 			}
 			
-			s_node<KEY, T>	*find(const KEY& key, s_node<KEY, T> *ptr, s_node<KEY, T> *&parent) const {
+			s_node<M>	*find(const KEY& key, s_node<M> *ptr, s_node<M> *&parent) const {
 				if (!ptr) {
 					return (NULL);
 				}
-				else if ((ptr->_data.first)  == key) {
+				else if ((ptr->_data->first)  == key) {
 					return (ptr);
 				}
-				else if (key < (ptr->_data.first)) {
+				else if (key < (ptr->_data->first)) {
 					parent = ptr;
 					return (find(key, ptr->left, parent));
 				}
@@ -188,8 +190,8 @@ namespace ft {
 			~node() { destroy(_root); }
 			
 			void		toDelete(const KEY& key) {
-				s_node<KEY, T>	*parent = 0;
-				s_node<KEY, T>	*del = find(key, _root, parent);
+				s_node<M>	*parent = 0;
+				s_node<M>	*del = find(key, _root, parent);
 				if (!del) {
 					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
 				}
@@ -199,8 +201,8 @@ namespace ft {
 				}
 			}
 			
-			s_node<KEY, T>	*find(const KEY& key, const T& value) const {
-				s_node<KEY, T>	*parent = find(key, value);
+			s_node<M>	*find(const KEY& key, const T& value) const {
+				s_node<M>	*parent = find(key, value);
 				return (parent);
 			}
 
