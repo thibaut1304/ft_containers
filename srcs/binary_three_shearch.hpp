@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/23 16:50:45 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:32:25 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft {
 	};
 	
 	template<class KEY, class T, class Alloc = std::allocator<ft::pair<const KEY, T> > >
-	class node {
+	class tree {
 		public:
 			typedef Alloc																				allocator_type;
 			typedef ft::pair<const KEY, T>																M;
@@ -141,11 +141,17 @@ namespace ft {
 					_alloc_node.deallocate(ptr, 1);
 				}
 				else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
+				std::cout << "TEST : ";
 					s_node<M>	*pere = ptr;
 					s_node<M>	*succ = successeur(ptr->right, pere);
-					// pair<const KEY, T> val  = *succ->_data;
+					std::cout << succ->_data->first << std::endl;
+					// s_node<M>	tmp = *succ;
+					// std::cout << "MEMORY : " << tmp.right << " | " << succ->right << std::endl;
+					pair<const KEY, T> val  = *succ->_data;
+					std::cout << "SUCC : " << val.first << " | " << succ->_data->first << std::endl;
+					std::cout << "SUCC : " << val.second << " | " << succ->_data->second << std::endl;
 					toDelete(succ, pere);
-					ptr = succ;
+					ptr->_data = &val;
 				}
 				else {
 					s_node<M>	*child = (ptr->left) ? ptr->left : ptr->right;
@@ -186,8 +192,8 @@ namespace ft {
 			}
 			
 		public:
-			node() : _root(0), _compteur(0) {}
-			~node() { destroy(_root); }
+			tree() : _root(0), _compteur(0) {}
+			~tree() { destroy(_root); }
 			
 			void		toDelete(const KEY& key) {
 				s_node<M>	*parent = 0;
@@ -196,6 +202,9 @@ namespace ft {
 					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
 				}
 				else {
+					// std::cout << "HERE : " << del->_data->first << std::endl;
+					// std::cout << "HERE : " << del->left << std::endl;
+					// std::cout << "HERE : " << del->right << std::endl;
 					toDelete(del, parent);
 					_compteur--;
 				}
@@ -205,7 +214,7 @@ namespace ft {
 				s_node<M>	*parent = find(key, value);
 				return (parent);
 			}
-
+			
 			void		insert(const KEY& key, const T& value) {
 				_compteur++;
 				insert(key, value, _root);
@@ -213,6 +222,11 @@ namespace ft {
 			
 			void		infixe() const {
 				infixe(_root);
+			}
+
+			void	print_node_find(const KEY& key) {
+				s_node<M>	*node = find(key, _root, _root);
+				std::cout << "Clé : " << node->_data->first << " Valeur : " << node->_data->second << std::endl;	
 			}
 
 			int			size() const {return (_compteur);}
