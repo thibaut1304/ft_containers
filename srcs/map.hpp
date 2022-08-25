@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/19 22:17:55 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:06:48 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ namespace ft {
 					typedef	T															mapped_type;
 					typedef	ft::pair<const key_type,mapped_type>						value_type;     //coder PAIR !
 					typedef	Compare														key_compare;
+					typedef ft::tree<Key, T>											tree
 					// typedef --> regarder value_compare nouv class ?
 					class value_compare;
 					typedef Alloc														allocator_type;
@@ -57,9 +58,8 @@ namespace ft {
 					typedef typename std::size_t										size_type;
 
 				private:
-
-					// Beosin de alloc key et T
-					// Alloc 			_alloc;
+					tree					_node;
+					allocator_type 			_alloc;
 					// key_type			_key;
 					// mapped_type		_type;
 
