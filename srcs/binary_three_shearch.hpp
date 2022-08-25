@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/25 02:55:28 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/25 22:49:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,7 @@ namespace ft {
 				ft::pair<const KEY, T>	*_pair = _alloc.allocate(1);
 				_alloc.construct(_pair, ft::make_pair(key, value));
 				s_node<M>			*tmp = _alloc_node.allocate(1);
-				// ft::pair<KEY, T>temp(key,value);
-				// tmp->_data = temp;
-				// std::cout << sizeof(tmp->_data.second) << std::endl << "\n";
 				tmp->_data = _pair;
-				// tmp->_data->first = key;
-				// tmp->_data->second = value;
 				tmp->left = NULL;
 				tmp->right = NULL;
 				return (tmp);
@@ -146,41 +141,15 @@ namespace ft {
 					_alloc_node.deallocate(ptr, 1);
 				}
 				else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
-					// s_node<M>	*pere = ptr;
-					// s_node<M>	*succ = successeur(ptr->right, pere);
-					// std::cout << "ping : " << succ << std::endl;
-					// std::cout << succ->_data->first << std::endl;
-					// // s_node<M>	tmp = *succ;
-					// // std::cout << "MEMORY : " << tmp.right << " | " << succ->right << std::endl;
-					// KEY val1 = *succ->_data->first;
-					// T val2 = *succ->_data->second;
-					// // ft::pair<const KEY, T>	val = ft::make_pair(*(succ->_data->first), *(succ->_data->seconde));
-					// // std::cout << "SUCC : " << val.firxst << " | " << succ->_data->first << std::endl;
-					// // std::cout << "SUCC : " << val.second << " | " << succ->_data->second << std::endl;
-					// toDelete(succ, pere);
-					// *ptr->_data->first = val1;
-					// *ptr->_data->second = val2;
+					// s_node<M>	*pere 2;
 					s_node<M>	*pere = ptr;
 					s_node<M>	*succ = successeur(ptr->right, pere);
-					// s_node<M>	*elpadre = find_el_padre(succ);
-					// std::cout << succ->_data->first << std::endl;
 					pair<const KEY, T> *val  = succ->_data;
-					// std::cout << "caca : " << val << std::endl;
-					// std::cout << "yo : " << val->first << std::endl;
-					// toDelete(succ, pere);
 					_alloc.destroy(ptr->_data);
 					_alloc.deallocate(ptr->_data, 1);
-
+					ptr->_data = _alloc.allocate(1);
 					_alloc.construct(ptr->_data, ft::make_pair(val->first, val->second));
-					// _alloc.destroy(succ->_data);
-					// _alloc.deallocate(succ->_data, 1);
-					// ptr->_data = val;
-					// succ->_data = NULL;
-					// _alloc_node.destroy(succ);
-					// _alloc_node.deallocate(succ, 1);
 					toDelete(succ, pere);
-					// ptr->right->left = NULL;
-					// std::cout << "caca : " << ptr->_data << std::endl;
 				}
 				else {
 					s_node<M>	*child = (ptr->left) ? ptr->left : ptr->right;
