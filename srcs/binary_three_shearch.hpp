@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/24 15:32:25 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/25 02:55:28 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@
 // alouer avec _alloc en premier pair et apres s_node
 
 namespace ft {
-	
+
 	template<class M>
 	struct 	s_node {
 		M			*_data;
 		s_node<M>	*left;
 		s_node<M>	*right;
 	};
-	
+
 	template<class KEY, class T, class Alloc = std::allocator<ft::pair<const KEY, T> > >
 	class tree {
 		public:
@@ -48,7 +48,7 @@ namespace ft {
 			alloc_node			_alloc_node;
 			s_node<M>			*_root;
 			int					_compteur;
-			
+
 			s_node<M>	*createNode(const T& value, const KEY& key) {
 				ft::pair<const KEY, T>	*_pair = _alloc.allocate(1);
 				_alloc.construct(_pair, ft::make_pair(key, value));
@@ -63,7 +63,7 @@ namespace ft {
 				tmp->right = NULL;
 				return (tmp);
 			}
-			
+
 			void		destroy(s_node<M> *ptr) {
 				if (!ptr) {return;}
 				destroy(ptr->left);
@@ -73,7 +73,7 @@ namespace ft {
 				_alloc_node.destroy(ptr);
 				_alloc_node.deallocate(ptr, 1);
 			}
-			
+
 			void		insert(const KEY& key, const T& value, s_node<M>*& ptr) {
 				if (!ptr) {
 					ptr = createNode(value, key);
@@ -90,18 +90,18 @@ namespace ft {
 					insert(key, value, ptr->right);
 				}
 			}
-			
+
 			void		infixe(s_node<M> *ptr) const {
 				if (!ptr) {return;}
-				
+
 				infixe(ptr->left);
-				std::cout << "KEY : " << ptr->_data->first << " - T : " << ptr->_data->second << "\n";	
-				infixe(ptr->right);	
+				std::cout << "KEY : " << ptr->_data->first << " - T : " << ptr->_data->second << "\n";
+				infixe(ptr->right);
 			}
-			
+
 			s_node<M> 	*successeur(s_node<M> *ptr, s_node<M> *&parent) const {
 				if (!ptr) {return (NULL);}
-				
+
 				s_node<M> *curent = ptr;
 				while (curent->left != 0) {
 					parent = curent;
@@ -109,7 +109,7 @@ namespace ft {
 				}
 				return (curent);
 			}
-			
+
 			s_node<M>	*predecesseur (s_node<M> *ptr, s_node<M>*& parent) const {
 				if (!ptr) {return (NULL);}
 
@@ -120,8 +120,13 @@ namespace ft {
 				}
 				return (curent);
 			}
-			
+
+			// s_node<M>	*find_el_padre(s_node<M> *ptr) {
+
+			// }
+
 			void		toDelete(s_node<M> *ptr, s_node<M> *parent) {
+					// std::cout << "hello : " << ptr << std::endl;
 				if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
 					std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
 					if (ptr != _root) {
@@ -141,21 +146,45 @@ namespace ft {
 					_alloc_node.deallocate(ptr, 1);
 				}
 				else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
-				std::cout << "TEST : ";
+					// s_node<M>	*pere = ptr;
+					// s_node<M>	*succ = successeur(ptr->right, pere);
+					// std::cout << "ping : " << succ << std::endl;
+					// std::cout << succ->_data->first << std::endl;
+					// // s_node<M>	tmp = *succ;
+					// // std::cout << "MEMORY : " << tmp.right << " | " << succ->right << std::endl;
+					// KEY val1 = *succ->_data->first;
+					// T val2 = *succ->_data->second;
+					// // ft::pair<const KEY, T>	val = ft::make_pair(*(succ->_data->first), *(succ->_data->seconde));
+					// // std::cout << "SUCC : " << val.firxst << " | " << succ->_data->first << std::endl;
+					// // std::cout << "SUCC : " << val.second << " | " << succ->_data->second << std::endl;
+					// toDelete(succ, pere);
+					// *ptr->_data->first = val1;
+					// *ptr->_data->second = val2;
 					s_node<M>	*pere = ptr;
 					s_node<M>	*succ = successeur(ptr->right, pere);
-					std::cout << succ->_data->first << std::endl;
-					// s_node<M>	tmp = *succ;
-					// std::cout << "MEMORY : " << tmp.right << " | " << succ->right << std::endl;
-					pair<const KEY, T> val  = *succ->_data;
-					std::cout << "SUCC : " << val.first << " | " << succ->_data->first << std::endl;
-					std::cout << "SUCC : " << val.second << " | " << succ->_data->second << std::endl;
+					// s_node<M>	*elpadre = find_el_padre(succ);
+					// std::cout << succ->_data->first << std::endl;
+					pair<const KEY, T> *val  = succ->_data;
+					// std::cout << "caca : " << val << std::endl;
+					// std::cout << "yo : " << val->first << std::endl;
+					// toDelete(succ, pere);
+					_alloc.destroy(ptr->_data);
+					_alloc.deallocate(ptr->_data, 1);
+
+					_alloc.construct(ptr->_data, ft::make_pair(val->first, val->second));
+					// _alloc.destroy(succ->_data);
+					// _alloc.deallocate(succ->_data, 1);
+					// ptr->_data = val;
+					// succ->_data = NULL;
+					// _alloc_node.destroy(succ);
+					// _alloc_node.deallocate(succ, 1);
 					toDelete(succ, pere);
-					ptr->_data = &val;
+					// ptr->right->left = NULL;
+					// std::cout << "caca : " << ptr->_data << std::endl;
 				}
 				else {
 					s_node<M>	*child = (ptr->left) ? ptr->left : ptr->right;
-					
+
 					if (ptr != _root) {
 						if (ptr == parent->left) {
 							parent->left = child;
@@ -173,7 +202,7 @@ namespace ft {
 					_alloc_node.deallocate(ptr, 1);
 				}
 			}
-			
+
 			s_node<M>	*find(const KEY& key, s_node<M> *ptr, s_node<M> *&parent) const {
 				if (!ptr) {
 					return (NULL);
@@ -190,11 +219,11 @@ namespace ft {
 					return (find(key, ptr->right, parent));
 				}
 			}
-			
+
 		public:
 			tree() : _root(0), _compteur(0) {}
 			~tree() { destroy(_root); }
-			
+
 			void		toDelete(const KEY& key) {
 				s_node<M>	*parent = 0;
 				s_node<M>	*del = find(key, _root, parent);
@@ -209,28 +238,28 @@ namespace ft {
 					_compteur--;
 				}
 			}
-			
+
 			s_node<M>	*find(const KEY& key, const T& value) const {
 				s_node<M>	*parent = find(key, value);
 				return (parent);
 			}
-			
+
 			void		insert(const KEY& key, const T& value) {
 				_compteur++;
 				insert(key, value, _root);
 			}
-			
+
 			void		infixe() const {
 				infixe(_root);
 			}
 
 			void	print_node_find(const KEY& key) {
 				s_node<M>	*node = find(key, _root, _root);
-				std::cout << "Clé : " << node->_data->first << " Valeur : " << node->_data->second << std::endl;	
+				std::cout << "Clé : " << node->_data->first << " Valeur : " << node->_data->second << std::endl;
 			}
 
 			int			size() const {return (_compteur);}
-			bool		empty() const {return (_compteur == 0);}			
+			bool		empty() const {return (_compteur == 0);}
 	};
 }
 #endif
