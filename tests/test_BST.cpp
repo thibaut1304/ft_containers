@@ -11,7 +11,7 @@ using namespace ft;
 template <typename T>
 std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
 {
-	o << "key: " << &iterator->first << " | value: " << &iterator->second;
+	o << "key: " << iterator->first << " | value: " << iterator->second;
 	if (nl)
 		o << std::endl;
 	return ("");
@@ -39,7 +39,7 @@ int main () {
 	print_result(tmp);
 	print_result(tmp2);
 	print_result(tmp3);
-	// test.print_infix();
+	test.print_infixe();
 
 
 	// ft::pair<std::map<int, int>::iterator, bool> hello= test.insert(ft::make_pair<int, int>(5, 3));

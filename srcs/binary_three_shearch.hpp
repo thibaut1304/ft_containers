@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/31 16:45:16 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:14:25 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ namespace ft {
 	template<class T>
 	struct 	s_node {
 		T			_data;
-		s_node<T>	*parent;
+		// s_node<T>	*parent;
 		s_node<T>	*left;
 		s_node<T>	*right;
 
-		s_node() : parent(0), left(0), right(0) {}
-		s_node(const T& data) : _data(data), parent(0), left(0), right(0) {}
+		s_node() : left(0), right(0) {}
+		s_node(const T& data) : _data(data), left(0), right(0) {}
 	};
 
 	template<class T, class Compare, class Alloc>
@@ -65,7 +65,7 @@ namespace ft {
 				_alloc.construct(tmp, data);
 				tmp->right = NULL;
 				tmp->left = NULL;
-				tmp->parent = NULL;
+				// tmp->parent = NULL;
 				return (tmp);
 			}
 
@@ -101,7 +101,7 @@ namespace ft {
 				if (!ptr) {return;}
 
 				infixe(ptr->left);
-				std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << " - Parent : " << ptr->parent->_data.first << "\n";
+				std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 				infixe(ptr->right);
 			}
 
@@ -130,7 +130,7 @@ namespace ft {
 			void		toDelete(nodePtr	ptr, nodePtr	parent) {
 					// std::cout << "hello : " << ptr << std::endl;
 				if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
-					std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
+					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
 					if (ptr != _root) {
 						if (parent->left == ptr) {
 							parent->left = NULL;
@@ -296,7 +296,7 @@ namespace ft {
 				_compteur++;
 				insert(data, _root);
 				_end->left = _root;
-				_root->parent = _end;
+				// _root->parent = _end;
 			}
 
 			void		erase(const value_type& data) {
