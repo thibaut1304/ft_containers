@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/31 17:15:51 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 00:13:38 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ namespace ft {
 	template<class T>
 	struct 	s_node {
 		T			_data;
-		// s_node<T>	*parent;
+		s_node<T>	*parent;
 		s_node<T>	*left;
 		s_node<T>	*right;
 
-		s_node() : left(0), right(0) {}
-		s_node(const T& data) : _data(data), left(0), right(0) {}
+		s_node() : parent(0), left(0), right(0) {}
+		s_node(const T& data) : _data(data), parent(0), left(0), right(0) {}
 	};
 
 	template<class T, class Compare, class Alloc>
@@ -60,12 +60,13 @@ namespace ft {
 			size_type			_compteur;
 			key_compare 		_comp;
 
-			nodePtr		createNode(const value_type& data) {
+			nodePtr		createNode(const value_type& data, nodePtr &old) {
 				nodePtr	tmp = _alloc.allocate(1);
 				_alloc.construct(tmp, data);
 				tmp->right = NULL;
 				tmp->left = NULL;
-				// tmp->parent = NULL;
+				// _end = tmp;
+				tmp->parent = old;
 				return (tmp);
 			}
 
@@ -80,9 +81,9 @@ namespace ft {
 				ptr = NULL;
 			}
 
-			void		insert(const value_type& data, nodePtr &ptr) {
+			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
 				if (!ptr) {
-					ptr = createNode(data);
+					ptr = createNode(data, old);
 					return ;
 				}
 				else if (data.first == ptr->_data.first) {
@@ -90,18 +91,22 @@ namespace ft {
 					return ;
 				}
 				if (_comp(data.first, ptr->_data.first)) {
-					insert(data, ptr->left);
+					insert(data, ptr->left, ptr);
 				}
 				else {
-					insert(data, ptr->right);
+					insert(data, ptr->right, ptr);
 				}
 			}
 
 			void		infixe(nodePtr ptr) const {
 				if (!ptr) {return;}
+				std::cout << "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 
+				std::cout << "left: " << ptr->left << std::endl;
+				// std::cout << "right: " << ptr->right << std::endl;
+				std::cout << "parent: " << ptr->parent << std::endl;
 				infixe(ptr->left);
-				std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+				// std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 				infixe(ptr->right);
 			}
 
@@ -223,11 +228,18 @@ namespace ft {
 				destroy(_root);
 			}
 
-			nodePtr		getMin(nodePtr node = NULL) const {
+			nodePtr		getMin(nodePtr node = NULL, bool test = 0) const {
 				if (!node)
 					node = _root;
 				while (node && node->left)
 					node = node->left;
+				if (test) {
+					// infixe(_root);
+					std::cout << "ARBRE : " << std::endl;
+					std::cout << node << std::endl;
+					std::cout << node->left << std::endl;
+					std::cout << node->right << std::endl << std::endl;
+				}
 				return (node);
 			}
 
@@ -294,8 +306,8 @@ namespace ft {
 
 			void	insert(const value_type data) {
 				_compteur++;
-				insert(data, _root);
-				_end->left = _root;
+				insert(data, _root, _root);
+				// _end->left = _root;
 				// _root->parent = _end;
 			}
 

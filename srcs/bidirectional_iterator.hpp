@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/31 17:04:34 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 00:35:52 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,86 @@ namespace ft {
 			reference		operator*() const {return (_node->_data);}
 			// const_reference	operator*() const {return (_node->_data);}
 
+			bidirectional_iterator &operator++() {
+				// std::cout << "BI : ";
+				// std::cout << _node << std::endl;
+					// std::cout << _node->right << std::endl;
+					// std::cout << _node->left << std::endl;
+				// std::cout << "Node right : ";
+				// std::cout << _node->right << std::endl;
+				// std::cout << "Node left  : ";
+				// std::cout << _node->left << std::endl;
+				// --(*this);
+				// nodePtr tmp = _node;
+				// _node = _node->parent;
+				bidirectional_iterator tmp(*this);
+				--_node;
+				// this = (--_node);
+				// std::cout << _node->_data.first << std::endl;
+				// std::cout << "BI : " << _node << std::endl;
+				// std::cout << _node << std::endl;
+				// if (_node)
+					// _node = successeur(_node->parent, _node);
+				// std::cout << _node << std::endl;
+				// _node = _node->right;
+				// if (_node)
+					// _node = successor(_node);
+				return (--tmp);
+			}
+
 			bidirectional_iterator operator++(int) {
 				bidirectional_iterator tmp(*this);
-				++(*this);
+				operator++();
 				return (tmp);
 			}
 
-			bidirectional_iterator &operator++() {
-				_node = successeur(_node->right, _node);
+			bidirectional_iterator &operator--() {
+				// ++_node;
+				if (_node)
+					_node = predecesseur(_node->left, _node);
+				else
+					_node = maximum(_node);
 				return (*this);
 			}
 
 			bidirectional_iterator operator--(int) {
 				bidirectional_iterator tmp(*this);
-				--(*this);
-				return (*tmp);
+				operator--();
+				return (tmp);
 			}
 
-			bidirectional_iterator &operator--() {
-				_node = predecesseur(_node->left, _node);
-				return (*this);
-			}
 		private:
+
+			nodePtr maximum(nodePtr ptr) {
+				while (ptr->right)
+					ptr = ptr->right;
+				return (ptr);
+			}
+
+			nodePtr minimum(nodePtr ptr) {
+				while (ptr->left)
+					ptr = ptr->left;
+				return (ptr);
+			}
+
+			nodePtr successor(nodePtr x) {
+				// if the right subtree is not null the successor is the leftmost node in the sright subtree
+				if (x->right != NULL)
+				{
+					return minimum(x->right);
+				}
+				// else it is the lowest ancestor of x whose left child is also an ancestor of x
+				nodePtr y = x->parent;
+				while (y != NULL && x == y->right)
+				{
+					x = y;
+					y = y->parent;
+				}
+				if (y == NULL)
+					return NULL;
+				return y;
+			}
+
 			nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
 				if (!ptr) {return (NULL);}
 

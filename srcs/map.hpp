@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/31 17:05:24 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 00:20:22 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,25 @@ namespace ft {
 					void	print_infixe() { std::cout << "\nAffichage arbre bianaire :\n"; _tree.infixe();}
 
 					iterator begin() {
+						// std::cout << "MAP : ";
+						// std::cout << _tree.getMin() << std::endl;
+						// nodePtr test = _tree.getMin();
+						_tree.infixe();
+						// std::cout << "Node right : ";
+						// std::cout << test->right << std::endl;
+						// std::cout << "Node left  : ";
+						// std::cout << test->left << std::endl;
+						// std::cout << "Value : " << test->_data.first << " - " <<  test->_data.second << std::endl;
+
 						return (iterator(_tree.getMin()));
 					}
 					const_iterator begin() const {
+						std::cout << "MIN MAP : " << _tree.getMin() << std::endl;
 						return (const_iterator(_tree.getMin()));
 					}
 
 					iterator end() {
+						std::cout << "MAX MAP : " << _tree.getMax() << std::endl;
 						return (iterator(_tree.getMax()));
 					}
 
