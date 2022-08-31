@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/25 23:06:48 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:05:24 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,27 @@
 // # include <iterator>
 /*********************************/
 # include <functional> // --> LESS
-// # include <iterator>
+# include <iterator>
 
 # include "reverse_iterator.hpp"
-# include "pair.hpp"
 # include "bidirectional_iterator.hpp"
+# include "binary_three_shearch.hpp"
 
 // # include <cstddef> // ptrdiff -->  dans iterator_traits
 
 // value_comp --> true si la clé du premier argument est considérée comme devant celle du second sinon false
 
 namespace ft {
+	// template <class KEY, class T>
+	// struct get_key : public std::unary_function<KEY, T>
+	// {
+	// 	const KEY &operator()(const KEY &x) const
+	// 	{
+	// 		// return (x.first);
+	// 		return (x);
+	// 	}
+	// };
+
 	template < class Key,                                  // map::key_type
 			class T,                                       // map::mapped_type
 			class Compare = std::less<Key>,                // map::key_compare      --> check si a recoder LESS --> NOP
@@ -42,83 +52,166 @@ namespace ft {
 					typedef	T															mapped_type;
 					typedef	ft::pair<const key_type,mapped_type>						value_type;     //coder PAIR !
 					typedef	Compare														key_compare;
-					typedef ft::tree<Key, T>											tree
+					// typedef ft::tree<Key, T>											tree -->nop, template tree modifie pour compare !
 					// typedef --> regarder value_compare nouv class ?
-					class value_compare;
+
 					typedef Alloc														allocator_type;
+
+					typedef ft::tree<value_type, key_compare, allocator_type>			tree_type;
+					typedef typename tree_type::nodePtr									nodePtr;
+
 					typedef typename allocator_type::reference							reference;
 					typedef typename allocator_type::const_reference					const_reference;
 					typedef typename allocator_type::pointer							pointer;
 					typedef typename allocator_type::const_pointer						const_pointer;
-					typedef typename ft::bidirectional_iterator<value_type>				iterator;		// coder bidirectional_iterator
-					typedef typename ft::bidirectional_iterator<value_type const>		const_iterator; // coder bidirectional_iterator
-					typedef typename ft::reverse_iterator<value_type>					reverse_iterator;
-					typedef typename ft::reverse_iterator<value_type const>				const_reverse_iterator;
-					typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;	// utiliser ft::iterator
-					typedef typename std::size_t										size_type;
+					typedef ft::bidirectional_iterator<pointer, nodePtr>				iterator;		// coder bidirectional_iterator
+					typedef ft::bidirectional_iterator<const_pointer, nodePtr>			const_iterator; // coder bidirectional_iterator
+					typedef ft::reverse_iterator<value_type>							reverse_iterator;
+					typedef ft::reverse_iterator<value_type const>						const_reverse_iterator;
+					// typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+					typedef typename allocator_type::difference_type						difference_type;	// utiliser ft::iterator
+					typedef typename allocator_type::size_type							size_type;
+					// typedef ft::tree<key_type, mapped_type, get_key<key_type, mapped_type>, key_compare>	tree_type;
+					class value_compare : public std::binary_function<value_type, value_type, bool>
+					{
+						friend class map;
+						protected:
+							key_compare comp;
+							value_compare(key_compare c) : comp(c) {}
+						public:
+							bool operator()(const value_type& lhs, const value_type& rhs) const {
+								return comp(lhs.first, rhs.first);
+							}
+					};
 
 				private:
-					tree					_node;
-					allocator_type 			_alloc;
-					// key_type			_key;
-					// mapped_type		_type;
-
-
-					// key_type 	_my_key;
-					// mapped_type 	_my_mapped;  -->NOP
-					// value_type	_val;
-					// Alloc		_alloc
+						key_compare 	_comp;
+						allocator_type 	_alloc;
+						tree_type 		_tree;
 
 				public:
 
 					// empty (1)
-					explicit map	(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
+					explicit map	(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree() {}
 
 					// range (2)
 					template <class InputIterator>
-					map	(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
+					map	(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree() {
+						while (first != last) {
+							_tree.insert(*first);
+							first++;
+						}
+					}
 
 					// copy (3)
-					map	(const map& x); //{
-					// 	if (this != &map) {
+					map (const map& x) : _comp(x._comp), _alloc(x._alloc) {
+						*this = x;
+					}
 
-					// 	}
-					// }
-
-					~map();
+					~map() {}
 
 					// copy (1)
-					 map&	operator= (const map& x);
+					 map&	operator= (const map& x) {
+						if (this == &x)
+							return *this;
+						_tree.clear();
+						if (x.size())
+							insert(x.begin(), x.end());
+						_alloc = x._alloc;
+						_comp = x._comp;
+						return *this;
+					 }
 
-					iterator begin();
-					const_iterator begin() const;
+					void	print_infixe() { std::cout << "\nAffichage arbre bianaire :\n"; _tree.infixe();}
 
-					iterator end();
-					const_iterator end() const;
+					iterator begin() {
+						return (iterator(_tree.getMin()));
+					}
+					const_iterator begin() const {
+						return (const_iterator(_tree.getMin()));
+					}
 
-					reverse_iterator rbegin();
-					const_reverse_iterator rbegin() const;
+					iterator end() {
+						return (iterator(_tree.getMax()));
+					}
 
-					reverse_iterator rend();
-					const_reverse_iterator rend() const;
+					const_iterator end() const {
+						return (const_iterator(_tree.getMax()));
+					}
 
-					bool empty() const;
+					reverse_iterator rbegin() {
+						return (reverse_iterator(end()));
+					}
 
-					size_type size() const;
+					const_reverse_iterator rbegin() const {
+						return (const_reverse_iterator(end()));
+					}
 
-					size_type max_size() const;
+					reverse_iterator rend() {
+						return (reverse_iterator(begin()));
+					}
+
+					const_reverse_iterator rend() const {
+						return (const_reverse_iterator(begin()));
+					}
+
+					bool empty() const {
+						return (_tree.empty());
+					}
+
+					size_type size() const {
+						return (_tree.size());
+					}
+
+					size_type max_size() const {
+						return (_tree.max_size());
+					}
 
 					mapped_type& operator[] (const key_type& k);
 
 					// single element (1)
-					ft::pair<iterator,bool> insert (const value_type& val);   // --> redocer pair
+					// ft::pair<iterator,bool> insert (const value_type& val) {
+					// 	bool x = _tree.insert(val.first, val.second);
+					// 	value_type node = _tree.get_pair(_tree.find(val.first, val.second));
+					// 	// return (ft::make_pair<iterator, bool>(iterator(node.first), x));
+					// 	(void)node;
+					// 	return(ft::make_pair<iterator, bool>(iterator(), x));
+					// }
+
+					pair<iterator,bool> insert (const value_type& val) {
+						nodePtr	node = _tree.find(val);
+						bool	notInserted = false;
+						if (!node || node == _tree.getEnd())
+						{
+							_tree.insert(val);
+							node = _tree.find(val);
+							notInserted = true;
+						}
+						return (ft::make_pair(iterator(node), notInserted));
+					}
 
 					// with hint (2)
-					iterator insert (iterator position, const value_type& val);
+					// iterator insert (iterator position, const value_type& val);
+					iterator insert (iterator position, const value_type& val) {
+						static_cast<void>(position);
+						nodePtr	node = _tree.find(val);
+						if (!node || node == _tree.getEnd())
+						{
+							_tree.insert(val);
+							node = _tree.find(val);
+						}
+						return (iterator(node));
+					}
 
 					// range (3)
 					template <class InputIterator>
-					void insert (InputIterator first, InputIterator last);
+					void insert (InputIterator first, InputIterator last) {
+						while (first != last)
+						{
+							_tree.insert(*first);
+							first++;
+						}
+					}
 
 					// (1)
 					void erase (iterator position);
@@ -131,7 +224,7 @@ namespace ft {
 
 					void swap (map& x);
 
-					void clear();
+					void clear() {_tree.clear();}
 
 					key_compare key_comp() const;
 
@@ -154,6 +247,21 @@ namespace ft {
 
 					allocator_type get_allocator() const;
 			};
+
+	// template <class Key, class T, class Compare, class Alloc>
+	// class map<Key,T,Compare,Alloc>::value_compare {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+	// 	friend class map;
+	// 	protected:
+	// 		Compare comp;
+	// 		value_compare(Compare c) : comp(c) {}  // constructed with map's comparison object
+	// 	public:
+	// 		typedef bool result_type;
+	// 		typedef value_type first_argument_type;
+	// 		typedef value_type second_argument_type;
+	// 		bool operator() (const value_type& x, const value_type& y) const {
+	// 			return comp(x.first, y.first);
+	// 		}
+	// };
 }
 
 #endif

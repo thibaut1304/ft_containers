@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/20 18:57:27 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/29 19:38:42 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ namespace ft {
 			reference operator[] (size_type n) {
 				return *(_tab + n);
 			}
+
 			const_reference operator[] (size_type n) const {
 				return *(_tab + n);
 			}
@@ -235,6 +236,7 @@ namespace ft {
 			reference front() {
 				return *(_tab);
 			}
+			
 			const_reference front() const {
 				return *(_tab);
 			}

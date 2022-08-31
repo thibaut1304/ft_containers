@@ -1,4 +1,5 @@
 #include "vector.hpp"
+#include "../srcs/random_access_iterator.hpp"
 
 #define _NC "\033[0;0m"
 #define _RED "\033[0;31m"
@@ -23,7 +24,7 @@
 
 
 #include <map>
-#include "map.hpp"
+// #include "map.hpp"
 #include "test_map.cpp"
 #include "debug_map.cpp"
 
@@ -88,10 +89,43 @@ void	ft_swap() {
 	print_vector(std_vector_swap, ft_vector_swap);
 }
 
+template<class T>
+class foo {
+	public:
+		foo() : value(0) {}
+		~foo() {}
+		void	m() {
+			std::cout << "Salut Wil" << std::endl;
+		}
+		T	value;
+};
+
 int main () {
-	test_map();
-	constructor_map();
-	exit(0);
+	// test_map();
+	// constructor_map();
+	// exit(0);
+
+	ft::vector<foo<int> > hello(5);
+
+	ft::vector<foo<int> >::iterator wil = hello.begin();
+	wil++;
+	wil->m();
+	return (0);
+	ft::random_access_iterator<int> it9;
+	it9++;
+	return (0);
+	ft::vector<char> test4;
+
+	for (int i = 33; i < 38; i++)
+		test4.push_back(i);
+
+	ft::vector<char>::iterator itt = test4.begin();
+
+	std::cout << *itt << std::endl;
+	itt++;
+	std::cout << *itt << std::endl;
+	std::cout << *itt << std::endl;
+	return (0);
 	std::cout << " - - - - - CONSTRUCTOR - - - - -" << std::endl << std::endl;
 	std::cout << " - Operator= and begin and end -" << std::endl << std::endl;
 	constructor();
@@ -107,26 +141,31 @@ int main () {
 	}
 	ft::vector<int> test2 = test;
 	print_my_vector(test2);
+
+	ft::vector<int>::iterator it = test.begin();
+	ft::vector<int>::iterator it2 = test2.begin();
+	if (it != it2)
+		std::cout << "TRUE" << std::endl;
 	std::cout << "SIZE     : " << test.size() << std::endl;
 	std::cout << "SIZE    2: " << test2.size() << std::endl;
 	std::cout << "CAPACITY : " << test.capacity() << std::endl;
 	std::cout << "CAPACITY2: " << test2.capacity() << std::endl;
 	std::cout << " - - - - - PUSH_BACK - - - - - -" << std::endl << std::endl;
-	ft_push_back();
-	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
-	std::cout << " - - - - - INSERT - - - - -" << std::endl << std::endl;
-	ft_insert();
-	ft_insert_mli();
-	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
-	std::cout << " - - - - - - ERASE - - - - - - -" << std::endl << std::endl;
-	ft_erase();
-	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
-	std::cout << " - - - - - - RESIZE  - - - - - -" << std::endl << std::endl;
-	ft_resize();
-	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
-	std::cout << " - - - - - - SWAP  - - - - - - -" << std::endl << std::endl;
-	ft_swap();
-	std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	// ft_push_back();
+	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	// std::cout << " - - - - - INSERT - - - - -" << std::endl << std::endl;
+	// ft_insert();
+	// ft_insert_mli();
+	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	// std::cout << " - - - - - - ERASE - - - - - - -" << std::endl << std::endl;
+	// ft_erase();
+	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	// std::cout << " - - - - - - RESIZE  - - - - - -" << std::endl << std::endl;
+	// ft_resize();
+	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
+	// std::cout << " - - - - - - SWAP  - - - - - - -" << std::endl << std::endl;
+	// ft_swap();
+	// std::cout << " - - - - - - - - - - - - - - - -" << std::endl << std::endl;
 	if (global != 0)
 		std::cout << _RED << "NB error : " << global << _NC << std::endl;
 	return (0);

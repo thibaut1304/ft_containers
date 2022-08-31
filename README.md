@@ -23,3 +23,12 @@ correction assign ne pas realloc si pas besoin ok
 
 
 ### Note Map
+
+- get_key pour recupere le comp pour node dans map.
+- faire value_compare
+- check template tree pour Alloc
+
+- Passer template arbre binaire en value_type, compare et alloc !
+
+- Probleme const iterator n'est pas trouvé en tant que *const mais en pointeur
+- A regler le succeseur et le predecesseur pour ++ et -- sur bidirectionel_iterartor

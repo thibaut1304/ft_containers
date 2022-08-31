@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:11:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 19:10:56 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:04:41 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ namespace ft {
 			template<typename _Iterator, typename _Iter>
 			friend bool operator>=(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs);
 
-			
+
 		protected:
 			pointer	_ptr;
 	};
@@ -209,8 +209,7 @@ namespace ft {
 	}
 
 	template<class _Iterator>
-	ft::random_access_iterator<_Iterator> operator+(typename ft::random_access_iterator<_Iterator>::difference_type n, ft::random_access_iterator<_Iterator> const &lhs)
-	{
+	ft::random_access_iterator<_Iterator> operator+(typename ft::random_access_iterator<_Iterator>::difference_type n, ft::random_access_iterator<_Iterator> const &lhs) {
 		return (lhs + n);
 	}
 }

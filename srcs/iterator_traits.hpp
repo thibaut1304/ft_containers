@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 09:45:19 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/05 18:19:03 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/28 17:03:50 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ namespace ft
 	template<typename _Iterator>
 	struct iterator_traits
 	{
-		typedef typename _Iterator::iterator_category iterator_category;
 		typedef typename _Iterator::value_type        value_type;
 		typedef typename _Iterator::difference_type   difference_type;
 		typedef typename _Iterator::pointer           pointer;
 		typedef typename _Iterator::reference         reference;
+		typedef typename _Iterator::iterator_category iterator_category;
 	};
 
 	/// Partial specialization for pointer types.
