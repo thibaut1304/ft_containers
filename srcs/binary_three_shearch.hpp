@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/31 17:14:25 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:15:51 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ namespace ft {
                 {
                     if (!_comp(node->_data.first, data.first))
                         return (node);
-                    node = successor(node);
+                    node = successeur(node);
                 }
                 return (NULL);
 			}
@@ -258,7 +258,7 @@ namespace ft {
                 {
                     if (_comp(data.first, node->_data.first))
                         return (node);
-                    node = successor(node);
+                    node = successeur(node);
                 }
                 return (NULL);
 			}
