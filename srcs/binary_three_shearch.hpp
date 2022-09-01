@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 23:46:13 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 00:39:18 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ namespace ft {
 			}
 
 			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
+					std::cout << _CYAN  << _root << _NC << std::endl;
 				if (ptr == _end || !ptr) {
+					std::cout << _CYAN  << _root << _NC << std::endl;
 					ptr = createNode(data, old);
 					// std::cout << _YELLOW "insert : " << ptr->parent << _NC<<std::endl;
 					// ptr->parent = old;
@@ -100,9 +102,11 @@ namespace ft {
 					return ;
 				}
 				if (_comp(data.first, ptr->_data.first)) {
+					std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->left, ptr);
 				}
 				else {
+					std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->right, ptr);
 				}
 			}
@@ -262,6 +266,7 @@ namespace ft {
 
 			~tree() {
 				// std::cout << "destructeur max : " << getMax() << std::endl;
+				std::cout << _YELLOW << _root << _NC << std::endl;
 				destroy(_root);
 				_alloc.destroy(_end);
 				_alloc.deallocate(_end, 1);
@@ -269,13 +274,13 @@ namespace ft {
 			}
 
 			nodePtr		getEnd() const {return (_end);}
-			nodePtr		getRoot() const {return (_test);}
+			nodePtr		getRoot() const {return (_root);}
 
 			nodePtr		getMin(nodePtr node = NULL, bool test = 0) const {
 				if (!node) {
 					if (_root == _end)
 						return (_root);
-					node = _test;
+					node = _root;
 				}
 				while (node->left != _end)
 					node = node->left;
@@ -288,7 +293,7 @@ namespace ft {
 				}
 				// std::cout << _PURPLE "MIN : " << node->_data.first << _NC <<std::endl;
 				// std::cout << _YELLOW << node << _NC <<std::endl;
-				// std::cout << _YELLOW << _test << _NC <<std::endl;
+				// std::cout << _YELLOW << _root << _NC <<std::endl;
 				return (node);
 			}
 
@@ -296,7 +301,7 @@ namespace ft {
 				if (!node) {
 					if (_root == _end)
 						return (_root);
-					node = _test;
+					node = _root;
 				}
 				while (node->right != _end)
 					node = node->right;
@@ -362,7 +367,7 @@ namespace ft {
 					_root = createNode(data, _end);
 					// std::cout << _CYAN  << _root << _NC << std::endl;
 					_root->parent = _end;
-					_test = _root;
+					_root = _root;
 					// std::cout << _CYAN  << _root << _NC << std::endl;
 					_compteur++;
 					return ;
@@ -391,7 +396,7 @@ namespace ft {
 			}
 
 			void		infixe() {
-				infixe(_test);
+				infixe(_root);
 				// clear();
 			}
 
