@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 17:14:24 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 21:20:13 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft {
 				// std::cout << "Racine : " << root() << std::endl;
 				if (_node)
 					_node = successor(_node);
-				// std::cout << "inc max : " << _node.getMax() << std::endl;
+				// std::cout << "inc max : " << _node << std::endl;
 				return (*this);
 			}
 
@@ -177,7 +177,7 @@ namespace ft {
 					y = y->parent;
 				}
 				if (y == NULL)
-					return NULL;
+					return _end;
 				return y;
 			}
 

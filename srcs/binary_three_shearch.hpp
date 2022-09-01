@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 17:10:00 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 23:46:13 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ namespace ft {
 			allocator_type		_alloc;
 			nodePtr				_root;
 			nodePtr				_end;
+			nodePtr				_test;
 			size_type			_compteur;
 			key_compare 		_comp;
 
 			nodePtr		createNode(const value_type& data, nodePtr &old) {
+				std::cout << _CYAN  << _root << _NC << std::endl;
 				nodePtr	tmp = _alloc.allocate(1);
 				// if (old == _end)
 					// old = NULL;
 				_alloc.construct(tmp, nodeType(data, old, _end, _end));
+					std::cout << _CYAN  << _root << _NC << std::endl;
 				// std::cout << "Adresse create end : " << tmp->right << std::endl;
 				// tmp->right = NULL;
 				// tmp->left = NULL;
@@ -88,6 +91,8 @@ namespace ft {
 			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
 				if (ptr == _end || !ptr) {
 					ptr = createNode(data, old);
+					// std::cout << _YELLOW "insert : " << ptr->parent << _NC<<std::endl;
+					// ptr->parent = old;
 					return ;
 				}
 				else if (data.first == ptr->_data.first) {
@@ -103,20 +108,40 @@ namespace ft {
 			}
 
 			void		infixe(nodePtr ptr) const {
-				if (!ptr || ptr == _end) {return;}
-				if (ptr != _end) {
-					std::cout << _RED "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
-				if (ptr->left != _end)
-					std::cout << _RED "left: " << ptr->left << _NC << std::endl;
-				if (ptr->right != _end)
-					std::cout << _RED "right: " << ptr->right << _NC << std::endl;
-				if (ptr->parent != _end)
-					std::cout << _RED "parent: " << ptr->parent << _NC << std::endl;
-				}
+					// std::cout << _YELLOW "root     : " << _root << _NC << std::endl;
+					// std::cout << _YELLOW "root papa: " << _root->parent << _NC << std::endl;
+					// return;
+				// if (ptr->left == _end) {
+				// 	std::cout << _CYAN << ptr->_data.first << " - " << ptr->_data.second << _NC << std::endl;
+				// }
+				// if (ptr->right == _end) {
+				// 	std::cout << _YELLOW << ptr->_data.first << " - " << ptr->_data.second << _NC << std::endl;
+				// }
+				if (ptr == _end) {return ;}
+				// if (ptr != _end)
+				// 	std::cout << _RED "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+				// if (ptr->left != _end)
+				// 	std::cout << _RED "left: " << ptr->left << _NC << std::endl;
+				// if (ptr->right != _end)
+				// 	std::cout << _RED "right: " << ptr->right << _NC << std::endl;
+				// if (ptr->parent != _end)
+				// 	std::cout << _RED "parent: " << ptr->parent << _NC << std::endl;
+				// if (ptr == _root) {
+				// 	// std::cout << "hello" << std::endl;
+				// 	// std::cout << _CYAN "ptr      : " << ptr << _NC << std::endl;
+				// 	// std::cout << _CYAN "ptr papa : " << ptr->parent << _NC << std::endl;
+				// 	// std::cout << _CYAN "end : " << _end << _NC << std::endl; // --> c'est good
+				// 	}
+
+				// if (ptr->_data.first == 50) {
+					// std::cout << ptr->parent->left << std::endl;
+				// }
 				infixe(ptr->left);
 					// std::cout << "root  : " << ptr << std::endl;
 					// std::cout << "parent: " << ptr->parent << std::endl;
-				// std::cout << _RED <<  "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+				std::cout << _YELLOW << ptr << _NC << " -- ";
+				// std::cout << _CYAN << ptr->parent << _NC << std::endl;
+				std::cout << _RED <<  "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 				infixe(ptr->right);
 			}
 
@@ -244,13 +269,13 @@ namespace ft {
 			}
 
 			nodePtr		getEnd() const {return (_end);}
-			nodePtr		getRoot() const {return (_root);}
+			nodePtr		getRoot() const {return (_test);}
 
 			nodePtr		getMin(nodePtr node = NULL, bool test = 0) const {
 				if (!node) {
 					if (_root == _end)
 						return (_root);
-					node = _root;
+					node = _test;
 				}
 				while (node->left != _end)
 					node = node->left;
@@ -261,7 +286,9 @@ namespace ft {
 					std::cout << node->left << std::endl;
 					std::cout << node->right << std::endl << std::endl;
 				}
-				// std::cout << "MIN : " << node << std::endl;
+				// std::cout << _PURPLE "MIN : " << node->_data.first << _NC <<std::endl;
+				// std::cout << _YELLOW << node << _NC <<std::endl;
+				// std::cout << _YELLOW << _test << _NC <<std::endl;
 				return (node);
 			}
 
@@ -269,7 +296,7 @@ namespace ft {
 				if (!node) {
 					if (_root == _end)
 						return (_root);
-					node = _root;
+					node = _test;
 				}
 				while (node->right != _end)
 					node = node->right;
@@ -329,8 +356,21 @@ namespace ft {
 			}
 
 			void	insert(const value_type data) {
+				// if (_root == _end)
+					std::cout << _CYAN  << _root << _NC << std::endl;
+				if (_compteur == 0) {
+					_root = createNode(data, _end);
+					// std::cout << _CYAN  << _root << _NC << std::endl;
+					_root->parent = _end;
+					_test = _root;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
+					_compteur++;
+					return ;
+				}
+
+				insert(data, _root, _end);
+				std::cout << _CYAN  << _root << _NC << std::endl;
 				_compteur++;
-				insert(data, _root, _root);
 				// _end->left = _root;
 				// _end->right = _root;
 				// _root->parent = _end;
@@ -351,7 +391,7 @@ namespace ft {
 			}
 
 			void		infixe() {
-				infixe(_root);
+				infixe(_test);
 				// clear();
 			}
 

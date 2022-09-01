@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 17:18:57 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 23:44:36 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,9 @@ namespace ft {
 						// std::cout << "Node left  : ";
 						// std::cout << test->left << std::endl;
 						// std::cout << "Value : " << test->_data.first << " - " <<  test->_data.second << std::endl;
-						std::cout << "Ite : " << _tree.getMin() << std::endl;
+						// std::cout << "Ite : " << _tree.getMin() << std::endl;
+						// std::cout << "Ite : " << _tree.getRoot() << std::endl;
+						// std::cout << "Ite : " << _tree.getEnd() << std::endl;
 						return (iterator(_tree.getMin(), _tree.getRoot(), _tree.getEnd()));
 					}
 					const_iterator begin() const {
@@ -220,7 +222,7 @@ namespace ft {
 							notInserted = true;
 						}
 						// std::cout << "BOOL : " << notInserted << std::endl;
-						print_infixe();
+						// print_infixe();
 						// std::cout << "ROOT insert : " << _tree.getRoot() << std::endl;
 						// std::cout << "END  insert : " << _tree.getEnd() << std::endl;
 						return (ft::make_pair(iterator(node, _tree.getRoot(), _tree.getEnd()), notInserted));
@@ -235,7 +237,9 @@ namespace ft {
 						{
 							_tree.insert(val);
 							node = _tree.find(val);
+						// std::cout << _CYAN << node << _NC << std::endl;
 						}
+						// print_infixe();
 						return (iterator(node, _tree.getRoot(), _tree.getEnd()));
 					}
 

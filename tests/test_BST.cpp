@@ -35,11 +35,15 @@ int main () {
 	ft::pair<iterator, bool> tmp;
 	ft::pair<iterator, bool> tmp2;
 	ft::pair<iterator, bool> tmp3;
+	ft::pair<iterator, bool> tmp4;
 
 	tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
 	tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
 	tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
-	tmp3 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
+	test.print_infixe();
+	tmp4 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
+	test.print_infixe();
+	// print_result(tmp);
 	// std::cout << tmp.first << std::endl;
 
 	// ft::pair<std::map<int, int>::iterator, bool> hello= test.insert(ft::make_pair<int, int>(5, 3));
