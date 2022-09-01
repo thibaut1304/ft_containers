@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 00:13:38 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 05:18:56 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft {
 		s_node<T>	*right;
 
 		s_node() : parent(0), left(0), right(0) {}
-		s_node(const T& data) : _data(data), parent(0), left(0), right(0) {}
+		s_node(T data, s_node* parent, s_node* left, s_node* right) : _data(data), parent(parent), left(left), right(right) {}
 	};
 
 	template<class T, class Compare, class Alloc>
@@ -46,6 +46,7 @@ namespace ft {
 			// typedef ft::pair<const KEY, T>																M;
 			typedef T 																					value_type;
 			typedef s_node<T>*																			nodePtr;
+			typedef s_node<T>																			nodeType;
 			typedef typename Alloc::template rebind<s_node<T> >::other 									allocator_type;
             // typedef std::size_t																			size_type;
 			typedef	typename allocator_type::size_type 													size_type;
@@ -62,16 +63,17 @@ namespace ft {
 
 			nodePtr		createNode(const value_type& data, nodePtr &old) {
 				nodePtr	tmp = _alloc.allocate(1);
-				_alloc.construct(tmp, data);
-				tmp->right = NULL;
-				tmp->left = NULL;
-				// _end = tmp;
-				tmp->parent = old;
+				_alloc.construct(tmp, nodeType(data, old, _end, _end));
+				// std::cout << "Adresse create end : " << tmp->right << std::endl;
+				// tmp->right = NULL;
+				// tmp->left = NULL;
+
+				// tmp->parent = old;
 				return (tmp);
 			}
 
 			void		destroy(nodePtr &ptr) {
-				if (!ptr) {return;}
+				if (ptr == _end || !ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				// _alloc.destroy(ptr->_data);
@@ -82,7 +84,7 @@ namespace ft {
 			}
 
 			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
-				if (!ptr) {
+				if (ptr == _end || !ptr) {
 					ptr = createNode(data, old);
 					return ;
 				}
@@ -114,7 +116,7 @@ namespace ft {
 				if (!ptr) {return (NULL);}
 
 				nodePtr curent = ptr;
-				while (curent->left != 0) {
+				while (curent->left != _end) {
 					parent = curent;
 					curent = curent->left;
 				}
@@ -125,7 +127,7 @@ namespace ft {
 				if (!ptr) {return (NULL);}
 
 				nodePtr	curent = ptr;
-				while (curent->right != 0) {
+				while (curent->right != _end) {
 					parent = curent;
 					curent = curent->droit;
 				}
@@ -202,7 +204,7 @@ namespace ft {
 			// }
 
 			nodePtr	find(const value_type& data, nodePtr& node, nodePtr& parent) {
-				if (!node)
+				if (node == _end || !node)
 					return (NULL);
 				if (data.first == node->_data.first)
 					return (node);
@@ -219,19 +221,30 @@ namespace ft {
 		public:
 			tree(const key_compare &comp = key_compare(), const allocator_type alloc = allocator_type()) :  _alloc(alloc), _root(0), _end(0), _compteur(0), _comp(comp) {
 				_end = _alloc.allocate(1);
-				_alloc.construct(_end);
+				_alloc.construct(_end, nodeType(value_type(), NULL, NULL, NULL));
+				_root = _end;
+				// std::cout << "address _end : " << _end << std::endl;
+				// std::cout << "adree max : " << getMax() << std::endl;
 			}
 
 			~tree() {
+				// std::cout << "destructeur max : " << getMax() << std::endl;
+				destroy(_root);
+				_alloc.destroy(_end);
 				_alloc.deallocate(_end, 1);
 				_end = NULL;
-				destroy(_root);
 			}
 
+			nodePtr		getEnd() const {return (_end);}
+			nodePtr		getRoot() const {return (_root);}
+
 			nodePtr		getMin(nodePtr node = NULL, bool test = 0) const {
-				if (!node)
+				if (!node) {
+					if (_root == _end)
+						return (_root);
 					node = _root;
-				while (node && node->left)
+				}
+				while (node->left != _end)
 					node = node->left;
 				if (test) {
 					// infixe(_root);
@@ -243,37 +256,38 @@ namespace ft {
 				return (node);
 			}
 
-			nodePtr	getEnd() const {return (this->_end);}
-
 			nodePtr		getMax(nodePtr node = NULL) const {
-				if (!node)
+				if (!node) {
+					if (_root == _end)
+						return (_root);
 					node = _root;
-				while (node && node->right)
+				}
+				while (node->right != _end)
 					node = node->right;
 				return (node);
 			}
 
-			nodePtr	lowerBound(const value_type& data) {
-				nodePtr node = getMin();
-                while (node)
-                {
-                    if (!_comp(node->_data.first, data.first))
-                        return (node);
-                    node = successeur(node);
-                }
-                return (NULL);
-			}
+			// nodePtr	lowerBound(const value_type& data) {
+			// 	nodePtr node = getMin();
+            //     while (node != _end)
+            //     {
+            //         if (!_comp(node->_data.first, data.first))
+            //             return (node);
+            //         node = successeur(node);
+            //     }
+            //     return (NULL);
+			// }
 
-			nodePtr	upperBound(const value_type& data) {
-				nodePtr node = getMin();
-                while (node)
-                {
-                    if (_comp(data.first, node->_data.first))
-                        return (node);
-                    node = successeur(node);
-                }
-                return (NULL);
-			}
+			// nodePtr	upperBound(const value_type& data) {
+			// 	nodePtr node = getMin();
+            //     while (node != _end)
+            //     {
+            //         if (_comp(data.first, node->_data.first))
+            //             return (node);
+            //         node = successeur(node);
+            //     }
+            //     return (NULL);
+			// }
 
 			void	swap(tree& Tree) {
 				nodePtr			root = _root;
@@ -297,6 +311,7 @@ namespace ft {
 
 			void	clear() {
 				destroy(_root);
+				_root = _end;
 				_compteur = 0;
 			}
 
@@ -308,6 +323,7 @@ namespace ft {
 				_compteur++;
 				insert(data, _root, _root);
 				// _end->left = _root;
+				// _end->right = _root;
 				// _root->parent = _end;
 			}
 

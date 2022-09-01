@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 03:00:59 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 05:13:11 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,17 @@ namespace ft {
 					// range (2)
 					template <class InputIterator>
 					map	(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree() {
-						while (first != last) {
-							_tree.insert(*first);
-							first++;
-						}
+						// while (first != last) {
+						// 	_tree.insert(*first);
+						// 	first++;
+						// }
+						insert(first, last);
 					}
 
 					// copy (3)
 					map (const map& x) : _comp(x._comp), _alloc(x._alloc) {
-						*this = x;
+						// *this = x;
+						insert(x.begin(), x.end());
 					}
 
 					~map() {}
@@ -138,20 +140,20 @@ namespace ft {
 						// std::cout << test->left << std::endl;
 						// std::cout << "Value : " << test->_data.first << " - " <<  test->_data.second << std::endl;
 
-						return (iterator(_tree.getMin()));
+						return (iterator(_tree.getMin(), _tree.getRoot(), _tree.getEnd()));
 					}
 					const_iterator begin() const {
 						// std::cout << "MIN MAP : " << _tree.getMin() << std::endl;
-						return (const_iterator(_tree.getMin()));
+						return (const_iterator(_tree.getMin(), _tree.getRoot(), _tree.getEnd()));
 					}
 
 					iterator end() {
 						// std::cout << "MAX MAP : " << _tree.getMax() << std::endl;
-						return (iterator(_tree.getMax()));
+						return (iterator(_tree.getEnd(), _tree.getRoot(),  _tree.getEnd()));
 					}
 
 					const_iterator end() const {
-						return (const_iterator(_tree.getMax()));
+						return (const_iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd()));
 					}
 
 					reverse_iterator rbegin() {

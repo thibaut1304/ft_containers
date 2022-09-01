@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 03:06:59 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 05:08:20 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ namespace ft {
 
 		protected:
 			nodePtr	_node;
+			nodePtr	_root;
+			nodePtr	_end;
 		public:
 
 			bidirectional_iterator() : _node(0) {}
 
-			bidirectional_iterator(nodePtr ptr) : _node(ptr) {}
+			bidirectional_iterator(nodePtr ptr, nodePtr root, nodePtr end) : _node(ptr), _root(root), _end(end) {}
 
-			bidirectional_iterator(bidirectional_iterator const &rhs) : _node(rhs._node) {}
+			bidirectional_iterator(bidirectional_iterator const &rhs) : _node(rhs._node), _root(rhs._root), _end(rhs._end) {}
 
 			// template <class Iter, class nodeptr>
 			// bidirectional_iterator (const bidirectional_iterator<Iter, nodeptr>& it) : _node(it._node) {}
@@ -51,11 +53,13 @@ namespace ft {
 				if (this == &lhs)
 					return (*this);
 				this->_node = lhs._node;
+				this->_root = lhs._root;
+				this->_end = lhs._end;
 				return (*this);
 			}
 
 			operator bidirectional_iterator<value_type const, nodeType const>() const {
-				return bidirectional_iterator<value_type const, nodeType const>(_node);
+				return bidirectional_iterator<value_type const, nodeType const>(_node, _root, _end);
 			}
 
 			virtual ~bidirectional_iterator() {}
@@ -92,6 +96,7 @@ namespace ft {
 				// std::cout << "Racine : " << root() << std::endl;
 				if (_node)
 					_node = successor(_node);
+				// std::cout << "inc max : " << _node.getMax() << std::endl;
 				return (*this);
 			}
 
@@ -104,16 +109,19 @@ namespace ft {
 			nodePtr root() {
 				nodePtr node = _node;
 
-				while (node->parent) {
+				while (node->parent != _end && node->parent) {
 					node = node->parent;
 				}
+				std::cout << node << std::endl;
 				return (node);
 			}
 
 			bidirectional_iterator &operator--() {
 				// ++_node;
-				if (!_node)
-					_node = maximum(root());
+				// std::cout << _node << std::endl;
+
+				if (_node == _end)
+					_node = maximum(_root);
 				else
 					_node = predecessor(_node);
 				return (*this);
@@ -128,20 +136,20 @@ namespace ft {
 		private:
 
 			nodePtr maximum(nodePtr ptr) {
-				while (ptr->right)
+				while (ptr->right != _end)
 					ptr = ptr->right;
 				return (ptr);
 			}
 
 			nodePtr minimum(nodePtr ptr) {
-				while (ptr->left)
+				while (ptr->left != _end)
 					ptr = ptr->left;
 				return (ptr);
 			}
 
 			nodePtr predecessor(nodePtr x) {
 				// if the left subtree is not null the predecessor is the rightmost node in the left subtree
-				if (x->left)
+				if (x->left != _end)
 				{
 					return maximum(x->left);
 				}
@@ -156,7 +164,7 @@ namespace ft {
 
 			nodePtr successor(nodePtr x) {
 				// if the right subtree is not null the successor is the leftmost node in the sright subtree
-				if (x->right != NULL)
+				if (x->right != _end)
 				{
 					return minimum(x->right);
 				}
@@ -173,7 +181,7 @@ namespace ft {
 			}
 
 			nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
-				if (!ptr) {return (NULL);}
+				if (ptr == _end) {return (NULL);}
 
 				nodePtr curent = ptr;
 				while (curent->left != 0) {
@@ -184,7 +192,7 @@ namespace ft {
 			}
 
 			nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
-				if (!ptr) {return (NULL);}
+				if (ptr == _end) {return (NULL);}
 
 				nodePtr	curent = ptr;
 				while (curent->right != 0) {
