@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 00:35:52 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 02:10:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ namespace ft {
 				// --(*this);
 				// nodePtr tmp = _node;
 				// _node = _node->parent;
-				bidirectional_iterator tmp(*this);
-				--_node;
+				// bidirectional_iterator tmp(*this);
+				// --_node;
 				// this = (--_node);
 				// std::cout << _node->_data.first << std::endl;
 				// std::cout << "BI : " << _node << std::endl;
@@ -73,9 +73,10 @@ namespace ft {
 					// _node = successeur(_node->parent, _node);
 				// std::cout << _node << std::endl;
 				// _node = _node->right;
-				// if (_node)
-					// _node = successor(_node);
-				return (--tmp);
+				// std::cout << "Racine : " << root() << std::endl;
+				if (_node)
+					_node = successor(_node);
+				return (*this);
 			}
 
 			bidirectional_iterator operator++(int) {
@@ -84,12 +85,21 @@ namespace ft {
 				return (tmp);
 			}
 
+			nodePtr root() {
+				nodePtr node = _node;
+
+				while (node->parent) {
+					node = node->parent;
+				}
+				return (node);
+			}
+
 			bidirectional_iterator &operator--() {
 				// ++_node;
-				if (_node)
-					_node = predecesseur(_node->left, _node);
+				if (!_node)
+					_node = maximum(root());
 				else
-					_node = maximum(_node);
+					_node = predecessor(_node);
 				return (*this);
 			}
 
@@ -111,6 +121,21 @@ namespace ft {
 				while (ptr->left)
 					ptr = ptr->left;
 				return (ptr);
+			}
+
+			nodePtr predecessor(nodePtr x) {
+				// if the left subtree is not null the predecessor is the rightmost node in the left subtree
+				if (x->left)
+				{
+					return maximum(x->left);
+				}
+				nodePtr y = x->parent;
+				while (y != NULL && x == y->left)
+				{
+					x = y;
+					y = y->parent;
+				}
+				return y;
 			}
 
 			nodePtr successor(nodePtr x) {
