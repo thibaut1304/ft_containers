@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 02:11:13 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 03:00:59 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,21 @@ namespace ft {
 					typedef Alloc														allocator_type;
 
 					typedef ft::tree<value_type, key_compare, allocator_type>			tree_type;
+
+					typedef s_node<value_type>											nodeType;
+
 					typedef typename tree_type::nodePtr									nodePtr;
 
 					typedef typename allocator_type::reference							reference;
 					typedef typename allocator_type::const_reference					const_reference;
 					typedef typename allocator_type::pointer							pointer;
 					typedef typename allocator_type::const_pointer						const_pointer;
-					typedef ft::bidirectional_iterator<pointer, nodePtr>				iterator;		// coder bidirectional_iterator
-					typedef ft::bidirectional_iterator<const_pointer, nodePtr>			const_iterator; // coder bidirectional_iterator
+					typedef ft::bidirectional_iterator<value_type, nodeType>				iterator;		// coder bidirectional_iterator
+					typedef ft::bidirectional_iterator<const value_type, const nodeType>		const_iterator; // coder bidirectional_iterator
 					typedef ft::reverse_iterator<value_type>							reverse_iterator;
-					typedef ft::reverse_iterator<value_type const>						const_reverse_iterator;
+					typedef ft::reverse_iterator<const value_type>						const_reverse_iterator;
 					// typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-					typedef typename allocator_type::difference_type						difference_type;	// utiliser ft::iterator
+					typedef typename allocator_type::difference_type					difference_type;	// utiliser ft::iterator
 					typedef typename allocator_type::size_type							size_type;
 					// typedef ft::tree<key_type, mapped_type, get_key<key_type, mapped_type>, key_compare>	tree_type;
 					class value_compare : public std::binary_function<value_type, value_type, bool>
