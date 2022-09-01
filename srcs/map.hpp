@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 05:13:11 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 15:58:12 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ namespace ft {
 					}
 
 					size_type max_size() const {
+						// std::cout << _alloc.max_size() <<std::endl;
 						return (_tree.max_size());
 					}
 
@@ -204,7 +205,9 @@ namespace ft {
 							node = _tree.find(val);
 							notInserted = true;
 						}
-						return (ft::make_pair(iterator(node), notInserted));
+						// std::cout << "BOOL : " << notInserted << std::endl;
+						print_infixe();
+						return (ft::make_pair(iterator(node, _tree.getRoot(), _tree.getEnd()), notInserted));
 					}
 
 					// with hint (2)
@@ -217,7 +220,7 @@ namespace ft {
 							_tree.insert(val);
 							node = _tree.find(val);
 						}
-						return (iterator(node));
+						return (iterator(node, _tree.getRoot(), _tree.getEnd()));
 					}
 
 					// range (3)

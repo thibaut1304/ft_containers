@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 05:08:20 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 15:52:27 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft {
 			nodePtr	_end;
 		public:
 
-			bidirectional_iterator() : _node(0) {}
+			bidirectional_iterator() : _node(0), _root(0), _end(0) {}
 
 			bidirectional_iterator(nodePtr ptr, nodePtr root, nodePtr end) : _node(ptr), _root(root), _end(end) {}
 

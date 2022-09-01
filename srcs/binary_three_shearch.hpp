@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 05:18:56 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 16:09:39 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,13 @@ namespace ft {
 
 			void		infixe(nodePtr ptr) const {
 				if (!ptr) {return;}
-				std::cout << "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+				if (ptr != _end) {
+					std::cout << "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 
-				std::cout << "left: " << ptr->left << std::endl;
-				// std::cout << "right: " << ptr->right << std::endl;
-				std::cout << "parent: " << ptr->parent << std::endl;
+					std::cout << "left: " << ptr->left << std::endl;
+					std::cout << "right: " << ptr->right << std::endl;
+					std::cout << "parent: " << ptr->parent << std::endl;
+				}
 				infixe(ptr->left);
 				// std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 				infixe(ptr->right);
