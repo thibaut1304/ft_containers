@@ -6,12 +6,21 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 15:58:12 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:18:57 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _MAP_HPP_
 # define _MAP_HPP_
+
+#define _NC "\033[0;0m"
+#define _RED "\033[0;31m"
+#define _GREEN "\033[0;32m"
+#define _YELLOW "\033[0;33m"
+#define _BLUE "\033[0;34m"
+#define _PURPLE "\033[0;95m"
+#define _CYAN "\033[0;36m"
+#define _WHITE "\033[0;37m"
 
 /*********************************/
 // # include <utility> // --> pair
@@ -23,6 +32,7 @@
 # include "reverse_iterator.hpp"
 # include "bidirectional_iterator.hpp"
 # include "binary_three_shearch.hpp"
+# include "pair.hpp"
 
 // # include <cstddef> // ptrdiff -->  dans iterator_traits
 
@@ -127,7 +137,10 @@ namespace ft {
 						return *this;
 					 }
 
-					void	print_infixe() { std::cout << "\nAffichage arbre bianaire :\n"; _tree.infixe();}
+					void	print_infixe() {
+						std::cout << "\nAffichage arbre bianaire :\n";
+						_tree.infixe();
+					}
 
 					iterator begin() {
 						// std::cout << "MAP : ";
@@ -139,7 +152,7 @@ namespace ft {
 						// std::cout << "Node left  : ";
 						// std::cout << test->left << std::endl;
 						// std::cout << "Value : " << test->_data.first << " - " <<  test->_data.second << std::endl;
-
+						std::cout << "Ite : " << _tree.getMin() << std::endl;
 						return (iterator(_tree.getMin(), _tree.getRoot(), _tree.getEnd()));
 					}
 					const_iterator begin() const {
@@ -203,10 +216,13 @@ namespace ft {
 						{
 							_tree.insert(val);
 							node = _tree.find(val);
+						// std::cout << "adresse end de node dans map : " << node << std::endl;
 							notInserted = true;
 						}
 						// std::cout << "BOOL : " << notInserted << std::endl;
 						print_infixe();
+						// std::cout << "ROOT insert : " << _tree.getRoot() << std::endl;
+						// std::cout << "END  insert : " << _tree.getEnd() << std::endl;
 						return (ft::make_pair(iterator(node, _tree.getRoot(), _tree.getEnd()), notInserted));
 					}
 

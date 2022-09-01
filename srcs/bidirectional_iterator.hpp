@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 15:52:27 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:14:24 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define _BIDIRECTIONAL_ITERATOR_HPP_
 
 # include "iterator_traits.hpp"
+#include <iostream>
 
 namespace ft {
 	template <class T, class nodeType>

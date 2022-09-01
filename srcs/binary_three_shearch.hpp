@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 16:09:39 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:10:00 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ namespace ft {
 
 			nodePtr		createNode(const value_type& data, nodePtr &old) {
 				nodePtr	tmp = _alloc.allocate(1);
+				// if (old == _end)
+					// old = NULL;
 				_alloc.construct(tmp, nodeType(data, old, _end, _end));
 				// std::cout << "Adresse create end : " << tmp->right << std::endl;
 				// tmp->right = NULL;
@@ -101,16 +103,20 @@ namespace ft {
 			}
 
 			void		infixe(nodePtr ptr) const {
-				if (!ptr) {return;}
+				if (!ptr || ptr == _end) {return;}
 				if (ptr != _end) {
-					std::cout << "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
-
-					std::cout << "left: " << ptr->left << std::endl;
-					std::cout << "right: " << ptr->right << std::endl;
-					std::cout << "parent: " << ptr->parent << std::endl;
+					std::cout << _RED "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+				if (ptr->left != _end)
+					std::cout << _RED "left: " << ptr->left << _NC << std::endl;
+				if (ptr->right != _end)
+					std::cout << _RED "right: " << ptr->right << _NC << std::endl;
+				if (ptr->parent != _end)
+					std::cout << _RED "parent: " << ptr->parent << _NC << std::endl;
 				}
 				infixe(ptr->left);
-				// std::cout << "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+					// std::cout << "root  : " << ptr << std::endl;
+					// std::cout << "parent: " << ptr->parent << std::endl;
+				// std::cout << _RED <<  "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 				infixe(ptr->right);
 			}
 
@@ -255,6 +261,7 @@ namespace ft {
 					std::cout << node->left << std::endl;
 					std::cout << node->right << std::endl << std::endl;
 				}
+				// std::cout << "MIN : " << node << std::endl;
 				return (node);
 			}
 

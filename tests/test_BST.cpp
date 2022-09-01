@@ -5,6 +5,7 @@
 // #include <map>
  #include "map.hpp"
 
+#include <iostream>
 
 using namespace ft;
 
@@ -24,23 +25,22 @@ void	print_result(const T &iter) {
 	std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
 }
 
+#define T1 int
+#define T2 std::string
+
 int main () {
 	// tree<ft::pair<int, int> > test;
-	ft::map<int, int> test;
-	typedef ft::map<int, int>::iterator iterator;
+	ft::map<T1, T2> test;
+	typedef ft::map<T1, T2>::iterator iterator;
 	ft::pair<iterator, bool> tmp;
 	ft::pair<iterator, bool> tmp2;
 	ft::pair<iterator, bool> tmp3;
 
-	tmp = test.insert(ft::map<int, int>::value_type(3, 5));
-	tmp2 = test.insert(ft::map<int, int>::value_type(1, 5));
-	tmp3 = test.insert(ft::map<int, int>::value_type(3, 5));
+	tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
+	tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
+	tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
+	tmp3 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
 	// std::cout << tmp.first << std::endl;
-	print_result(tmp);
-	print_result(tmp2);
-	print_result(tmp3);
-	test.print_infixe();
-
 
 	// ft::pair<std::map<int, int>::iterator, bool> hello= test.insert(ft::make_pair<int, int>(5, 3));
 	// std::cout << hello.second << std::endl;
