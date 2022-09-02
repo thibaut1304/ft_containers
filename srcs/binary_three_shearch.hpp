@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 21:46:49 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 22:30:48 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ namespace ft {
 					// parent = curent;
 					curent = curent->left;
 				}
+				// std::cout << curent->_data.first << std::endl;
+				// std::cout << curent->right->_data.first << std::endl;
 				return (curent);
 			}
 
@@ -150,15 +152,25 @@ namespace ft {
 					// _alloc_node.deallocate(ptr, 1);
 				}
 				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
-					nodePtr		pere = ptr;
-					std::cout << "TEST" << std::endl;
+					// nodePtr		pere = ptr;
 					nodePtr		succ = successeur(ptr->right);
-					// std::cout << succ->_data.first << std::endl;
-					nodePtr tmp1 = ptr->parent;
-					nodePtr tmp2 = ptr->left;
-					nodePtr tmp3 = ptr->right;
-					// _alloc.destroy(ptr);
-					// _alloc.deallocate(ptr, 1);
+					nodePtr papa_succ = succ->parent;
+					if (succ->right != _end) {
+						papa_succ->left = succ->right;
+					}
+					else {
+						papa_succ->left = _end;
+					}
+
+					succ->parent = ptr->parent;
+					succ->left = ptr->left;
+					succ->right = ptr->right;
+
+					if (ptr == _root)
+						_root = succ;
+					// std::cout << succ->parent->_data.first << std::endl;
+					_alloc.destroy(ptr);
+					_alloc.deallocate(ptr, 1);
 
 					// value_type val  = succ->_data;
 					// _alloc.destroy(ptr);
@@ -169,11 +181,13 @@ namespace ft {
 					// ptr->parent = succ->parent;
 					// ptr->left = succ->left;
 					// ptr->right = succ->right;
-					toDelete(succ, pere);
-					succ->parent = tmp1;
-					succ->left = tmp2;
-					succ->right = tmp3;
+					// toDelete(ptr, pere);
 
+					// std::cout << _CYAN << succ->right->_data.first << _NC << std::endl;
+
+					// _alloc.destroy(ptr);
+					// _alloc.deallocate(ptr, 1);
+					// delete ptr;
 					// ptr->_data = val;
 				}
 				else {
