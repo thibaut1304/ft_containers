@@ -6,21 +6,22 @@
 using namespace ft;
 #define T1 int
 #define T2 std::string
+#define T3 ft::pair<const T1, T2>
 
 int main () {
 	// std::cout << sizeof(int) << " "
-	ft::pair<const T1, T2> _pair = ft::make_pair(42, "hi");
-	tree<int, std::string> arbre;
+	T3 _pair = ft::make_pair(42, "hi");
+	tree<T3> arbre;
 	//insert key et T
-	arbre.insert(42, "hi");
-	arbre.insert(50, "hi");
-	arbre.insert(35, "hi");
-	arbre.insert(21, "hi");
-	arbre.insert(38, "hello");
-	arbre.insert(45, "3");
-	arbre.insert(55, "b");
-	// arbre.insert(55, "hi");
-	// arbre.insert(45, "hi");
+	arbre.insert(ft::make_pair(42, "hi"));
+	arbre.insert(ft::make_pair(50, "hi"));
+	arbre.insert(ft::make_pair(35, "hi"));
+	arbre.insert(ft::make_pair(21, "hi"));
+	arbre.insert(ft::make_pair(38, "hello"));
+	arbre.insert(ft::make_pair(45, "3"));
+	arbre.insert(ft::make_pair(55, "b"));
+	arbre.insert(ft::make_pair(55, "hi"));
+	arbre.insert(ft::make_pair(45, "hi"));
 
 	// arbre.insert(9, "hello");
 	// arbre.insert(5, "el padre");
@@ -33,7 +34,7 @@ int main () {
 
 	arbre.infixe();
 	// arbre.print_node_find(42);
-	std::cout << "Taille de  l'arbre : " << arbre.size() << std::endl;
+	// std::cout << "Taille de  l'arbre : " << arbre.size() << std::endl;
 
 	// std::cout  << "Supression 25 !" << std::endl;
 	// arbre.toDelete(14);
