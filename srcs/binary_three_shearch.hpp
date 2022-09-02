@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 18:22:40 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:31:40 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ namespace ft {
 		s_node<T>	*left;
 		s_node<T>	*right;
 
-		s_node() : parent(0), left(0), right(0) {}
+		// s_node() : parent(0), left(0), right(0) {}
 		s_node(T data, s_node* parent, s_node* left, s_node* right) : _data(data), parent(parent), left(left), right(right) {}
 	};
 
@@ -86,15 +86,15 @@ namespace ft {
 				return (tmp);
 			}
 
-			void		destroy(nodePtr &ptr) {
+			void		destroy(nodePtr ptr) {
 				if (ptr == _end || !ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				// _alloc.destroy(ptr->_data);
 				// _alloc.deallocate(ptr->_data, 1);
-				// _alloc.destroy(ptr);
+				_alloc.destroy(ptr);
 				_alloc.deallocate(ptr, 1);
-				ptr = NULL;
+				// ptr = NULL;
 			}
 
 			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
@@ -130,7 +130,7 @@ namespace ft {
 				// if (ptr->right == _end) {
 				// 	std::cout << _YELLOW << ptr->_data.first << " - " << ptr->_data.second << _NC << std::endl;
 				// }
-				if (ptr == _end) {return ;}
+				if (ptr == _end || !ptr) {return ;}
 				// if (ptr != _end)
 				// 	std::cout << _RED "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
 				// if (ptr->left != _end)
@@ -156,94 +156,77 @@ namespace ft {
 				infixe(ptr->right);
 			}
 
-			nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
-				if (!ptr) {return (NULL);}
+			// nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
+			// 	if (!ptr) {return (NULL);}
 
-				nodePtr curent = ptr;
-				while (curent->left != _end) {
-					parent = curent;
-					curent = curent->left;
-				}
-				return (curent);
-			}
-
-			nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
-				if (!ptr) {return (NULL);}
-
-				nodePtr	curent = ptr;
-				while (curent->right != _end) {
-					parent = curent;
-					curent = curent->droit;
-				}
-				return (curent);
-			}
-
-			void		toDelete(nodePtr	ptr, nodePtr	parent) {
-					// std::cout << "hello : " << ptr << std::endl;
-				if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
-					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
-					if (ptr != _root) {
-						if (parent->left == ptr) {
-							parent->left = NULL;
-						}
-						else {
-							parent->right = NULL;
-						}
-					}
-					else {
-						_root = NULL;
-					}
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
-					// _alloc_node.destroy(ptr);
-					// _alloc_node.deallocate(ptr, 1);
-				}
-				else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
-					// s_node<M>	*pere 2;
-					nodePtr		pere = ptr;
-					nodePtr		succ = successeur(ptr->right, pere);
-					value_type val  = succ->_data;
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
-					ptr->_data = val;
-					// _alloc.construct(ptr->_data, ft::make_pair(val->first, val->second));
-					toDelete(succ, pere);
-				}
-				else {
-					nodePtr	child = (ptr->left) ? ptr->left : ptr->right;
-
-					if (ptr != _root) {
-						if (ptr == parent->left) {
-							parent->left = child;
-						}
-						else {
-							parent->right = child;
-						}
-					}
-					else {
-						_root = child;
-					}
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
-					// _alloc_node.destroy(ptr);
-					// _alloc_node.deallocate(ptr, 1);
-				}
-			}
-
-			// s_node<M>	*find(const KEY& key, s_node<M> *ptr, s_node<M> *&parent) const {
-			// 	if (!ptr) {
-			// 		return (NULL);
+			// 	nodePtr curent = ptr;
+			// 	while (curent->left != _end) {
+			// 		parent = curent;
+			// 		curent = curent->left;
 			// 	}
-			// 	else if ((ptr->_data->first)  == key) {
-			// 		return (ptr);
+			// 	return (curent);
+			// }
+
+			// nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
+			// 	if (!ptr) {return (NULL);}
+
+			// 	nodePtr	curent = ptr;
+			// 	while (curent->right != _end) {
+			// 		parent = curent;
+			// 		curent = curent->droit;
 			// 	}
-			// 	else if (key < (ptr->_data->first)) {
-			// 		parent = ptr;
-			// 		return (find(key, ptr->left, parent));
+			// 	return (curent);
+			// }
+
+			// void		toDelete(nodePtr	ptr, nodePtr	parent) {
+			// 		// std::cout << "hello : " << ptr << std::endl;
+			// 	if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
+			// 		// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
+			// 		if (ptr != _root) {
+			// 			if (parent->left == ptr) {
+			// 				parent->left = NULL;
+			// 			}
+			// 			else {
+			// 				parent->right = NULL;
+			// 			}
+			// 		}
+			// 		else {
+			// 			_root = NULL;
+			// 		}
+			// 		_alloc.destroy(ptr);
+			// 		_alloc.deallocate(ptr, 1);
+			// 		// _alloc_node.destroy(ptr);
+			// 		// _alloc_node.deallocate(ptr, 1);
+			// 	}
+			// 	else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
+			// 		// s_node<M>	*pere 2;
+			// 		nodePtr		pere = ptr;
+			// 		nodePtr		succ = successeur(ptr->right, pere);
+			// 		value_type val  = succ->_data;
+			// 		_alloc.destroy(ptr);
+			// 		_alloc.deallocate(ptr, 1);
+			// 		ptr->_data = val;
+			// 		// _alloc.construct(ptr->_data, ft::make_pair(val->first, val->second));
+			// 		toDelete(succ, pere);
 			// 	}
 			// 	else {
-			// 		parent = ptr;
-			// 		return (find(key, ptr->right, parent));
+			// 		nodePtr	child = (ptr->left) ? ptr->left : ptr->right;
+
+			// 		if (ptr != _root) {
+			// 			if (ptr == parent->left) {
+			// 				parent->left = child;
+			// 			}
+			// 			else {
+			// 				parent->right = child;
+			// 			}
+			// 		}
+			// 		else {
+			// 			_root = child;
+			// 		}
+			// 		_alloc.destroy(ptr);
+			// 		_alloc.deallocate(ptr, 1);
+			// 		// _alloc_node.destroy(ptr);
+			// 		// _alloc_node.deallocate(ptr, 1);
 			// 	}
 			// }
 
@@ -261,7 +244,7 @@ namespace ft {
 			}
 
 		public:
-			tree(const key_compare &comp = key_compare(), const allocator_type alloc = allocator_type()) :  _alloc(alloc), _root(0), _end(0), _compteur(0), _comp(comp) {
+			tree(const key_compare &comp = key_compare(), const allocator_type alloc = allocator_type()) :  _alloc(alloc), _compteur(0), _comp(comp) {
 				_end = _alloc.allocate(1);
 				_alloc.construct(_end, nodeType(value_type(), NULL, NULL, NULL));
 				_root = _end;
@@ -368,19 +351,26 @@ namespace ft {
 			void	insert(const value_type data) {
 				// if (_root == _end)
 					// std::cout << _CYAN  << _root << _NC << std::endl;
-				if (_compteur == 0) {
-					_root = createNode(data, _end);
+				// if (_compteur == 0) {
+					// _root = createNode(data, _end);
 					// std::cout << _CYAN  << _root << _NC << std::endl;
-					_root->parent = _end;
-					_root = _root;
+					// _root->parent = _end;
+					// _root = _root;
 					// std::cout << _CYAN  << _root << _NC << std::endl;
-					_compteur++;
-					return ;
-				}
+				// if (_compteur == 0) {
+				// 	_root = createNode(data, _end);
+				// 	// std::cout << _CYAN  << _root << _NC << std::endl;
+				// 	_root->parent = _end;
+				// 	_root = _root;
+				// 	// std::cout << _CYAN  << _root << _NC << std::endl;
+				// 	_compteur++;
+				// 	return ;
+				// }
 
-				insert(data, _root, _end);
 				// std::cout << _CYAN  << _root << _NC << std::endl;
 				_compteur++;
+				insert(data, _root, _root);
+				// std::cout << _CYAN  << _root << _NC << std::endl;
 				// _end->left = _root;
 				// _end->right = _root;
 				// _root->parent = _end;
