@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 17:02:22 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:57:35 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ namespace ft {
 				return (this->_node == lhs._node);
 			}
 
-			template<class _Iterator>
-			bool operator==(ft::bidirectional_iterator<_Iterator, ft::s_node<_Iterator> > const &rhs) {
-				return (this->_node == rhs._node);
-			}
+			// template<class _Iterator>
+			// bool operator==(ft::bidirectional_iterator<_Iterator, ft::s_node<_Iterator> > const &rhs) {
+				// return (_node == rhs._node);
+			// }
 
+			template<class Iterator, class Iter>
+			friend bool operator==(ft::bidirectional_iterator<Iterator, ft::s_node<Iterator> > const &lhs, ft::bidirectional_iterator<Iter, ft::s_node<Iter> > const &rhs);
 
 			nodePtr		base() const {return (_node);}
 
@@ -215,16 +217,19 @@ namespace ft {
 			}
 
 	};
-	template <class Iter, class nodeptr>
-	bool operator== (const bidirectional_iterator<Iter, nodeptr>& lhs,
-					const bidirectional_iterator<Iter, nodeptr>& rhs)
-	{
+
+	template<class Iterator, class Iter>
+	bool operator==(ft::bidirectional_iterator<Iterator, ft::s_node<Iterator> > const &lhs, ft::bidirectional_iterator<Iter, ft::s_node<Iter> > const &rhs) {
+		return (lhs._node == rhs._node);
+	}
+
+	template <class Iter, class nodePtr>
+	bool operator== (const bidirectional_iterator<Iter, nodePtr>& lhs, const bidirectional_iterator<Iter, nodePtr>& rhs) {
 		return (lhs.base() == rhs.base());
 	}
-	template <class Iter, class nodeptr>
-	bool operator!= (const bidirectional_iterator<Iter, nodeptr>& lhs,
-					const bidirectional_iterator<Iter, nodeptr>& rhs)
-	{
+
+	template <class Iter, class nodePtr>
+	bool operator!= (const bidirectional_iterator<Iter, nodePtr>& lhs, const bidirectional_iterator<Iter, nodePtr>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 18:31:40 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 21:46:49 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,31 @@ namespace ft {
 		s_node<T>	*left;
 		s_node<T>	*right;
 
-		// s_node() : parent(0), left(0), right(0) {}
 		s_node(T data, s_node* parent, s_node* left, s_node* right) : _data(data), parent(parent), left(left), right(right) {}
 	};
 
 	template<class T, class Compare, class Alloc>
 	class tree {
 		public:
-			// typedef ft::pair<const KEY, T>																M;
 			typedef T 																					value_type;
 			typedef s_node<T>*																			nodePtr;
 			typedef s_node<T>																			nodeType;
 			typedef typename Alloc::template rebind<s_node<T> >::other 									allocator_type;
-            // typedef std::size_t																			size_type;
 			typedef	typename allocator_type::size_type 													size_type;
-            typedef Compare																				key_compare;
+			typedef Compare																				key_compare;
+			// typedef std::size_t																			size_type;
 
 
 		private:
-			// alloc_node			_alloc_node;
 			allocator_type		_alloc;
 			nodePtr				_root;
 			nodePtr				_end;
-			nodePtr				_test;
 			size_type			_compteur;
 			key_compare 		_comp;
 
 			nodePtr		createNode(const value_type& data, nodePtr &old) {
-				// std::cout << _CYAN  << _root << _NC << std::endl;
 				nodePtr	tmp = _alloc.allocate(1);
-				// if (old == _end)
-					// old = NULL;
 				_alloc.construct(tmp, nodeType(data, old, _end, _end));
-					// std::cout << _CYAN  << _root << _NC << std::endl;
-				// std::cout << "Adresse create end : " << tmp->right << std::endl;
-				// tmp->right = NULL;
-				// tmp->left = NULL;
-
-				// tmp->parent = old;
 				return (tmp);
 			}
 
@@ -90,20 +77,13 @@ namespace ft {
 				if (ptr == _end || !ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
-				// _alloc.destroy(ptr->_data);
-				// _alloc.deallocate(ptr->_data, 1);
 				_alloc.destroy(ptr);
 				_alloc.deallocate(ptr, 1);
-				// ptr = NULL;
 			}
 
 			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
-					// std::cout << _CYAN  << _root << _NC << std::endl;
 				if (ptr == _end || !ptr) {
-					// std::cout << _CYAN  << _root << _NC << std::endl;
 					ptr = createNode(data, old);
-					// std::cout << _YELLOW "insert : " << ptr->parent << _NC<<std::endl;
-					// ptr->parent = old;
 					return ;
 				}
 				else if (data.first == ptr->_data.first) {
@@ -111,44 +91,15 @@ namespace ft {
 					return ;
 				}
 				if (_comp(data.first, ptr->_data.first)) {
-					// std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->left, ptr);
 				}
 				else {
-					// std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->right, ptr);
 				}
 			}
 
 			void		infixe(nodePtr ptr) const {
-					// std::cout << _YELLOW "root     : " << _root << _NC << std::endl;
-					// std::cout << _YELLOW "root papa: " << _root->parent << _NC << std::endl;
-					// return;
-				// if (ptr->left == _end) {
-				// 	std::cout << _CYAN << ptr->_data.first << " - " << ptr->_data.second << _NC << std::endl;
-				// }
-				// if (ptr->right == _end) {
-				// 	std::cout << _YELLOW << ptr->_data.first << " - " << ptr->_data.second << _NC << std::endl;
-				// }
 				if (ptr == _end || !ptr) {return ;}
-				// if (ptr != _end)
-				// 	std::cout << _RED "node: " << ptr << "    KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
-				// if (ptr->left != _end)
-				// 	std::cout << _RED "left: " << ptr->left << _NC << std::endl;
-				// if (ptr->right != _end)
-				// 	std::cout << _RED "right: " << ptr->right << _NC << std::endl;
-				// if (ptr->parent != _end)
-				// 	std::cout << _RED "parent: " << ptr->parent << _NC << std::endl;
-				// if (ptr == _root) {
-				// 	// std::cout << "hello" << std::endl;
-				// 	// std::cout << _CYAN "ptr      : " << ptr << _NC << std::endl;
-				// 	// std::cout << _CYAN "ptr papa : " << ptr->parent << _NC << std::endl;
-				// 	// std::cout << _CYAN "end : " << _end << _NC << std::endl; // --> c'est good
-				// 	}
-
-				// if (ptr->_data.first == 50) {
-					// std::cout << ptr->parent->left << std::endl;
-				// }
 				infixe(ptr->left);
 				std::cout << _YELLOW << "ptr  : " << ptr << " - " << ptr->left << " - " << ptr->right << _NC;
 				std::cout << " - KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n";
@@ -156,16 +107,16 @@ namespace ft {
 				infixe(ptr->right);
 			}
 
-			// nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
-			// 	if (!ptr) {return (NULL);}
+			nodePtr	successeur(nodePtr ptr) const {
+				if (ptr == _end || !ptr) {return (_end);}
 
-			// 	nodePtr curent = ptr;
-			// 	while (curent->left != _end) {
-			// 		parent = curent;
-			// 		curent = curent->left;
-			// 	}
-			// 	return (curent);
-			// }
+				nodePtr curent = ptr;
+				while (curent->left != _end) {
+					// parent = curent;
+					curent = curent->left;
+				}
+				return (curent);
+			}
 
 			// nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
 			// 	if (!ptr) {return (NULL);}
@@ -178,57 +129,73 @@ namespace ft {
 			// 	return (curent);
 			// }
 
-			// void		toDelete(nodePtr	ptr, nodePtr	parent) {
-			// 		// std::cout << "hello : " << ptr << std::endl;
-			// 	if (ptr->left == 0 &&  ptr->right == 0) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
-			// 		// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
-			// 		if (ptr != _root) {
-			// 			if (parent->left == ptr) {
-			// 				parent->left = NULL;
-			// 			}
-			// 			else {
-			// 				parent->right = NULL;
-			// 			}
-			// 		}
-			// 		else {
-			// 			_root = NULL;
-			// 		}
-			// 		_alloc.destroy(ptr);
-			// 		_alloc.deallocate(ptr, 1);
-			// 		// _alloc_node.destroy(ptr);
-			// 		// _alloc_node.deallocate(ptr, 1);
-			// 	}
-			// 	else if (ptr->left && ptr->right) { // Dans le cas ou left et right est pas null
-			// 		// s_node<M>	*pere 2;
-			// 		nodePtr		pere = ptr;
-			// 		nodePtr		succ = successeur(ptr->right, pere);
-			// 		value_type val  = succ->_data;
-			// 		_alloc.destroy(ptr);
-			// 		_alloc.deallocate(ptr, 1);
-			// 		ptr->_data = val;
-			// 		// _alloc.construct(ptr->_data, ft::make_pair(val->first, val->second));
-			// 		toDelete(succ, pere);
-			// 	}
-			// 	else {
-			// 		nodePtr	child = (ptr->left) ? ptr->left : ptr->right;
+			void		toDelete(nodePtr	ptr, nodePtr	parent) {
+				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
+					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
+					std::cout << "hello : " << parent << std::endl;
+					if (ptr != _root) {
+						if (parent->left == ptr) {
+							parent->left = _end;
+						}
+						else {
+							parent->right = _end;
+						}
+					}
+					else {
+						_root = _end;
+					}
+					_alloc.destroy(ptr);
+					_alloc.deallocate(ptr, 1);
+					// _alloc_node.destroy(ptr);
+					// _alloc_node.deallocate(ptr, 1);
+				}
+				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
+					nodePtr		pere = ptr;
+					std::cout << "TEST" << std::endl;
+					nodePtr		succ = successeur(ptr->right);
+					// std::cout << succ->_data.first << std::endl;
+					nodePtr tmp1 = ptr->parent;
+					nodePtr tmp2 = ptr->left;
+					nodePtr tmp3 = ptr->right;
+					// _alloc.destroy(ptr);
+					// _alloc.deallocate(ptr, 1);
 
-			// 		if (ptr != _root) {
-			// 			if (ptr == parent->left) {
-			// 				parent->left = child;
-			// 			}
-			// 			else {
-			// 				parent->right = child;
-			// 			}
-			// 		}
-			// 		else {
-			// 			_root = child;
-			// 		}
-			// 		_alloc.destroy(ptr);
-			// 		_alloc.deallocate(ptr, 1);
-			// 		// _alloc_node.destroy(ptr);
-			// 		// _alloc_node.deallocate(ptr, 1);
-			// 	}
-			// }
+					// value_type val  = succ->_data;
+					// _alloc.destroy(ptr);
+					// _alloc.deallocate(ptr, 1);
+					// ptr = _alloc.allocate(1);
+					// _alloc.construct(ptr, nodeType(succ->_data, succ->parent, succ->left, succ->right));
+
+					// ptr->parent = succ->parent;
+					// ptr->left = succ->left;
+					// ptr->right = succ->right;
+					toDelete(succ, pere);
+					succ->parent = tmp1;
+					succ->left = tmp2;
+					succ->right = tmp3;
+
+					// ptr->_data = val;
+				}
+				else {
+					nodePtr	child = (ptr->left) ? ptr->left : ptr->right;
+
+					if (ptr != _root) {
+						if (ptr == parent->left) {
+							parent->left = child;
+						}
+						else {
+							parent->right = child;
+						}
+					}
+					else {
+						_root = child;
+					}
+					_alloc.destroy(ptr);
+					_alloc.deallocate(ptr, 1);
+					// _alloc_node.destroy(ptr);
+					// _alloc_node.deallocate(ptr, 1);
+				}
+			}
 
 			nodePtr	find(const value_type& data, nodePtr& node) {
 				if (node == _end || !node)
@@ -248,13 +215,9 @@ namespace ft {
 				_end = _alloc.allocate(1);
 				_alloc.construct(_end, nodeType(value_type(), NULL, NULL, NULL));
 				_root = _end;
-				// std::cout << "address _end : " << _end << std::endl;
-				// std::cout << "adree max : " << getMax() << std::endl;
 			}
 
 			~tree() {
-				// std::cout << "destructeur max : " << getMax() << std::endl;
-				// std::cout << _YELLOW << _root << _NC << std::endl;
 				destroy(_root);
 				_alloc.destroy(_end);
 				_alloc.deallocate(_end, 1);
@@ -273,15 +236,11 @@ namespace ft {
 				while (node->left != _end)
 					node = node->left;
 				if (test) {
-					// infixe(_root);
 					std::cout << "ARBRE : " << std::endl;
 					std::cout << node << std::endl;
 					std::cout << node->left << std::endl;
 					std::cout << node->right << std::endl << std::endl;
 				}
-				// std::cout << _PURPLE "MIN : " << node->_data.first << _NC <<std::endl;
-				// std::cout << _RED << node << _NC <<std::endl;
-				// std::cout << _YELLOW << _root << _NC <<std::endl;
 				return (node);
 			}
 
@@ -335,7 +294,7 @@ namespace ft {
 				Tree._end = end;
 				Tree._alloc = alloc;
 				Tree._comp = comp;
-				Tree._size = compteur;
+				Tree._compteur = compteur;
 			}
 
 			void	clear() {
@@ -349,46 +308,25 @@ namespace ft {
 			}
 
 			void	insert(const value_type data) {
-				// if (_root == _end)
-					// std::cout << _CYAN  << _root << _NC << std::endl;
-				// if (_compteur == 0) {
-					// _root = createNode(data, _end);
-					// std::cout << _CYAN  << _root << _NC << std::endl;
-					// _root->parent = _end;
-					// _root = _root;
-					// std::cout << _CYAN  << _root << _NC << std::endl;
-				// if (_compteur == 0) {
-				// 	_root = createNode(data, _end);
-				// 	// std::cout << _CYAN  << _root << _NC << std::endl;
-				// 	_root->parent = _end;
-				// 	_root = _root;
-				// 	// std::cout << _CYAN  << _root << _NC << std::endl;
-				// 	_compteur++;
-				// 	return ;
-				// }
-
-				// std::cout << _CYAN  << _root << _NC << std::endl;
 				_compteur++;
 				insert(data, _root, _root);
-				// std::cout << _CYAN  << _root << _NC << std::endl;
-				// _end->left = _root;
-				// _end->right = _root;
-				// _root->parent = _end;
 			}
 
-			// void		erase(const value_type& data) {
-			// 	nodePtr	parent = 0;
-			// 	nodePtr	del = find(data, _root);
-			// 	if (!del) {
-			// 		std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
-			// 	}
-			// 	else {
-			// 		if (_root)
-			// 			_root->parent = _end;
-			// 		toDelete(del, parent);
-			// 		_compteur--;
-			// 	}
-			// }
+			void		erase(const value_type& data) {
+				nodePtr	del = find(data, _root);
+				nodePtr	parent = del->parent;
+				// std::cout << _RED << data.first << _NC << std::endl;
+				if (!del) {
+					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
+				}
+				else {
+					if (_root != _end)
+						_root->parent = _end;
+					// std::cout << "TEST" << std::endl;
+					toDelete(del, parent);
+					_compteur--;
+				}
+			}
 
 			void		infixe() {
 				infixe(_root);

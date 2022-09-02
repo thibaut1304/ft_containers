@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 18:30:16 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 21:48:29 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,12 +284,23 @@ namespace ft {
 					void erase (iterator position);
 
 					// (2)
-					size_type erase (const key_type& k);
+					size_type erase (const key_type& k) {
+						ft::pair<const Key, T> _pair = ft::make_pair(k, T());
+						nodePtr search = _tree.find(_pair);
+						size_type vd = _tree.size();
+						_tree.erase(_pair);
+						// std::cout << _RED << search->_data.first << " - " << search->_data.second << _NC << std::endl;
+						if (_tree.size() - 1 == vd)
+							return (1);
+						return (0);
+					}
 
 					// (3)
 					void erase (iterator first, iterator last);
 
-					void swap (map& x);
+					void swap (map& x) {
+						_tree.swap(x._tree);
+					}
 
 					void clear() {_tree.clear();}
 
