@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 23:44:36 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:17:58 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ namespace ft {
 						if (!node || node == _tree.getEnd())
 						{
 							_tree.insert(val);
-							node = _tree.find(val);
+							// node = _tree.find(val);
 						// std::cout << _CYAN << node << _NC << std::endl;
 						}
 						// print_infixe();
