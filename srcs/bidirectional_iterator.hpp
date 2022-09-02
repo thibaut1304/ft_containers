@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 21:20:13 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:02:22 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define _BIDIRECTIONAL_ITERATOR_HPP_
 
 # include "iterator_traits.hpp"
+# include "binary_three_shearch.hpp"
 #include <iostream>
 
 namespace ft {
@@ -64,6 +65,16 @@ namespace ft {
 			}
 
 			virtual ~bidirectional_iterator() {}
+
+			bool operator==(ft::bidirectional_iterator<value_type, nodeType> const &lhs) const {
+				return (this->_node == lhs._node);
+			}
+
+			template<class _Iterator>
+			bool operator==(ft::bidirectional_iterator<_Iterator, ft::s_node<_Iterator> > const &rhs) {
+				return (this->_node == rhs._node);
+			}
+
 
 			nodePtr		base() const {return (_node);}
 

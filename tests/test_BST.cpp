@@ -31,17 +31,20 @@ void	print_result(const T &iter) {
 int main () {
 	// tree<ft::pair<int, int> > test;
 	ft::map<T1, T2> test;
-	typedef ft::map<T1, T2>::iterator iterator;
-	ft::pair<iterator, bool> tmp;
-	ft::pair<iterator, bool> tmp2;
-	ft::pair<iterator, bool> tmp3;
-	ft::pair<iterator, bool> tmp4;
+	// typedef ft::map<T1, T2>::iterator iterator;
+	// ft::pair<iterator, bool> tmp;
+	// ft::pair<iterator, bool> tmp2;
+	// ft::pair<iterator, bool> tmp3;
+	// ft::pair<iterator, bool> tmp4;
 
-	tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
-	tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
-	tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
+	test.insert(ft::map<T1, T2>::value_type(42, "root"));
+	 test.insert(ft::map<T1, T2>::value_type(50, "root -1 right"));
+	 test.insert(ft::map<T1, T2>::value_type(35, "root -1 left"));
 	test.print_infixe();
-	tmp4 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
+	 test.insert(ft::map<T1, T2>::value_type(45, "root -2 right"));
+	 test.insert(ft::map<T1, T2>::value_type(55, "root -2 right"));
+	 test.insert(ft::map<T1, T2>::value_type(21, "root -2 left"));
+	 test.insert(ft::map<T1, T2>::value_type(38, "root -2 left"));
 	test.print_infixe();
 	// print_result(tmp);
 	// std::cout << tmp.first << std::endl;

@@ -6,12 +6,21 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 00:39:18 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:22:40 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _BINARY_THREE_SHEARCH_
 # define _BINARY_THREE_SHEARCH_
+
+#define _NC "\033[0;0m"
+#define _RED "\033[0;31m"
+#define _GREEN "\033[0;32m"
+#define _YELLOW "\033[0;33m"
+#define _BLUE "\033[0;34m"
+#define _PURPLE "\033[0;95m"
+#define _CYAN "\033[0;36m"
+#define _WHITE "\033[0;37m"
 
 # define FEUILLE NULL
 # include <iostream>
@@ -63,12 +72,12 @@ namespace ft {
 			key_compare 		_comp;
 
 			nodePtr		createNode(const value_type& data, nodePtr &old) {
-				std::cout << _CYAN  << _root << _NC << std::endl;
+				// std::cout << _CYAN  << _root << _NC << std::endl;
 				nodePtr	tmp = _alloc.allocate(1);
 				// if (old == _end)
 					// old = NULL;
 				_alloc.construct(tmp, nodeType(data, old, _end, _end));
-					std::cout << _CYAN  << _root << _NC << std::endl;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
 				// std::cout << "Adresse create end : " << tmp->right << std::endl;
 				// tmp->right = NULL;
 				// tmp->left = NULL;
@@ -89,9 +98,9 @@ namespace ft {
 			}
 
 			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
-					std::cout << _CYAN  << _root << _NC << std::endl;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
 				if (ptr == _end || !ptr) {
-					std::cout << _CYAN  << _root << _NC << std::endl;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
 					ptr = createNode(data, old);
 					// std::cout << _YELLOW "insert : " << ptr->parent << _NC<<std::endl;
 					// ptr->parent = old;
@@ -102,11 +111,11 @@ namespace ft {
 					return ;
 				}
 				if (_comp(data.first, ptr->_data.first)) {
-					std::cout << _CYAN  << _root << _NC << std::endl;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->left, ptr);
 				}
 				else {
-					std::cout << _CYAN  << _root << _NC << std::endl;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->right, ptr);
 				}
 			}
@@ -141,11 +150,9 @@ namespace ft {
 					// std::cout << ptr->parent->left << std::endl;
 				// }
 				infixe(ptr->left);
-					// std::cout << "root  : " << ptr << std::endl;
-					// std::cout << "parent: " << ptr->parent << std::endl;
-				std::cout << _YELLOW << ptr << _NC << " -- ";
-				// std::cout << _CYAN << ptr->parent << _NC << std::endl;
-				std::cout << _RED <<  "KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << _NC << "\n"; //" - Parent : " << ptr->parent->_data.first << "\n";
+				std::cout << _YELLOW << "ptr  : " << ptr << " - " << ptr->left << " - " << ptr->right << _NC;
+				std::cout << " - KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n";
+				std::cout << _YELLOW << "papa : " << ptr->parent << _NC << std::endl << std::endl;
 				infixe(ptr->right);
 			}
 
@@ -240,18 +247,16 @@ namespace ft {
 			// 	}
 			// }
 
-			nodePtr	find(const value_type& data, nodePtr& node, nodePtr& parent) {
+			nodePtr	find(const value_type& data, nodePtr& node) {
 				if (node == _end || !node)
 					return (NULL);
 				if (data.first == node->_data.first)
 					return (node);
 				if (_comp(data.first, node->_data.first)) {
-					parent = node;
-					return (find(data, node->left, parent));
+					return (find(data, node->left));
 				}
 				else {
-					parent = node;
-					return (find(data, node->right, parent));
+					return (find(data, node->right));
 				}
 			}
 
@@ -266,7 +271,7 @@ namespace ft {
 
 			~tree() {
 				// std::cout << "destructeur max : " << getMax() << std::endl;
-				std::cout << _YELLOW << _root << _NC << std::endl;
+				// std::cout << _YELLOW << _root << _NC << std::endl;
 				destroy(_root);
 				_alloc.destroy(_end);
 				_alloc.deallocate(_end, 1);
@@ -292,7 +297,7 @@ namespace ft {
 					std::cout << node->right << std::endl << std::endl;
 				}
 				// std::cout << _PURPLE "MIN : " << node->_data.first << _NC <<std::endl;
-				// std::cout << _YELLOW << node << _NC <<std::endl;
+				// std::cout << _RED << node << _NC <<std::endl;
 				// std::cout << _YELLOW << _root << _NC <<std::endl;
 				return (node);
 			}
@@ -357,12 +362,12 @@ namespace ft {
 			}
 
 			nodePtr	find(const value_type& data) {
-				return (find(data, _root, _root));
+				return (find(data, _root));
 			}
 
 			void	insert(const value_type data) {
 				// if (_root == _end)
-					std::cout << _CYAN  << _root << _NC << std::endl;
+					// std::cout << _CYAN  << _root << _NC << std::endl;
 				if (_compteur == 0) {
 					_root = createNode(data, _end);
 					// std::cout << _CYAN  << _root << _NC << std::endl;
@@ -374,26 +379,26 @@ namespace ft {
 				}
 
 				insert(data, _root, _end);
-				std::cout << _CYAN  << _root << _NC << std::endl;
+				// std::cout << _CYAN  << _root << _NC << std::endl;
 				_compteur++;
 				// _end->left = _root;
 				// _end->right = _root;
 				// _root->parent = _end;
 			}
 
-			void		erase(const value_type& data) {
-				nodePtr	parent = 0;
-				nodePtr	del = find(data, _root, parent);
-				if (!del) {
-					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
-				}
-				else {
-					if (_root)
-						_root->parent = _end;
-					toDelete(del, parent);
-					_compteur--;
-				}
-			}
+			// void		erase(const value_type& data) {
+			// 	nodePtr	parent = 0;
+			// 	nodePtr	del = find(data, _root);
+			// 	if (!del) {
+			// 		std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
+			// 	}
+			// 	else {
+			// 		if (_root)
+			// 			_root->parent = _end;
+			// 		toDelete(del, parent);
+			// 		_compteur--;
+			// 	}
+			// }
 
 			void		infixe() {
 				infixe(_root);

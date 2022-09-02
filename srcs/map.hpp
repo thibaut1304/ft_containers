@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 23:44:36 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:18:13 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "reverse_iterator.hpp"
 # include "bidirectional_iterator.hpp"
 # include "binary_three_shearch.hpp"
+# include "equal.hpp"
 # include "pair.hpp"
 
 // # include <cstddef> // ptrdiff -->  dans iterator_traits
@@ -110,10 +111,10 @@ namespace ft {
 					// range (2)
 					template <class InputIterator>
 					map	(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree() {
-						// while (first != last) {
-						// 	_tree.insert(*first);
-						// 	first++;
-						// }
+						while (first != last) {
+							_tree.insert(*first);
+							first++;
+						}
 						insert(first, last);
 					}
 
@@ -228,6 +229,32 @@ namespace ft {
 						return (ft::make_pair(iterator(node, _tree.getRoot(), _tree.getEnd()), notInserted));
 					}
 
+					// void insert (const value_type& val) {
+					// 	nodePtr	node;
+
+					// 	// if (node != _tree.xgetEnd())
+					// 		// return ;
+					// 	// bool nil = false;
+
+					// 	// if (node == _tree.getEnd())
+					// 		// nil = true;
+					// 	// bool	notInserted = false;
+					// 	// if (nil)
+					// // 	// {
+					// 		_tree.insert(val);
+					// 		node = _tree.find(val);
+					// 	// std::cout << "adresse end de node dans map : " << node << std::endl;
+					// 		// notInserted = true;
+					// 	// }
+					// 	(void)node;
+					// 	// std::cout << "BOOL : " << notInserted << std::endl;
+					// 	// print_infixe();
+					// 	// std::cout << _RED << _tree.getMin() << _NC <<std::endl;
+					// 	// std::cout << "ROOT insert : " << _tree.getRoot() << std::endl;
+					// 	// std::cout << "END  insert : " << _tree.getEnd() << std::endl;
+					// 	// return (ft::make_pair(iterator(node, _tree.getRoot(), _tree.getEnd()), notInserted));
+					// }
+
 					// with hint (2)
 					// iterator insert (iterator position, const value_type& val);
 					iterator insert (iterator position, const value_type& val) {
@@ -287,6 +314,14 @@ namespace ft {
 
 					allocator_type get_allocator() const;
 			};
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return false;
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
 
 	// template <class Key, class T, class Compare, class Alloc>
 	// class map<Key,T,Compare,Alloc>::value_compare {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
