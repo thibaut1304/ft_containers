@@ -4,9 +4,12 @@
 
 
 using namespace ft;
+#define T1 int
+#define T2 std::string
 
 int main () {
 	// std::cout << sizeof(int) << " "
+	ft::pair<const T1, T2> _pair = ft::make_pair(42, "hi");
 	tree<int, std::string> arbre;
 	//insert key et T
 	arbre.insert(42, "hi");

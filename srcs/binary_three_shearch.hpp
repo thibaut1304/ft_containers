@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/25 22:49:17 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 15:46:16 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # define FEUILLE NULL
 # include <iostream>
 # include <memory>
+
+#define _NC "\033[0;0m"
+#define _RED "\033[0;31m"
+#define _GREEN "\033[0;32m"
+#define _YELLOW "\033[0;33m"
+#define _BLUE "\033[0;34m"
+#define _PURPLE "\033[0;95m"
+#define _CYAN "\033[0;36m"
+#define _WHITE "\033[0;37m"
 
 #include <stdio.h>
 
@@ -32,8 +41,12 @@ namespace ft {
 	template<class M>
 	struct 	s_node {
 		M			*_data;
+		s_node<M>	*parent;
 		s_node<M>	*left;
 		s_node<M>	*right;
+
+		// s_node(s_node* parent, s_node* left, s_node* right) : parent(parent), left(left), right(right) {}
+		s_node(M *data, s_node* parent, s_node* left, s_node* right) : _data(data), parent(parent), left(left), right(right) {}
 	};
 
 	template<class KEY, class T, class Alloc = std::allocator<ft::pair<const KEY, T> > >
@@ -41,26 +54,30 @@ namespace ft {
 		public:
 			typedef Alloc																				allocator_type;
 			typedef ft::pair<const KEY, T>																M;
+			typedef s_node<M>*																			nodePtr;
+			typedef s_node<M>																			nodeType;
 			typedef typename allocator_type::template rebind<s_node<ft::pair<const KEY, T> > >::other 	alloc_node;
 			typedef T 																					value_type;
 		private:
 			allocator_type		_alloc;
 			alloc_node			_alloc_node;
 			s_node<M>			*_root;
+			nodePtr 			_end;
 			int					_compteur;
 
-			s_node<M>	*createNode(const T& value, const KEY& key) {
+			s_node<M>	*createNode(const T& value, const KEY& key, nodePtr &old) {
 				ft::pair<const KEY, T>	*_pair = _alloc.allocate(1);
+
 				_alloc.construct(_pair, ft::make_pair(key, value));
-				s_node<M>			*tmp = _alloc_node.allocate(1);
-				tmp->_data = _pair;
-				tmp->left = NULL;
-				tmp->right = NULL;
+
+				nodePtr		tmp = _alloc_node.allocate(1);
+				
+				_alloc_node.construct(tmp, nodeType(_pair, old, _end, _end));
 				return (tmp);
 			}
 
 			void		destroy(s_node<M> *ptr) {
-				if (!ptr) {return;}
+				if (!ptr || ptr == _end) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				_alloc.destroy(ptr->_data);
@@ -69,9 +86,9 @@ namespace ft {
 				_alloc_node.deallocate(ptr, 1);
 			}
 
-			void		insert(const KEY& key, const T& value, s_node<M>*& ptr) {
-				if (!ptr) {
-					ptr = createNode(value, key);
+			void		insert(const KEY& key, const T& value, s_node<M>*& ptr, nodePtr old) {
+				if (!ptr || ptr == _end) {
+					ptr = createNode(value, key, old);
 					return ;
 				}
 				else if (key == ptr->_data->first) {
@@ -79,18 +96,20 @@ namespace ft {
 					return;
 				}
 				else if (key < ptr->_data->first) {
-					insert(key, value, ptr->left);
+					insert(key, value, ptr->left, ptr);
 				}
 				else {
-					insert(key, value, ptr->right);
+					insert(key, value, ptr->right, ptr);
 				}
 			}
 
 			void		infixe(s_node<M> *ptr) const {
-				if (!ptr) {return;}
+				if (!ptr || ptr == _end) {return;}
 
 				infixe(ptr->left);
-				std::cout << "KEY : " << ptr->_data->first << " - T : " << ptr->_data->second << "\n";
+				std::cout << _YELLOW << "ptr  : " << ptr << " - " << ptr->left << " - " << ptr->right << _NC;
+				std::cout << " - KEY : " << ptr->_data->first << " - T : " << ptr->_data->second << "\n";
+				std::cout << _YELLOW << "papa : " << ptr->parent << _NC << std::endl << std::endl;
 				infixe(ptr->right);
 			}
 
@@ -173,7 +192,7 @@ namespace ft {
 			}
 
 			s_node<M>	*find(const KEY& key, s_node<M> *ptr, s_node<M> *&parent) const {
-				if (!ptr) {
+				if (!ptr || ptr == _end) {
 					return (NULL);
 				}
 				else if ((ptr->_data->first)  == key) {
@@ -190,8 +209,27 @@ namespace ft {
 			}
 
 		public:
-			tree() : _root(0), _compteur(0) {}
-			~tree() { destroy(_root); }
+			tree() : _compteur(0) {
+				ft::pair<const KEY, T>	*_pair = _alloc.allocate(1);
+				_alloc.construct(_pair, ft::make_pair(KEY(), T()));
+				_end = _alloc_node.allocate(1);
+				_alloc_node.construct(_end, nodeType(_pair, NULL, NULL, NULL));
+				// _end->_data = _pair;
+				// _end->parent = NULL;
+				// _end->left = NULL;
+				// _end->right = NULL;
+				_root = _end;
+				// std::cout << _CYAN << _end << _NC << std::endl;
+			}
+
+			~tree() {
+				// std::cout << _CYAN << _end << _NC << std::endl;
+				destroy(_root);
+				_alloc.destroy(_end->_data);
+				_alloc.deallocate(_end->_data, 1);
+				_alloc_node.destroy(_end);
+				_alloc_node.deallocate(_end, 1);
+			}
 
 			void		toDelete(const KEY& key) {
 				s_node<M>	*parent = 0;
@@ -214,8 +252,9 @@ namespace ft {
 			}
 
 			void		insert(const KEY& key, const T& value) {
+				// std::cout << _CYAN << _root << _NC << std::endl;
 				_compteur++;
-				insert(key, value, _root);
+				insert(key, value, _root, _root);
 			}
 
 			void		infixe() const {
