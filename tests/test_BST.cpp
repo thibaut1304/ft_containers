@@ -10,7 +10,7 @@ using namespace ft;
 
 int main () {
 	// std::cout << sizeof(int) << " "
-	T3 _pair = ft::make_pair(42, "hi");
+	// T3 _pair = ft::make_pair(42, "hi");
 	tree<T3> arbre;
 	//insert key et T
 	arbre.insert(ft::make_pair(42, "hi"));
