@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 22:32:26 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 01:29:16 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ namespace ft {
 							_tree.insert(*first);
 							first++;
 						}
-						insert(first, last);
+						// insert(first, last);
 					}
 
 					// copy (3)
@@ -201,7 +201,20 @@ namespace ft {
 						return (_tree.max_size());
 					}
 
-					mapped_type& operator[] (const key_type& k);
+					mapped_type& operator[] (const key_type& k) {
+						ft::pair<const Key, T> _pair_ = ft::make_pair(k, T());
+
+						nodePtr res = _tree.find(_pair_);
+
+						if (res != _tree.getEnd())
+							return (res->_data.second);
+						else
+						{
+							_tree.insert(_pair_);
+							res = _tree.find(_pair_);
+							return (res->_data.second);
+						}
+					}
 
 					// single element (1)
 					// ft::pair<iterator,bool> insert (const value_type& val) {
@@ -281,21 +294,35 @@ namespace ft {
 					}
 
 					// (1)
-					void erase (iterator position);
+					void erase (iterator position) {
+						// std::cout << position->first << std::endl;
+						if (position != end())
+							erase((*position).first);
+					}
+
+					// void erase (const_iterator position) {
+					// 	std::cout << position->first << std::endl;
+					// 	if (position != end())
+					// 		erase((*position).first);
+					// }
 
 					// (2)
 					size_type erase (const key_type& k) {
-						ft::pair<const Key, T> _pair = ft::make_pair(k, T());
+						ft::pair<const Key, T> _pair_ = ft::make_pair(k, T());
 
 						size_type vd = _tree.size();
-						_tree.erase(_pair);
+						_tree.erase(_pair_);
 						if (_tree.size() - 1 == vd)
 							return (1);
 						return (0);
 					}
 
 					// (3)
-					void erase (iterator first, iterator last);
+					void erase (iterator first, iterator last) {
+						for (; first != last; first++) {
+							erase((*first).first);
+						}
+					}
 
 					void swap (map& x) {
 						_tree.swap(x._tree);

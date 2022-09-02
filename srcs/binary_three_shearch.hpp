@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 22:30:48 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 01:25:53 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,16 +131,16 @@ namespace ft {
 			// 	return (curent);
 			// }
 
-			void		toDelete(nodePtr	ptr, nodePtr	parent) {
+			void		toDelete(nodePtr	ptr) {
 				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
 					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
-					std::cout << "hello : " << parent << std::endl;
 					if (ptr != _root) {
-						if (parent->left == ptr) {
-							parent->left = _end;
+						nodePtr padre = ptr->parent;
+						if (padre->left == ptr) {
+							padre->left = _end;
 						}
 						else {
-							parent->right = _end;
+							padre->right = _end;
 						}
 					}
 					else {
@@ -154,17 +154,31 @@ namespace ft {
 				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
 					// nodePtr		pere = ptr;
 					nodePtr		succ = successeur(ptr->right);
-					nodePtr papa_succ = succ->parent;
-					if (succ->right != _end) {
-						papa_succ->left = succ->right;
+
+					if (succ->parent == ptr) {
+						succ->left = ptr->left;
+						succ->parent = ptr->parent;
+						succ->right = _end;
+
+						nodePtr big_papa_succ = succ->parent;
+						if (_comp(succ->_data.first, big_papa_succ->_data.first))
+							big_papa_succ->left = succ;
+						else
+							big_papa_succ->right = succ;
+
 					}
 					else {
-						papa_succ->left = _end;
-					}
+						nodePtr papa_succ = succ->parent;
 
-					succ->parent = ptr->parent;
-					succ->left = ptr->left;
-					succ->right = ptr->right;
+						if (succ->right != _end)
+								papa_succ->left = succ->right;
+						else
+							papa_succ->left = _end;
+
+						succ->parent = ptr->parent;
+						succ->left = ptr->left;
+						succ->right = ptr->right;
+					}
 
 					if (ptr == _root)
 						_root = succ;
@@ -191,23 +205,25 @@ namespace ft {
 					// ptr->_data = val;
 				}
 				else {
-					nodePtr	child = (ptr->left) ? ptr->left : ptr->right;
+					// std::cout << _YELLOW << ptr->_data.first << _NC << std::endl;
+					nodePtr	child = (ptr->left != _end) ? ptr->left : ptr->right;
+					nodePtr padre = ptr->parent;
+					// std::cout << _YELLOW << padre->_data.first << _NC << std::endl;
 
 					if (ptr != _root) {
-						if (ptr == parent->left) {
-							parent->left = child;
+						if (ptr == padre->left) {
+							padre->left = child;
 						}
 						else {
-							parent->right = child;
+							padre->right = child;
 						}
+						child->parent = padre;
 					}
 					else {
 						_root = child;
 					}
 					_alloc.destroy(ptr);
 					_alloc.deallocate(ptr, 1);
-					// _alloc_node.destroy(ptr);
-					// _alloc_node.deallocate(ptr, 1);
 				}
 			}
 
@@ -326,20 +342,22 @@ namespace ft {
 				insert(data, _root, _root);
 			}
 
-			void		erase(const value_type& data) {
+			bool		erase(const value_type& data) {
 				nodePtr	del = find(data, _root);
-				nodePtr	parent = del->parent;
+				// nodePtr	parent = del->parent;
 				// std::cout << _RED << data.first << _NC << std::endl;
-				if (!del) {
+				if (del == _end) {
 					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
+					return (0);
 				}
 				else {
 					if (_root != _end)
 						_root->parent = _end;
-					// std::cout << "TEST" << std::endl;
-					toDelete(del, parent);
+					toDelete(del);
 					_compteur--;
+					// std::cout << _compteur << std::endl;
 				}
+				return (1);
 			}
 
 			void		infixe() {

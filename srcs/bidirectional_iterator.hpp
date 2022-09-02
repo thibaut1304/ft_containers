@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 18:57:35 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 00:29:21 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ namespace ft {
 				return (this->_node == lhs._node);
 			}
 
-			// template<class _Iterator>
-			// bool operator==(ft::bidirectional_iterator<_Iterator, ft::s_node<_Iterator> > const &rhs) {
-				// return (_node == rhs._node);
-			// }
+			bool operator!=(ft::bidirectional_iterator<value_type, nodeType> const &lhs) const {
+				return (this->_node != lhs._node);
+			}
 
 			template<class Iterator, class Iter>
 			friend bool operator==(ft::bidirectional_iterator<Iterator, ft::s_node<Iterator> > const &lhs, ft::bidirectional_iterator<Iter, ft::s_node<Iter> > const &rhs);
+
+			template<class Iterator, class Iter>
+			friend bool operator!=(ft::bidirectional_iterator<Iterator, ft::s_node<Iterator> > const &lhs, ft::bidirectional_iterator<Iter, ft::s_node<Iter> > const &rhs);
 
 			nodePtr		base() const {return (_node);}
 
@@ -120,24 +122,23 @@ namespace ft {
 				return (tmp);
 			}
 
-			nodePtr root() {
-				nodePtr node = _node;
+			// nodePtr root() {
+			// 	nodePtr node = _node;
 
-				while (node->parent != _end && node->parent) {
-					node = node->parent;
-				}
-				std::cout << node << std::endl;
-				return (node);
-			}
+			// 	while (node->parent != _end && node->parent) {
+			// 		node = node->parent;
+			// 	}
+			// 	std::cout << node << std::endl;
+			// 	return (node);
+			// }
 
 			bidirectional_iterator &operator--() {
-				// ++_node;
-				// std::cout << _node << std::endl;
-
-				if (_node == _end)
+				if (_node == _end) {
 					_node = maximum(_root);
+				}
 				else
 					_node = predecessor(_node);
+					// std::cout << _RED << _node->_data.first << _NC << std::endl;
 				return (*this);
 			}
 
@@ -221,6 +222,12 @@ namespace ft {
 	template<class Iterator, class Iter>
 	bool operator==(ft::bidirectional_iterator<Iterator, ft::s_node<Iterator> > const &lhs, ft::bidirectional_iterator<Iter, ft::s_node<Iter> > const &rhs) {
 		return (lhs._node == rhs._node);
+	}
+
+	template<class Iterator, class Iter>
+	bool operator!=(ft::bidirectional_iterator<Iterator, ft::s_node<Iterator> > const &lhs, ft::bidirectional_iterator<Iter, ft::s_node<Iter> > const &rhs)
+	{
+		return (lhs._ptr != rhs._ptr);
 	}
 
 	template <class Iter, class nodePtr>
