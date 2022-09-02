@@ -1,9 +1,9 @@
-// #include "../srcs/binary_three_shearch.hpp"
+#include "../srcs/binary_three_shearch.hpp"
 
 #include <string>
 
 // #include <map>
- #include "map.hpp"
+//  #include "map.hpp"
 
 #include <iostream>
 
@@ -25,33 +25,48 @@ void	print_result(const T &iter) {
 	std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
 }
 
-#define T1 int
-#define T2 std::string
+# define T1 int
+# define T2 std::string
+# define T3 ft::pair<const T1, T2>
 
 int main () {
-	// tree<ft::pair<T1, T2> > arbre;
-	ft::map<T1, T2> test;
-	typedef ft::map<T1, T2>::iterator iterator;
-	ft::pair<iterator, bool> tmp;
-	ft::pair<iterator, bool> tmp2;
-	ft::pair<iterator, bool> tmp3;
-	ft::pair<iterator, bool> tmp4;
+	tree<T3> arbre;
 
-	tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
-	// print_result(tmp);
-	tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
-	// print_result(tmp2);
-	tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
-	// print_result(tmp3);
-	// tmp4 = test.insert(ft::map<T1, T2>::value_type(21, "bunny"));
-	// // print_result(tmp4);
-	// tmp4 = test.insert(ft::map<T1, T2>::value_type(38, "bunny"));
-	// // print_result(tmp4);
-	// tmp4 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
-	// // print_result(tmp4);
-	// tmp4 = test.insert(ft::map<T1, T2>::value_type(55, "bunny"));
-	// // print_result(tmp4);
-	test.print_infixe();
+	arbre.insert(ft::make_pair(42, "hi"));
+	arbre.insert(ft::make_pair(50, "hi"));
+	arbre.insert(ft::make_pair(35, "hi"));
+	arbre.insert(ft::make_pair(21, "hi"));
+	arbre.insert(ft::make_pair(38, "hello"));
+	arbre.insert(ft::make_pair(45, "3"));
+	arbre.insert(ft::make_pair(55, "b"));
+	arbre.insert(ft::make_pair(55, "hi"));
+	arbre.insert(ft::make_pair(45, "hi"));
+
+	arbre.infixe();
+
+
+	// ft::map<T1, T2> test;
+	// typedef ft::map<T1, T2>::iterator iterator;
+	// ft::pair<iterator, bool> tmp;
+	// ft::pair<iterator, bool> tmp2;
+	// ft::pair<iterator, bool> tmp3;
+	// ft::pair<iterator, bool> tmp4;
+
+	// tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
+	// // print_result(tmp);
+	// tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
+	// // print_result(tmp2);
+	// tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
+	// // print_result(tmp3);
+	// // tmp4 = test.insert(ft::map<T1, T2>::value_type(21, "bunny"));
+	// // // print_result(tmp4);
+	// // tmp4 = test.insert(ft::map<T1, T2>::value_type(38, "bunny"));
+	// // // print_result(tmp4);
+	// // tmp4 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
+	// // // print_result(tmp4);
+	// // tmp4 = test.insert(ft::map<T1, T2>::value_type(55, "bunny"));
+	// // // print_result(tmp4);
+	// test.print_infixe();
 	// print_result(tmp);
 	// std::cout << tmp.first << std::endl;
 

@@ -6,12 +6,21 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 16:23:37 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:28:24 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _BINARY_THREE_SHEARCH_
 # define _BINARY_THREE_SHEARCH_
+
+#define _NC "\033[0;0m"
+#define _RED "\033[0;31m"
+#define _GREEN "\033[0;32m"
+#define _YELLOW "\033[0;33m"
+#define _BLUE "\033[0;34m"
+#define _PURPLE "\033[0;95m"
+#define _CYAN "\033[0;36m"
+#define _WHITE "\033[0;37m"
 
 # define FEUILLE NULL
 # include <iostream>
@@ -40,17 +49,18 @@ namespace ft {
 		s_node(T data, s_node* parent, s_node* left, s_node* right) : _data(data), parent(parent), left(left), right(right) {}
 	};
 
-	template<class T, class Compare, class Alloc>
+	template<class T, class Alloc = std::allocator<s_node<T> > >
 	class tree {
 		public:
+			typedef Alloc																				allocator_type;
 			// typedef ft::pair<const KEY, T>																M;
 			typedef T 																					value_type;
 			typedef s_node<T>*																			nodePtr;
 			typedef s_node<T>																			nodeType;
-			typedef typename Alloc::template rebind<s_node<T> >::other 									allocator_type;
+			// typedef typename Alloc::template rebind<s_node<T> >::other 									allocator_type;
             // typedef std::size_t																			size_type;
 			typedef	typename allocator_type::size_type 													size_type;
-            typedef Compare																				key_compare;
+            // typedef Compare																				key_compare;
 
 
 		private:
@@ -60,7 +70,7 @@ namespace ft {
 			nodePtr				_end;
 			nodePtr				_test;
 			size_type			_compteur;
-			key_compare 		_comp;
+			// key_compare 		_comp;
 
 			nodePtr		createNode(const value_type& data, nodePtr &old) {
 				// std::cout << _CYAN  << _root << _NC << std::endl;
@@ -101,7 +111,7 @@ namespace ft {
 					_compteur--;
 					return ;
 				}
-				if (_comp(data.first, ptr->_data.first)) {
+				if (data.first < ptr->_data.first) {
 					// std::cout << _CYAN  << _root << _NC << std::endl;
 					insert(data, ptr->left, ptr);
 				}
@@ -259,7 +269,7 @@ namespace ft {
 			}
 
 		public:
-			tree(const key_compare &comp = key_compare(), const allocator_type alloc = allocator_type()) :  _alloc(alloc), _compteur(0), _comp(comp) {
+			tree(const allocator_type alloc = allocator_type()) :  _alloc(alloc), _compteur(0) {
 				_end = _alloc.allocate(1);
 				_alloc.construct(_end, nodeType(value_type(), NULL, NULL, NULL));
 				_root = _end;
@@ -333,25 +343,25 @@ namespace ft {
             //     return (NULL);
 			// }
 
-			void	swap(tree& Tree) {
-				nodePtr			root = _root;
-				nodePtr			end = _end;
-				allocator_type	alloc = _alloc;
-				key_compare		comp = _comp;
-				size_type		compteur = _compteur;
+			// void	swap(tree& Tree) {
+			// 	nodePtr			root = _root;
+			// 	nodePtr			end = _end;
+			// 	allocator_type	alloc = _alloc;
+			// 	key_compare		comp = _comp;
+			// 	size_type		compteur = _compteur;
 
-				_root = Tree._root;
-				_end = Tree._end;
-				_alloc = Tree._alloc;
-				_comp = Tree._comp;
-				_compteur = Tree._compteur;
+			// 	_root = Tree._root;
+			// 	_end = Tree._end;
+			// 	_alloc = Tree._alloc;
+			// 	_comp = Tree._comp;
+			// 	_compteur = Tree._compteur;
 
-				Tree._root = root;
-				Tree._end = end;
-				Tree._alloc = alloc;
-				Tree._comp = comp;
-				Tree._size = compteur;
-			}
+			// 	Tree._root = root;
+			// 	Tree._end = end;
+			// 	Tree._alloc = alloc;
+			// 	Tree._comp = comp;
+			// 	Tree._size = compteur;
+			// }
 
 			void	clear() {
 				destroy(_root);
