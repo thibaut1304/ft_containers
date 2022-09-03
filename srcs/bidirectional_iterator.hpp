@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 00:29:21 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 17:11:39 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ namespace ft {
 				// std::cout << _node << std::endl;
 				// _node = _node->right;
 				// std::cout << "Racine : " << root() << std::endl;
-				if (_node)
+				if (_node != _end)
 					_node = successor(_node);
-				// std::cout << "inc max : " << _node << std::endl;
+				// std::cout << _YELLOW << "inc max : " << _node->_data.first << _NC<< std::endl;
 				return (*this);
 			}
 
@@ -135,10 +135,12 @@ namespace ft {
 			bidirectional_iterator &operator--() {
 				if (_node == _end) {
 					_node = maximum(_root);
+					// std::cout << _RED << _node->_data.first << _NC << std::endl;
 				}
 				else
 					_node = predecessor(_node);
-					// std::cout << _RED << _node->_data.first << _NC << std::endl;
+
+				// std::cout << _RED << _node->_data.first << _NC << std::endl;
 				return (*this);
 			}
 
@@ -195,27 +197,27 @@ namespace ft {
 				return y;
 			}
 
-			nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
-				if (ptr == _end) {return (NULL);}
+			// nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
+			// 	if (ptr == _end) {return (NULL);}
 
-				nodePtr curent = ptr;
-				while (curent->left != 0) {
-					parent = curent;
-					curent = curent->left;
-				}
-				return (curent);
-			}
+			// 	nodePtr curent = ptr;
+			// 	while (curent->left != 0) {
+			// 		parent = curent;
+			// 		curent = curent->left;
+			// 	}
+			// 	return (curent);
+			// }
 
-			nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
-				if (ptr == _end) {return (NULL);}
+			// nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
+			// 	if (ptr == _end) {return (NULL);}
 
-				nodePtr	curent = ptr;
-				while (curent->right != 0) {
-					parent = curent;
-					curent = curent->right;
-				}
-				return (curent);
-			}
+			// 	nodePtr	curent = ptr;
+			// 	while (curent->right != 0) {
+			// 		parent = curent;
+			// 		curent = curent->right;
+			// 	}
+			// 	return (curent);
+			// }
 
 	};
 

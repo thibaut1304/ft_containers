@@ -20,26 +20,44 @@ std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::
 }
 
 template <typename T>
-void	print_result(const T &iter) {
+void	print_result(const T &iter, bool insered = 0) {
 	std::cout << printPair(iter.first);
-	std::cout << "Est entrée dans l'arbre ? ";
-	std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
+	if (insered) {
+		std::cout << "Est entrée dans l'arbre ? ";
+		std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
+	}
 }
 
 #define T1 int
 #define T2 std::string
 typedef ft::pair<const T1, T2> T3;
 
-template <typename Map, typename Iter>
-void	ft_erase(Map mp, Iter iterator) {
-	mp.erase(iterator);
+template <typename Map>
+void	print_map(Map &mp) {
 	ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-	std::cout << _CYAN "Size : " << mp.size() << _NC << std::endl;
+	std::cout << _CYAN << "Size : " << mp.size() <<  _NC << std::endl;
 	for (; it != ite; it++) {
 		std::cout << "key : " << it->first << " - T : " << it->second << std::endl;
 	}
 	std::cout << std::endl;
+}
 
+template <typename MAP, typename U, typename V>
+void	ft_erase(MAP &mp, U param, V param2) {
+	mp.erase(param, param2);
+	// print_map(mp);
+}
+
+template <typename Map, typename Iter>
+void	ft_erase(Map &mp, Iter iterator) {
+	mp.erase(iterator);
+	// std::cout << _YELLOW << iterator->first << _NC << std::endl;
+		ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+		std::cout << _CYAN "Size : " << mp.size() << _NC << std::endl;
+		for (; it != ite; it++) {
+			std::cout << "key : " << it->first << " - T : " << it->second << std::endl;
+		}
+		std::cout << std::endl;
 }
 
 int main () {
@@ -93,14 +111,27 @@ int main () {
 
 	// std::cout << _RED << ite->first << _NC << std::endl;
 	// mp.erase(--(--mp.end()));
+	print_map(mp);
+	// ft_erase(mp, mp.begin());
+	ft_erase(mp, mp.end());
+	// ft_erase(mp, --mp.end());
+	// print_map(mp);
+	mp[10] = "hello";
+	mp[11] = "yo";
+	print_map(mp);
+	// ft_erase(mp, --(--(--mp.end())));
+	// ft_erase(mp, (--(--mp.end())));
+	// ft_erase(mp, ((--mp.end())));
+	// ft_erase(mp, ((mp.end())));
+	// ft_erase(mp, 8);
+	ft_erase(mp, (--(--(--mp.end()))), (--mp.end()));
+	// ft::map<T1, T2>::iterator test_yo = (++(mp.end()));
+	// std::cout << _YELLOW << test_yo->first << _NC << std::endl;
 
-	ft_erase(mp, mp.begin());
-	ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-	std::cout << _CYAN "Size : " << mp.size() << _NC << std::endl;
-	for (; it != ite; it++) {
-		std::cout << "key : " << it->first << " - T : " << it->second << std::endl;
-	}
-	std::cout << std::endl;
+	// ft::map<T1, T2>::iterator iter = --(--(--mp.end())), iter_end = mp.end();
+	// std::cout << _YELLOW << iter->first << _NC << std::endl;
+	// std::cout << _YELLOW << iter_end->first << _NC << std::endl;
+	// print_map(mp);
 	// ft_erase(mp, mp.begin());
 	// ft_erase(mp, mp.begin()++);
 	// ft_erase(mp,--(--mp.end()));

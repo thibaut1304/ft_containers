@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 01:29:16 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 17:17:48 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,7 @@ namespace ft {
 					// (1)
 					void erase (iterator position) {
 						// std::cout << position->first << std::endl;
-						if (position != end())
+						// if (position != end())
 							erase((*position).first);
 					}
 
@@ -320,6 +320,7 @@ namespace ft {
 					// (3)
 					void erase (iterator first, iterator last) {
 						for (; first != last; first++) {
+						// std::cout << _BLUE << first->first << _NC << std::endl;
 							erase((*first).first);
 						}
 					}
