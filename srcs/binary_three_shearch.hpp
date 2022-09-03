@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 17:18:24 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 23:08:05 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ namespace ft {
 
 			void		toDelete(nodePtr	ptr) {
 				nodePtr padre = ptr->parent;
-				
+
 				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
 					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
 					if (ptr != _root) {
@@ -343,13 +343,13 @@ namespace ft {
 				insert(data, _root, _root);
 			}
 
-			bool		erase(const value_type& data) {
+			void		erase(const value_type& data) {
 				nodePtr	del = find(data, _root);
 				// nodePtr	parent = del->parent;
 				// std::cout << _RED << del->_data.first << _NC << std::endl;
 				if (del == _end) {
-					std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
-					return (false);
+					// std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
+					return ;
 				}
 				else {
 					// if (_root != _end)
@@ -358,7 +358,7 @@ namespace ft {
 					_compteur--;
 					// std::cout << _compteur << std::endl;
 				}
-				return (true);
+				return ;
 			}
 
 			void		infixe() {

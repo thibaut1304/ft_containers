@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 17:17:48 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/03 23:04:15 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,16 +295,9 @@ namespace ft {
 
 					// (1)
 					void erase (iterator position) {
-						// std::cout << position->first << std::endl;
-						// if (position != end())
-							erase((*position).first);
+						ft::pair<const Key, T> _pair_ = ft::make_pair(position->first, position->second);
+						_tree.erase(_pair_);
 					}
-
-					// void erase (const_iterator position) {
-					// 	std::cout << position->first << std::endl;
-					// 	if (position != end())
-					// 		erase((*position).first);
-					// }
 
 					// (2)
 					size_type erase (const key_type& k) {
@@ -320,8 +313,7 @@ namespace ft {
 					// (3)
 					void erase (iterator first, iterator last) {
 						for (; first != last; first++) {
-						// std::cout << _BLUE << first->first << _NC << std::endl;
-							erase((*first).first);
+							erase(first);
 						}
 					}
 
@@ -331,9 +323,9 @@ namespace ft {
 
 					void clear() {_tree.clear();}
 
-					key_compare key_comp() const;
+					key_compare key_comp() const {return (_comp);}
 
-					value_compare value_comp() const;
+					value_compare value_comp() const {return (value_compare(_comp));}
 
 
 					iterator find (const key_type& k);
