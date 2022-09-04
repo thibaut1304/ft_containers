@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 17:21:17 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:14:23 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include "binary_three_shearch.hpp"
 # include "equal.hpp"
 # include "pair.hpp"
+# include "lexicographical_compare.hpp" 
 // # include <cstddef> // ptrdiff -->  dans iterator_traits
 
 // value_comp --> true si la clé du premier argument est considérée comme devant celle du second sinon false
@@ -79,8 +80,8 @@ namespace ft {
 					typedef typename allocator_type::const_pointer						const_pointer;
 					typedef ft::bidirectional_iterator<value_type, nodeType>				iterator;		// coder bidirectional_iterator
 					typedef ft::bidirectional_iterator<const value_type, const nodeType>		const_iterator; // coder bidirectional_iterator
-					typedef ft::reverse_iterator<value_type>							reverse_iterator;
-					typedef ft::reverse_iterator<const value_type>						const_reverse_iterator;
+					typedef ft::reverse_iterator<iterator>							reverse_iterator;
+					typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 					// typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 					typedef typename allocator_type::difference_type					difference_type;	// utiliser ft::iterator
 					typedef typename allocator_type::size_type							size_type;
@@ -298,9 +299,6 @@ namespace ft {
 
 					value_compare value_comp() const {return (value_compare(_comp));}
 
-
-					// iterator find (const key_type& k);
-
 					iterator find(const key_type &k)
 					{
 						ft::pair<const Key, T> _pair_ = ft::make_pair(k, T());
@@ -378,6 +376,8 @@ namespace ft {
 						return (ft::make_pair(lower_bound(k), upper_bound(k)));
 					}
 
+					allocator_type get_allocator() const { return (_alloc);}
+
 			};
 
 	template <class Key, class T, class Compare, class Alloc>
@@ -396,11 +396,35 @@ namespace ft {
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
-	{
+	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
 		if (lhs.size() != rhs.size())
 			return false;
 		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+		return (!(rhs == lhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+		return (rhs < lhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+		return (!(lhs < rhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+		return (!(rhs < lhs));
 	}
 }
 
