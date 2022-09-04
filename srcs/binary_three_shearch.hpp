@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 03:21:17 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 12:05:15 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ namespace ft {
 			}
 
 			void		destroy(nodePtr ptr) {
-				if (ptr == _end || !ptr) {return;}
+				if (ptr == _end) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				_alloc.destroy(ptr);
