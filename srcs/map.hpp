@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 12:18:05 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 12:23:40 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,27 +260,21 @@ namespace ft {
 					// }
 
 					// with hint (2)
-					// iterator insert (iterator position, const value_type& val);
 					iterator insert (iterator position, const value_type& val) {
 						static_cast<void>(position);
 						nodePtr	node = _tree.find(val);
-						if (node == _tree.getEnd())
-						{
+						if (node == _tree.getEnd()) {
 							_tree.insert(val);
 							node = _tree.find(val);
-						// std::cout << _CYAN << node << _NC << std::endl;
 						}
-						// print_infixe();
 						return (iterator(node, _tree.getRoot(), _tree.getEnd()));
 					}
 
 					// range (3)
 					template <class InputIterator>
 					void insert (InputIterator first, InputIterator last) {
-						while (first != last)
-						{
-							_tree.insert(*first);
-							first++;
+						while (first != last) {
+							_tree.insert(*first++);
 						}
 					}
 
