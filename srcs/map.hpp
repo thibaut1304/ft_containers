@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 02:27:31 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:52:20 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # include "binary_three_shearch.hpp"
 # include "equal.hpp"
 # include "pair.hpp"
-
 // # include <cstddef> // ptrdiff -->  dans iterator_traits
 
 // value_comp --> true si la clé du premier argument est considérée comme devant celle du second sinon false
@@ -86,17 +85,8 @@ namespace ft {
 					typedef typename allocator_type::difference_type					difference_type;	// utiliser ft::iterator
 					typedef typename allocator_type::size_type							size_type;
 					// typedef ft::tree<key_type, mapped_type, get_key<key_type, mapped_type>, key_compare>	tree_type;
-					class value_compare : public std::binary_function<value_type, value_type, bool>
-					{
-						friend class map;
-						protected:
-							key_compare comp;
-							value_compare(key_compare c) : comp(c) {}
-						public:
-							bool operator()(const value_type& lhs, const value_type& rhs) const {
-								return comp(lhs.first, rhs.first);
-							}
-					};
+
+		class value_compare;
 
 				private:
 						key_compare 	_comp;
@@ -333,17 +323,74 @@ namespace ft {
 
 					size_type count (const key_type& k) const;
 
-					iterator lower_bound (const key_type& k);
-					const_iterator lower_bound (const key_type& k) const;
+					iterator lower_bound(const key_type &k) {
+						iterator it = begin(), ite = end();
 
-					iterator upper_bound (const key_type& k);
-					const_iterator upper_bound (const key_type& k) const;
+					while (it != ite) {
+						if (_comp((*it).first, k) == false)
+							break;
+						it++;
+					}
+					return (it);
+					}
 
-					ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-					ft::pair<iterator,iterator>             equal_range (const key_type& k);
+					const_iterator lower_bound(const key_type& k) const {
+						const_iterator it = begin(), ite = end();
 
-					allocator_type get_allocator() const;
+						while (it != ite) {
+							if (_comp((*it).first, k) == false)
+								break;
+							it++;
+						}
+						return (it);
+					}
+
+					iterator upper_bound(const key_type& k) {
+						iterator it = begin(), ite = end();
+
+						while (it != ite) {
+							if (_comp(k ,(*it).first))
+								break;
+							it++;
+						}
+						return (it);
+					}
+
+					const_iterator upper_bound(const key_type& k) const {
+						const_iterator it = begin(), ite = end();
+
+						while (it != ite) {
+							if (_comp(k, (*it).first))
+								break;
+							it++;
+						}
+						return (it);
+					}
+
+					pair<const_iterator,const_iterator> equal_range(const key_type &k) const {
+						return (ft::make_pair(lower_bound(k), upper_bound(k)));
+					}
+
+					pair<iterator,iterator> equal_range(const key_type &k) {
+						return (ft::make_pair(lower_bound(k), upper_bound(k)));
+					}
+
 			};
+
+	template <class Key, class T, class Compare, class Alloc>
+	class map<Key,T,Compare,Alloc>::value_compare {
+		friend class map;
+		protected:
+			Compare comp;
+			value_compare(Compare c) : comp(c) {}
+		public:
+			typedef bool result_type;
+			typedef value_type first_argument_type;
+			typedef value_type second_argument_type;
+			bool operator() (const value_type& x, const value_type& y) const {
+				return comp(x.first, y.first);
+			}
+	};
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
@@ -352,21 +399,6 @@ namespace ft {
 			return false;
 		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
-
-	// template <class Key, class T, class Compare, class Alloc>
-	// class map<Key,T,Compare,Alloc>::value_compare {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
-	// 	friend class map;
-	// 	protected:
-	// 		Compare comp;
-	// 		value_compare(Compare c) : comp(c) {}  // constructed with map's comparison object
-	// 	public:
-	// 		typedef bool result_type;
-	// 		typedef value_type first_argument_type;
-	// 		typedef value_type second_argument_type;
-	// 		bool operator() (const value_type& x, const value_type& y) const {
-	// 			return comp(x.first, y.first);
-	// 		}
-	// };
 }
 
 #endif
