@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 02:36:48 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 03:21:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,11 @@ namespace ft {
 					nodePtr		succ = successeur(ptr->right);
 					if (succ->parent == ptr) {
 						succ->left = ptr->left;
+						if (ptr->left != _end) {
+							ptr->left->parent = succ;
+						}
 						succ->parent = ptr->parent;
-						// succ->right = _end;
+						// succ->right = _end;				--> verifier ca -> voir tableau et -1 1 2 3 4 5 -> normalement good sans ca !
 
 						if (ptr != _root) {        // check cette config --> normalement good maic check tres rapide :)
 							nodePtr papa_succ = succ->parent;
@@ -338,6 +341,7 @@ namespace ft {
 			}
 
 			void		infixe() {
+				std::cout << _CYAN << _end << _NC << std::endl;
 				infixe(_root);
 				// clear();
 			}
