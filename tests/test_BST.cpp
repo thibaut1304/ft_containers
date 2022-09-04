@@ -1,7 +1,7 @@
 
 #include <string>
 
-// #include <map>
+#include <map>
 #include <list>
  #include "map.hpp"
 
@@ -60,8 +60,23 @@ void	ft_erase(Map &mp, Iter iterator) {
 }
 
 int main () {
+	ft::map<T1, T2> mp;
+
+	mp.insert(ft::pair<T1, T2>(35, "hello"));
+	mp.insert(ft::pair<T1, T2>(55, "hello"));
+	mp.insert(ft::pair<T1, T2>(45, "hello"));
+	mp.insert(ft::pair<T1, T2>(42, "salut"));
+	mp.insert(ft::pair<T1, T2>(47, "hello"));
+	mp.insert(ft::pair<T1, T2>(21, "hello"));
+	mp.insert(ft::pair<T1, T2>(38, "hello"));
+	mp.insert(ft::pair<T1, T2>(50, "hello"));
+
+	print_map(mp);
+	// mp.erase(42);
+	mp.print_infixe();
+	// print_map(mp);
 	// tree<ft::pair<T1, T2> > arbre;
-	ft::map<T1, T2> test;
+	// ft::map<T1, T2> test;
 	// typedef ft::map<T1, T2>::iterator iterator;
 	// ft::pair<iterator, bool> tmp;
 	// ft::pair<iterator, bool> tmp2;
@@ -102,26 +117,26 @@ int main () {
 	// test.erase(++(++(++(++(++(++(++test.begin())))))));
 	// test.print_infixe();
 
-	std::list<T3> lst;
-	unsigned int lst_size = 11;
-	for (unsigned int i = 5; i < lst_size; ++i)
-		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-	ft::map<T1, T2> mp(lst.begin(), lst.end());
-	print_map(mp);
-	// mp.insert(T3(0, "AAAAAA"));
+						// std::list<T3> lst;
+						// unsigned int lst_size = 11;
+						// for (unsigned int i = 5; i < lst_size; ++i)
+						// 	lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+						// ft::map<T1, T2> mp(lst.begin(), lst.end());
+						// print_map(mp);
+						// // mp.insert(T3(0, "AAAAAA"));
 
-	// for (int i = 2; i < 4; ++i)
-		// ft_erase(mp, i);
+						// // for (int i = 2; i < 4; ++i)
+						// 	// ft_erase(mp, i);
 
-	// ft_erase(mp, mp.begin()->first);
-	// ft_erase(mp, (--mp.end())->first);
+						// // ft_erase(mp, mp.begin()->first);
+						// // ft_erase(mp, (--mp.end())->first);
 
-	mp[1] = "Hello";
-	// mp[10] = "Hi there";
-	print_map(mp);
+						// mp[1] = "Hello";
+						// // mp[10] = "Hi there";
+						// print_map(mp);
 
-	// ft_erase(mp, 1);
-	ft_erase(mp, 5);
+						// // ft_erase(mp, 1);
+						// ft_erase(mp, 5);
 	// mp.erase(5);
 	// mp.print_infixe();
 	// ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();

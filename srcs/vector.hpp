@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 18:28:41 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 20:19:24 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ namespace ft {
 					}
 				}
 			}
-
+				
 			vector& operator= (const vector& x) {
 				if (this != &x) {
 					size_type current_capacity = this->_capacity;
