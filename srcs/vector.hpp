@@ -6,12 +6,18 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/08/29 19:38:42 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:28:41 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _VECTOR_HPP_
 # define _VECTOR_HPP_
+
+/***************COLOR*************/
+
+#include "utils.hpp"
+
+/*********************************/
 
 #include <iostream>
 // #include <type_traits>

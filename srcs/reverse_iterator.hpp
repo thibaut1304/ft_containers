@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/02 18:57:43 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:24:35 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define _REVERSE_ITERATOR_HPP_
 
 # include "iterator_traits.hpp"
-// # include "iterator_traits.hpp"
 
 namespace ft {
 	template<typename _Iterator>

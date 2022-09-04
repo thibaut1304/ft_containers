@@ -6,19 +6,19 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 09:45:19 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/01 02:39:27 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:25:10 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _ITERATOR_TRAITS_HPP_
 # define _ITERATOR_TRAITS_HPP_
 
-# include <iterator>
 # include <cstddef>
 
 namespace ft
 {
-
+	struct random_access_iterator_tag {};
+	
 	template<typename _Iterator>
 	struct iterator_traits
 	{
@@ -34,7 +34,7 @@ namespace ft
 	template<typename _Tp>
 	struct iterator_traits<_Tp*>
 	{
-		typedef std::random_access_iterator_tag 	iterator_category;
+		typedef ft::random_access_iterator_tag 	iterator_category;
 		typedef _Tp                         		value_type;
 		typedef ptrdiff_t                   		difference_type;
 		typedef _Tp*                        		pointer;

@@ -1,13 +1,3 @@
-// #include "../srcs/binary_three_shearch.hpp"
-
-#define _NC "\033[0;0m"
-#define _RED "\033[0;31m"
-#define _GREEN "\033[0;32m"
-#define _YELLOW "\033[0;33m"
-#define _BLUE "\033[0;34m"
-#define _PURPLE "\033[0;95m"
-#define _CYAN "\033[0;36m"
-#define _WHITE "\033[0;37m"
 
 #include <string>
 
