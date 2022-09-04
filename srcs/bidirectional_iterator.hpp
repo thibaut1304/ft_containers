@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 17:11:39 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 00:05:08 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft {
 			nodePtr	_end;
 		public:
 
-			bidirectional_iterator() : _node(0), _root(0), _end(0) {}
+			bidirectional_iterator() : _node(NULL), _root(NULL), _end(NULL) {}
 
 			bidirectional_iterator(nodePtr ptr, nodePtr root, nodePtr end) : _node(ptr), _root(root), _end(end) {}
 
@@ -182,9 +182,7 @@ namespace ft {
 			nodePtr successor(nodePtr x) {
 				// if the right subtree is not null the successor is the leftmost node in the sright subtree
 				if (x->right != _end)
-				{
 					return minimum(x->right);
-				}
 				// else it is the lowest ancestor of x whose left child is also an ancestor of x
 				nodePtr y = x->parent;
 				while (y != NULL && x == y->right)

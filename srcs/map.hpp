@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 23:04:15 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 02:27:31 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,16 +305,16 @@ namespace ft {
 
 						size_type vd = _tree.size();
 						_tree.erase(_pair_);
-						if (_tree.size() - 1 == vd)
+						if ((_tree.size() + 1) == vd) {
 							return (1);
+						}
 						return (0);
 					}
 
 					// (3)
 					void erase (iterator first, iterator last) {
-						for (; first != last; first++) {
-							erase(first);
-						}
+							while (first != last)
+								erase(first++);
 					}
 
 					void swap (map& x) {

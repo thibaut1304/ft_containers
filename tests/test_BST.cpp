@@ -1,5 +1,14 @@
 // #include "../srcs/binary_three_shearch.hpp"
 
+#define _NC "\033[0;0m"
+#define _RED "\033[0;31m"
+#define _GREEN "\033[0;32m"
+#define _YELLOW "\033[0;33m"
+#define _BLUE "\033[0;34m"
+#define _PURPLE "\033[0;95m"
+#define _CYAN "\033[0;36m"
+#define _WHITE "\033[0;37m"
+
 #include <string>
 
 // #include <map>
@@ -78,53 +87,70 @@ int main () {
 	//  test.insert(ft::map<T1, T2>::value_type(21, "root -2 left"));
 	//  test.insert(ft::map<T1, T2>::value_type(38, "root -2 left"));
 
-	typedef ft::map<T1, T2>::iterator iterator;
-	ft::pair<iterator, bool> tmp;
-	ft::pair<iterator, bool> tmp2;
-	ft::pair<iterator, bool> tmp3;
-	ft::pair<iterator, bool> tmp4;
+	// typedef ft::map<T1, T2>::iterator iterator;
+	// ft::pair<iterator, bool> tmp;
+	// ft::pair<iterator, bool> tmp2;
+	// ft::pair<iterator, bool> tmp3;
+	// ft::pair<iterator, bool> tmp4;
 
-	tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
-	// print_result(tmp);
-	tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
-	// print_result(tmp2);
-	tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
-	// print_result(tmp3);
-	tmp4 = test.insert(ft::map<T1, T2>::value_type(21, "bunny"));
-	// print_result(tmp4);
-	tmp4 = test.insert(ft::map<T1, T2>::value_type(38, "bunny"));
-	// print_result(tmp4);
-	tmp4 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
-	// print_result(tmp4);
-	tmp4 = test.insert(ft::map<T1, T2>::value_type(55, "bunny"));
-	tmp4 = test.insert(ft::map<T1, T2>::value_type(47, "bunny"));
+	// tmp = test.insert(ft::map<T1, T2>::value_type(42, "lol"));
+	// // print_result(tmp);
+	// tmp2 = test.insert(ft::map<T1, T2>::value_type(50, "mdr"));
+	// // print_result(tmp2);
+	// tmp3 = test.insert(ft::map<T1, T2>::value_type(35, "funny"));
+	// // print_result(tmp3);
+	// tmp4 = test.insert(ft::map<T1, T2>::value_type(21, "bunny"));
+	// // print_result(tmp4);
+	// tmp4 = test.insert(ft::map<T1, T2>::value_type(38, "bunny"));
+	// // print_result(tmp4);
+	// tmp4 = test.insert(ft::map<T1, T2>::value_type(45, "bunny"));
+	// // print_result(tmp4);
+	// tmp4 = test.insert(ft::map<T1, T2>::value_type(55, "bunny"));
+	// tmp4 = test.insert(ft::map<T1, T2>::value_type(47, "bunny"));
 	// print_result(tmp4);
 	// test.erase((--test.end()));
 	// test.erase(++(++(++(++(++(++(++test.begin())))))));
 	// test.print_infixe();
 
 	std::list<T3> lst;
-	unsigned int lst_size = 10;
+	unsigned int lst_size = 6;
 	for (unsigned int i = 0; i < lst_size; ++i)
 		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
 	ft::map<T1, T2> mp(lst.begin(), lst.end());
+	print_map(mp);
+	// mp.insert(T3(0, "AAAAAA"));
+
+	// for (int i = 2; i < 4; ++i)
+		// ft_erase(mp, i);
+
+	// ft_erase(mp, mp.begin()->first);
+	// ft_erase(mp, (--mp.end())->first);
+
+	mp[-1] = "Hello";
+	mp[10] = "Hi there";
+	print_map(mp);
+
+	ft_erase(mp, 1);
+	// ft_erase(mp, 0);
 
 	// std::cout << _RED << ite->first << _NC << std::endl;
 	// mp.erase(--(--mp.end()));
-	print_map(mp);
-	// ft_erase(mp, mp.begin());
-	ft_erase(mp, mp.end());
-	// ft_erase(mp, --mp.end());
 	// print_map(mp);
-	mp[10] = "hello";
-	mp[11] = "yo";
-	print_map(mp);
+	// ft_erase(mp, mp.begin());
+	// ft_erase(mp, mp.end());
+	// ft_erase(mp, --mp.end());
+	// mp[10] = "hello";
+	// mp[11] = "yo";
+	// print_map(mp);
 	// ft_erase(mp, --(--(--mp.end())));
 	// ft_erase(mp, (--(--mp.end())));
 	// ft_erase(mp, ((--mp.end())));
 	// ft_erase(mp, ((mp.end())));
 	// ft_erase(mp, 8);
-	ft_erase(mp, (--(--(--mp.end()))), (--mp.end()));
+	// ft::map<T1, T2>::iterator alice = --(--mp.begin());
+	// std::cout << _RED << alice->first << _NC << std::endl;
+	// ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+	// ft_erase(mp, (mp.begin()), (mp.end()));
 	// ft::map<T1, T2>::iterator test_yo = (++(mp.end()));
 	// std::cout << _YELLOW << test_yo->first << _NC << std::endl;
 

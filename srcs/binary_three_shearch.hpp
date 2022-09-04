@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/03 23:08:05 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 02:36:48 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ namespace ft {
 				nodePtr padre = ptr->parent;
 
 				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
+					// std::cout << _YELLOW << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
 					if (ptr != _root) {
 						if (padre->left == ptr) {
@@ -146,27 +147,24 @@ namespace ft {
 					}
 					else {
 						_root = _end;
-						_root->parent = _end;
+						// _root->parent = _end;
 					}
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
-					// _alloc_node.destroy(ptr);
-					// _alloc_node.deallocate(ptr, 1);
 				}
 				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
+					// std::cout << _BLUE << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					nodePtr		succ = successeur(ptr->right);
-
 					if (succ->parent == ptr) {
 						succ->left = ptr->left;
 						succ->parent = ptr->parent;
-						succ->right = _end;
+						// succ->right = _end;
 
-						nodePtr papa_succ = succ->parent;
-						if (_comp(succ->_data.first, papa_succ->_data.first))
-							papa_succ->left = succ;
-						else
-							papa_succ->right = succ;
-
+						if (ptr != _root) {        // check cette config --> normalement good maic check tres rapide :)
+							nodePtr papa_succ = succ->parent;
+							if (_comp(succ->_data.first, papa_succ->_data.first))
+								papa_succ->left = succ;
+							else
+								papa_succ->right = succ;
+						}
 					}
 					else {
 						nodePtr papa_succ = succ->parent;
@@ -183,49 +181,27 @@ namespace ft {
 
 					if (ptr == _root)
 						_root = succ;
-					// std::cout << succ->parent->_data.first << std::endl;
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
-
-					// value_type val  = succ->_data;
-					// _alloc.destroy(ptr);
-					// _alloc.deallocate(ptr, 1);
-					// ptr = _alloc.allocate(1);
-					// _alloc.construct(ptr, nodeType(succ->_data, succ->parent, succ->left, succ->right));
-
-					// ptr->parent = succ->parent;
-					// ptr->left = succ->left;
-					// ptr->right = succ->right;
-					// toDelete(ptr, pere);
-
-					// std::cout << _CYAN << succ->right->_data.first << _NC << std::endl;
-
-					// _alloc.destroy(ptr);
-					// _alloc.deallocate(ptr, 1);
-					// delete ptr;
-					// ptr->_data = val;
 				}
 				else {
-					// std::cout << _YELLOW << ptr->_data.first << _NC << std::endl;
 					nodePtr	child = (ptr->left != _end) ? ptr->left : ptr->right;
-					// std::cout << _YELLOW << padre->_data.first << _NC << std::endl;
-
+						// std::cout << _BLUE << ptr->parent->_data.first << _NC << std::endl;
+					// std::cout << _RED << "HERE ! " <<  ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					if (ptr != _root) {
-						if (ptr == padre->left) {
+						if (ptr == padre->left)
 							padre->left = child;
-						}
-						else {
+						else
 							padre->right = child;
-						}
 						child->parent = padre;
 					}
 					else {
 						_root = child;
-						child->parent = _end;
+						_root->parent = _end;
+						// child->parent = _root;
 					}
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
 				}
+				_alloc.destroy(ptr);
+				_alloc.deallocate(ptr, 1);
+				ptr = NULL;
 			}
 
 			nodePtr	find(const value_type& data, nodePtr& node) {
@@ -338,7 +314,7 @@ namespace ft {
 				return (find(data, _root));
 			}
 
-			void	insert(const value_type data) {
+			void	insert(const value_type& data) {
 				_compteur++;
 				insert(data, _root, _root);
 			}
