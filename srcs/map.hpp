@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 12:23:40 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:21:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ namespace ft {
 
 					typedef Alloc														allocator_type;
 
-					typedef ft::tree<value_type, key_compare, allocator_type>			tree_type;
+					typedef ft::tree<const key_type, value_type, key_compare, allocator_type>			tree_type;
 
 					typedef s_node<value_type>											nodeType;
-
+					// typedef s_node<value_type>*											nodePtr;	
 					typedef typename tree_type::nodePtr									nodePtr;
 
 					typedef typename allocator_type::reference							reference;
@@ -135,27 +135,13 @@ namespace ft {
 					}
 
 					iterator begin() {
-						// std::cout << "MAP : ";
-						// std::cout << _tree.getMin() << std::endl;
-						// nodePtr test = _tree.getMin();
-						// _tree.infixe();
-						// std::cout << "Node right : ";
-						// std::cout << test->right << std::endl;
-						// std::cout << "Node left  : ";
-						// std::cout << test->left << std::endl;
-						// std::cout << "Value : " << test->_data.first << " - " <<  test->_data.second << std::endl;
-						// std::cout << "Ite : " << _tree.getMin() << std::endl;
-						// std::cout << "Ite : " << _tree.getRoot() << std::endl;
-						// std::cout << "Ite : " << _tree.getEnd() << std::endl;
 						return (iterator(_tree.getMin(), _tree.getRoot(), _tree.getEnd()));
 					}
 					const_iterator begin() const {
-						// std::cout << "MIN MAP : " << _tree.getMin() << std::endl;
 						return (const_iterator(_tree.getMin(), _tree.getRoot(), _tree.getEnd()));
 					}
 
 					iterator end() {
-						// std::cout << "MAX MAP : " << _tree.getMax() << std::endl;
 						return (iterator(_tree.getEnd(), _tree.getRoot(),  _tree.getEnd()));
 					}
 
@@ -313,10 +299,32 @@ namespace ft {
 					value_compare value_comp() const {return (value_compare(_comp));}
 
 
-					iterator find (const key_type& k);
-					const_iterator find (const key_type& k) const;
+					// iterator find (const key_type& k);
 
-					size_type count (const key_type& k) const;
+					iterator find(const key_type &k)
+					{
+						ft::pair<const Key, T> _pair_ = ft::make_pair(k, T());
+						nodePtr tmp = _tree.find(_pair_);
+						if (tmp == _tree.getEnd())
+							return (end());
+						return iterator(tmp, _tree.getRoot(), _tree.getEnd());
+					}
+					
+					const_iterator find (const key_type& k) const {
+						nodePtr tmp = _tree.find_key(k);
+						if (tmp == _tree.getEnd())
+							return (end());
+						return const_iterator(tmp, _tree.getRoot(), _tree.getEnd());
+					}
+
+					size_type count (const key_type& k) const {
+						const_iterator it = begin(), ite =end();
+
+						while (it != ite)
+							if ((*(it++)).first == k)
+								return (1);
+						return (0);
+					}
 
 					iterator lower_bound(const key_type &k) {
 						iterator it = begin(), ite = end();

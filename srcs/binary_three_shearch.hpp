@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 12:05:15 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:21:57 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ namespace ft {
 		s_node(T data, s_node* parent, s_node* left, s_node* right) : _data(data), parent(parent), left(left), right(right) {}
 	};
 
-	template<class T, class Compare, class Alloc>
+	template<class Key, class T, class Compare, class Alloc>
 	class tree {
 		public:
+			typedef Key																					key_type;
 			typedef T 																					value_type;
 			typedef s_node<T>*																			nodePtr;
 			typedef s_node<T>																			nodeType;
@@ -220,6 +221,19 @@ namespace ft {
 				}
 			}
 
+			nodePtr	find_key(const key_type& k, const nodePtr& node) const {
+				if (node == _end || !node)
+					return (_end);
+				if (k == node->_data.first)
+					return (node);
+				if (_comp(k, node->_data.first)) {
+					return (find_key(k, node->left));
+				}
+				else {
+					return (find_key(k, node->right));
+				}
+			}
+
 		public:
 			tree(const key_compare &comp = key_compare(), const allocator_type alloc = allocator_type()) :  _alloc(alloc), _compteur(0), _comp(comp) {
 				_end = _alloc.allocate(1);
@@ -316,6 +330,11 @@ namespace ft {
 			nodePtr	find(const value_type& data) {
 				return (find(data, _root));
 			}
+
+			nodePtr	find_key(const key_type &k) const {
+				return (find_key(k, _root));
+			}
+
 
 			void	insert(const value_type& data) {
 				_compteur++;
