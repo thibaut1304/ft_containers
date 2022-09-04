@@ -1,13 +1,6 @@
 
-#include <string>
-
-#include <map>
-#include <list>
- #include "map.hpp"
-
-#include <iostream>
-
-using namespace ft;
+#include "utils.hpp"
+#include "function.hpp"
 
 template <typename T>
 std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
@@ -25,20 +18,6 @@ void	print_result(const T &iter, bool insered = 0) {
 		std::cout << "Est entrée dans l'arbre ? ";
 		std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
 	}
-}
-
-#define T1 int
-#define T2 std::string
-typedef ft::pair<const T1, T2> T3;
-
-template <typename Map>
-void	print_map(Map &mp) {
-	ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-	std::cout << _CYAN << "Size : " << mp.size() <<  _NC << std::endl;
-	for (; it != ite; it++) {
-		std::cout << "key : " << it->first << " - T : " << it->second << std::endl;
-	}
-	std::cout << std::endl;
 }
 
 template <typename MAP, typename U, typename V>
@@ -59,21 +38,43 @@ void	ft_erase(Map &mp, Iter iterator) {
 		std::cout << std::endl;
 }
 
+template<typename Map, typename P>
+void	ft_insert_in_map(Map &std_mp, P pair, bool test) {
+	(void)test;
+	std_mp.insert(pair);
+}
+
+template<typename Map, typename P>
+void	ft_insert_in_map(Map &ft_mp, P pair) {
+	ft_mp.insert(pair);
+}
+
+// template<typename List, typename ft_map, typename std_map>
+// void	ft_insert(List &lst, ft_map &ft_mp, std_map &std_mp, int nb) {
+// 	std::list<L1>::iterator l_it = begin(), l_ite = end();
+// 	for ()
+
+
+// }
+
 int main () {
-	ft::map<T1, T2> mp;
+	ft::map<T1, T2> ft_mp;
+	std::map<T1, T2> std_mp;
+	
+	srand(time(NULL));
+	int roll = rand() % 10 + 5;
+	std::list<L1> lst;
+	for (int i = 0; i < roll; i++) {
+		srand(i + time(0));
+		int y = rand() % 100 + 10;
+		lst.push_back(y);
+	}
 
-	mp.insert(ft::pair<T1, T2>(35, "hello"));
-	mp.insert(ft::pair<T1, T2>(55, "hello"));
-	mp.insert(ft::pair<T1, T2>(45, "hello"));
-	mp.insert(ft::pair<T1, T2>(42, "salut"));
-	mp.insert(ft::pair<T1, T2>(47, "hello"));
-	mp.insert(ft::pair<T1, T2>(21, "hello"));
-	mp.insert(ft::pair<T1, T2>(38, "hello"));
-	mp.insert(ft::pair<T1, T2>(50, "hello"));
-
-	print_map(mp);
-	// mp.erase(42);
-	mp.print_infixe();
+	print_list(lst);
+	ft_insert_in_map(ft_mp, F3(42, "root"));
+	ft_insert_in_map(std_mp, S3(42, "root"), 1);
+	// ft_mp.print_infixe();
+	// ft_insert(list, ft_mp, std_mp, roll);
 	// print_map(mp);
 	// tree<ft::pair<T1, T2> > arbre;
 	// ft::map<T1, T2> test;
