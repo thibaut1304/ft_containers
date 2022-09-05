@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/05 22:47:57 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/06 00:08:30 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,17 +43,19 @@ CC		=	c++
 
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-
 OBJS	=	$(OBJS_OS)
 
 ifeq ($(OS), ubuntu)
 	OBJS_OS		=	$(SRCS_LINUX:.cpp=.o)
+	NOTE = Linux
 else
 	OBJS_OS		=	$(SRCS_MAC:.cpp=.o)
+	NOTE = MacOS
 endif
 
 
 all:  $(NAME)
+		@echo "Compile exec ${NOTE}"
 
 .cpp.o:
 			@printf "$(_WHITE)Generating $(NAME) objects... %-33.33s\r$(_NC)" $@

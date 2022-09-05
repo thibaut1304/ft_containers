@@ -1,23 +1,28 @@
 
 #include "utils.hpp"
 
-template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2) {
-	mp.erase(param, param2);
-	print_map(mp);
-}
+#include "print_in_file.cpp"
+#include "ft_file.cpp"
+#include "print.cpp"
+#include "utils.cpp"
 
-template <typename Map, typename Iter>
-void	ft_erase(Map &mp, Iter iterator) {
-	mp.erase(iterator);
-	// std::cout << _YELLOW << iterator->first << _NC << std::endl;
-		ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-		std::cout << _CYAN "Size : " << mp.size() << _NC << std::endl;
-		for (; it != ite; it++) {
-			std::cout << "key : " << it->first << " - T : " << it->second << std::endl;
-		}
-		std::cout << std::endl;
-}
+// template <typename MAP, typename U, typename V>
+// void	ft_erase(MAP &mp, U param, V param2) {
+// 	mp.erase(param, param2);
+// 	print_map(mp);
+// }
+
+// template <typename Map, typename Iter>
+// void	ft_erase(Map &mp, Iter iterator) {
+// 	mp.erase(iterator);
+// 	// std::cout << _YELLOW << iterator->first << _NC << std::endl;
+// 		ft::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+// 		std::cout << _CYAN "Size : " << mp.size() << _NC << std::endl;
+// 		for (; it != ite; it++) {
+// 			std::cout << "key : " << it->first << " - T : " << it->second << std::endl;
+// 		}
+// 		std::cout << std::endl;
+// }
 
 template<typename Map, typename P>
 void	ft_insert_in_map(Map &std_mp, P pair, bool test) {
@@ -49,8 +54,8 @@ void	first_insert() {
 	ft_insert(lst, ft_mp, std_mp);
 
 	int res = test_continue();
-	// if (res == 2)
-		// write_in_file(lst, ft_mp, std_mp);
+	if (res == 2)
+		write_in_file(lst, ft_mp, std_mp);
 	if (res == 1)
 		first_insert();
 }

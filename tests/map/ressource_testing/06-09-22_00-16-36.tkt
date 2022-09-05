@@ -1,0 +1,43 @@
+// Remplace '.' with ft or std !
+#define   .   NAMESPACE
+
+// Remplace '.' with your string with " "
+#define WORD   .
+
+NAMESPACE::map<int, std::string> mp;
+
+
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(98, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(65, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(82, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(57, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(100, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(83, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(31, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(99, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(49, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(59, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(52, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(85, WORD));
+mp.insert(NAMESPACE::pair<const int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >>(59, WORD));
+
+
+
+Your results : 
+
+PRINT STD MAP :			PRINT FT MAP :
+Size : 12				Size : 12
+key : 31 - T : Yo !		key : 31 - T : Yo !
+key : 49 - T : Yo !		key : 49 - T : Yo !
+key : 52 - T : Yo !		key : 52 - T : Yo !
+key : 57 - T : Yo !		key : 57 - T : Yo !
+key : 59 - T : Yo !		key : 59 - T : Yo !
+key : 65 - T : Yo !		key : 65 - T : Yo !
+key : 82 - T : Yo !		key : 82 - T : Yo !
+key : 83 - T : Yo !		key : 83 - T : Yo !
+key : 85 - T : Yo !		key : 85 - T : Yo !
+key : 98 - T : Yo !		key : 98 - T : Yo !
+key : 99 - T : Yo !		key : 99 - T : Yo !
+key : 100 - T : Yo !		key : 100 - T : Yo !
+
+					SUCCESS !
