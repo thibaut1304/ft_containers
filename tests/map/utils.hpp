@@ -27,7 +27,7 @@
 #define _WHITE "\033[0;37m"
 
 
-#define L1 int
+#define     L1      int
 #define T1 int
 #define T2 std::string
 #define WORD "Yo !"

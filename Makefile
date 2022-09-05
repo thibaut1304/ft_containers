@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/07/21 15:54:02 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/05 11:50:30 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,9 @@ NAME	=	debug
 
 HEADER 	=	-I ./srcs/
 
-
 SRCS		= $(addprefix ./tests/, ${SRCS_FILES})
 
-SRCS_FILES	=	main.cpp \
+SRCS_FILES	=	map/test_BST.cpp \
 
 OBJS	=	$(SRCS:.cpp=.o)
 
@@ -34,7 +33,7 @@ RM		= rm -f
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++98 -ferror-limit=100 -fsanitize=address -g3
+FLAGS	=	-Wall -Wextra -Werror -std=c++98 -ferror-limit=100
 
 
 .cpp.o:

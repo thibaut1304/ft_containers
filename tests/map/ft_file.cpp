@@ -10,9 +10,11 @@ std::string	date_now() {
 
 
 std::ofstream	create_file() {
-	std::string date = "ressource_testing/" + date_now() + ".tkt";
+	std::string date = "tests/map/ressource_testing/" + date_now() + ".tkt";
 	const char *c = date.c_str();
 	std::ofstream file(c);
+	if (!file)
+		std::cout << "erreur" << std::endl;
 	return (file);
 }
 
@@ -21,7 +23,8 @@ void	write_in_file(List &lst, ft_map &ft_mp, std_map &std_mp) {
 	std::string type1 = recup_type1();
 	std::string type2 = recup_type2();
 	std::ofstream o = create_file();
-	o << "// Remplace '.' with ft or std !\n#define . NAMESPACE\n\n";
+	o << "// Remplace '.' with ft or std !\n#define   .   NAMESPACE\n\n";
+	o << "// Remplace '.' with your string with \" \"\n#define WORD   .\n\n";
 	o << "NAMESPACE::map<int, std::string> mp;\n\n" << "\n";
 
 	std::list<L1>::iterator l_it = lst.begin(), l_ite = lst.end();
