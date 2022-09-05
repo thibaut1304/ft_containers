@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <cstdio>
+#include <cctype>
 
 #include <map>
 #include <list>
@@ -26,7 +28,9 @@
 #define L1 int
 #define T1 int
 #define T2 std::string
-typedef ft::pair<const T1, T2> F3;
-typedef std::pair<const T1, T2> S3;
+typedef ft::pair<const T1, T2> FT_pair;
+typedef std::pair<const T1, T2> STD_pair;
+
+#define CONTINUE		PRINT("Do you want to run the test again? y/n"); PRINT("---------------------------"); getchar()
 
 #endif

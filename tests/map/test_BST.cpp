@@ -2,23 +2,23 @@
 #include "utils.hpp"
 #include "function.hpp"
 
-template <typename T>
-std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
-{
-	o << "key: " << iterator->first << " | value: " << iterator->second;
-	if (nl)
-		o << std::endl;
-	return ("");
-}
+// template <typename T>
+// std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+// {
+// 	o << "key: " << iterator->first << " | value: " << iterator->second;
+// 	if (nl)
+// 		o << std::endl;
+// 	return ("");
+// }
 
-template <typename T>
-void	print_result(const T &iter, bool insered = 0) {
-	std::cout << printPair(iter.first);
-	if (insered) {
-		std::cout << "Est entrée dans l'arbre ? ";
-		std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
-	}
-}
+// template <typename T>
+// void	print_result(const T &iter, bool insered = 0) {
+// 	std::cout << printPair(iter.first);
+// 	if (insered) {
+// 		std::cout << "Est entrée dans l'arbre ? ";
+// 		std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
+// 	}
+// }
 
 template <typename MAP, typename U, typename V>
 void	ft_erase(MAP &mp, U param, V param2) {
@@ -49,30 +49,41 @@ void	ft_insert_in_map(Map &ft_mp, P pair) {
 	ft_mp.insert(pair);
 }
 
-// template<typename List, typename ft_map, typename std_map>
-// void	ft_insert(List &lst, ft_map &ft_mp, std_map &std_mp, int nb) {
-// 	std::list<L1>::iterator l_it = begin(), l_ite = end();
-// 	for ()
+template<typename List, typename ft_map, typename std_map>
+void	ft_insert(List &lst, ft_map &ft_mp, std_map &std_mp) {
+	std::list<L1>::iterator l_it = lst.begin(), l_ite = lst.end();
+	for (int i = 0; l_it != l_ite; i++, l_it++) {
+		ft_insert_in_map(ft_mp, FT_pair(*l_it, "YO !"));
+		ft_insert_in_map(std_mp, STD_pair(*l_it, "YO !"), 1);
+	}
+	print(ft_mp, std_mp);
+	ft_compare(ft_mp, std_mp);
+}
 
-
-// }
-
-int main () {
+void	first_insert() {
 	ft::map<T1, T2> ft_mp;
 	std::map<T1, T2> std_mp;
-	
-	srand(time(NULL));
-	int roll = rand() % 10 + 5;
-	std::list<L1> lst;
-	for (int i = 0; i < roll; i++) {
-		srand(i + time(0));
-		int y = rand() % 100 + 10;
-		lst.push_back(y);
-	}
+	std::list<L1> lst = random_list();
 
-	print_list(lst);
-	ft_insert_in_map(ft_mp, F3(42, "root"));
-	ft_insert_in_map(std_mp, S3(42, "root"), 1);
+	ft_insert(lst, ft_mp, std_mp);
+	if (test_continue())
+		first_insert();
+}
+
+int main () {
+	first_insert();
+	// std::cout << std::toupper() << '\n';
+
+	// std::map<T1, T2> std_test;
+	// ft::map<T1, T2> ft_test;
+
+	// ft_test.insert(FT_pair(10, "HELLO !"));
+	// ft::map<T1, T2>::iterator ft_it = ft_test.begin();
+	// std_test.insert(STD_pair(ft_it->first, ft_it->second));
+	// std::map<T1, T2>::iterator std_it = std_test.begin(), std_ite = std_test.end();
+	// for (;std_it != std_ite; std_it++)
+	// 	std::cout << std_it->first << std::endl;
+
 	// ft_mp.print_infixe();
 	// ft_insert(list, ft_mp, std_mp, roll);
 	// print_map(mp);
