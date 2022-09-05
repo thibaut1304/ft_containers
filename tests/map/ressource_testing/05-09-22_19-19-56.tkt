@@ -1,0 +1,32 @@
+// Remplace '.' with ft or std !
+#define   .   NAMESPACE
+
+// Remplace '.' with your string with " "
+#define WORD   .
+
+NAMESPACE::map<int, std::string> mp;
+
+
+mp.insert(NAMESPACE::pair<const 4, std::string>(72, WORD));
+mp.insert(NAMESPACE::pair<const 4, std::string>(84, WORD));
+mp.insert(NAMESPACE::pair<const 4, std::string>(66, WORD));
+mp.insert(NAMESPACE::pair<const 4, std::string>(93, WORD));
+mp.insert(NAMESPACE::pair<const 4, std::string>(20, WORD));
+mp.insert(NAMESPACE::pair<const 4, std::string>(82, WORD));
+mp.insert(NAMESPACE::pair<const 4, std::string>(92, WORD));
+
+
+
+Your results : 
+
+PRINT STD MAP :			PRINT FT MAP :
+Size : 7				Size : 7
+key : 20 - T : Yo !		key : 20 - T : Yo !
+key : 66 - T : Yo !		key : 66 - T : Yo !
+key : 72 - T : Yo !		key : 72 - T : Yo !
+key : 82 - T : Yo !		key : 82 - T : Yo !
+key : 84 - T : Yo !		key : 84 - T : Yo !
+key : 92 - T : Yo !		key : 92 - T : Yo !
+key : 93 - T : Yo !		key : 93 - T : Yo !
+
+					SUCCESS !

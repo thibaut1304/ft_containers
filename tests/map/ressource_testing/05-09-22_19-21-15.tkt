@@ -1,0 +1,46 @@
+// Remplace '.' with ft or std !
+#define   .   NAMESPACE
+
+// Remplace '.' with your string with " "
+#define WORD   .
+
+NAMESPACE::map<int, std::string> mp;
+
+
+mp.insert(NAMESPACE::pair<const i, std::string>(69, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(14, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(108, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(93, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(74, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(53, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(36, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(65, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(45, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(38, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(88, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(64, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(96, WORD));
+mp.insert(NAMESPACE::pair<const i, std::string>(24, WORD));
+
+
+
+Your results : 
+
+PRINT STD MAP :			PRINT FT MAP :
+Size : 14				Size : 14
+key : 14 - T : Yo !		key : 14 - T : Yo !
+key : 24 - T : Yo !		key : 24 - T : Yo !
+key : 36 - T : Yo !		key : 36 - T : Yo !
+key : 38 - T : Yo !		key : 38 - T : Yo !
+key : 45 - T : Yo !		key : 45 - T : Yo !
+key : 53 - T : Yo !		key : 53 - T : Yo !
+key : 64 - T : Yo !		key : 64 - T : Yo !
+key : 65 - T : Yo !		key : 65 - T : Yo !
+key : 69 - T : Yo !		key : 69 - T : Yo !
+key : 74 - T : Yo !		key : 74 - T : Yo !
+key : 88 - T : Yo !		key : 88 - T : Yo !
+key : 93 - T : Yo !		key : 93 - T : Yo !
+key : 96 - T : Yo !		key : 96 - T : Yo !
+key : 108 - T : Yo !		key : 108 - T : Yo !
+
+					SUCCESS !

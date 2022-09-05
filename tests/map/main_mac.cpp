@@ -1,5 +1,6 @@
 
 #include "utils.hpp"
+#include "ft_file.cpp"
 
 template <typename MAP, typename U, typename V>
 void	ft_erase(MAP &mp, U param, V param2) {
@@ -49,8 +50,8 @@ void	first_insert() {
 	ft_insert(lst, ft_mp, std_mp);
 
 	int res = test_continue();
-	// if (res == 2)
-		// write_in_file(lst, ft_mp, std_mp);
+	if (res == 2)
+		write_in_file(lst, ft_mp, std_mp);
 	if (res == 1)
 		first_insert();
 }

@@ -1,3 +1,4 @@
+#include "utils.hpp"
 
 std::string	date_now() {
 	time_t now = time(NULL);
@@ -7,15 +8,12 @@ std::string	date_now() {
 	return (date);
 }
 
-std::ofstream	create_file() {
-	std::string date = "tests/map/ressource_testing/" + date_now() + ".tkt";
-	const char *c = date.c_str();
-	std::ofstream strm = std::ofstream("test.txt");
-	std::ofstream file = std::ofstream(c);
-	if (!file)
-		std::cout << "erreur" << std::endl;
-	return (file);
-}
+// std::ofstream	create_file() {
+// 	std::string date = "tests/map/ressource_testing/" + date_now() + ".tkt";
+// 	const char *c = date.c_str();
+// 	std::ofstream file(c);
+// 	return (file);
+// }
 
 std::string recup_type2() {
 	std::string type2;
@@ -106,7 +104,7 @@ void	print_file(ft_map ft_mp, std_map std_mp, std::ostream &o) {
 }
 
 template<typename ft_map, typename std_map>
-void	ft_compare_file(ft_map ft_mp, std_map std_mp, std::ostream &o) {
+void	ft_compare_file(ft_map ft_mp, std_map std_mp, std::ostream &o = std::cout) {
 	std::map<T1, T2>::iterator	std_it = std_mp.begin(), std_ite = std_mp.end();
 	ft::map<T1, T2>::iterator	ft_it = ft_mp.begin();
 	for (;std_it != std_ite; std_it++, ft_it++) {
@@ -123,14 +121,16 @@ template <typename List, typename ft_map, typename std_map>
 void	write_in_file(List &lst, ft_map &ft_mp, std_map &std_mp) {
 	std::string type1 = recup_type1();
 	std::string type2 = recup_type2();
-	std::ofstream o = create_file();
+	std::string date = "tests/map/ressource_testing/" + date_now() + ".tkt";
+	const char *c = date.c_str();
+	std::ofstream o(c);
 	o << "// Remplace '.' with ft or std !\n#define   .   NAMESPACE\n\n";
 	o << "// Remplace '.' with your string with \" \"\n#define WORD   .\n\n";
 	o << "NAMESPACE::map<int, std::string> mp;\n\n" << "\n";
 
 	std::list<L1>::iterator l_it = lst.begin(), l_ite = lst.end();
 	for (; l_it != l_ite; l_it++) {
-		o << "mp.insert(NAMESPACE::pair<const " << type1 << ", " << type2 << ">(" << *l_it << ", WORD));" << "\n";
+		o << "mp.insert(NAMESPACE::pair<const " << abi::__cxa_demangle(typeid(T1).name(), NULL, NULL, NULL) << ", " << abi::__cxa_demangle(typeid(T2).name(), NULL, NULL, NULL) << ">(" << *l_it << ", WORD));" << "\n";
 	}
 	o << "\n\n\n";
 	o << "Your results : \n\n";
