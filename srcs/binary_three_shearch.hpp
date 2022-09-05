@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 19:50:39 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/06 00:59:12 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ namespace ft {
 			}
 
 			nodePtr	successeur(nodePtr ptr) const {
-				if (ptr == _end || !ptr) {return (_end);}
+				if (ptr == _end) {return (_end);}
 
 				nodePtr curent = ptr;
 				while (curent->left != _end) {
@@ -154,8 +154,29 @@ namespace ft {
 				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
 					// std::cout << _BLUE << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					nodePtr		succ = successeur(ptr->right);
-					if (succ->parent == ptr) {
+					if (ptr == _root) {
+						nodePtr tmp = find(succ->parent->_data); // (parent succeseur)
+
+						if (succ->right != _end)
+							tmp->left = succ->right;
+						else
+							tmp->left = _end;
+
+						nodePtr child_left_ptr = find(ptr->left->_data);
+						nodePtr child_right_ptr = find(ptr->right->_data);
+
+						if (child_left_ptr != _end)
+							child_left_ptr->parent = succ;
+						if (child_right_ptr != _end)
+							child_right_ptr->parent = succ;
+
+						succ->parent = ptr->parent;
 						succ->left = ptr->left;
+						succ->right = ptr->right;
+					}
+					else if (succ->parent == ptr) {
+						succ->left = ptr->left;
+						// succ->right = ptr->right;
 						if (ptr->left != _end) {
 							ptr->left->parent = succ;
 						}
@@ -170,21 +191,18 @@ namespace ft {
 								papa_succ->right = succ;
 						}
 					}
-					else {
-						nodePtr papa_succ = succ->parent;
+					// else {
+					// 	nodePtr papa_succ = succ->parent;
 
-						if (succ->right != _end)
-								papa_succ->left = succ->right;
-						else
-							papa_succ->left = _end;
+					// 	if (succ->right != _end)
+					// 			papa_succ->left = succ->right;
+					// 	else
+					// 		papa_succ->left = _end;
 
-						succ->parent = ptr->parent;
-						succ->left = ptr->left;
-						succ->right = ptr->right;
-					}
-
-					if (ptr == _root)
-						_root = succ;
+					// 	succ->parent = ptr->parent;
+					// 	succ->left = ptr->left;
+					// 	succ->right = ptr->right;
+					// }
 				}
 				else {
 					nodePtr	child = (ptr->left != _end) ? ptr->left : ptr->right;
