@@ -8,6 +8,10 @@
 #include <cctype>
 #include <fstream>
 #include <sstream>
+#include <typeinfo>
+
+#include <streambuf>
+#include <ios>
 
 #include <map>
 #include <list>
@@ -25,7 +29,6 @@
 #define _PURPLE "\033[0;95m"
 #define _CYAN "\033[0;36m"
 #define _WHITE "\033[0;37m"
-
 
 #define     L1      int
 #define T1 int

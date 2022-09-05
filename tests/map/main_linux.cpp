@@ -2,24 +2,6 @@
 #include "utils.hpp"
 #include "function.hpp"
 
-// template <typename T>
-// std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
-// {
-// 	o << "key: " << iterator->first << " | value: " << iterator->second;
-// 	if (nl)
-// 		o << std::endl;
-// 	return ("");
-// }
-
-// template <typename T>
-// void	print_result(const T &iter, bool insered = 0) {
-// 	std::cout << printPair(iter.first);
-// 	if (insered) {
-// 		std::cout << "Est entrée dans l'arbre ? ";
-// 		std::cout << ((iter.second) ? "Oui" : "Non") << std::endl;
-// 	}
-// }
-
 template <typename MAP, typename U, typename V>
 void	ft_erase(MAP &mp, U param, V param2) {
 	mp.erase(param, param2);
@@ -68,9 +50,9 @@ void	first_insert() {
 	ft_insert(lst, ft_mp, std_mp);
 
 	int res = test_continue();
-	if (res == 2)
-		write_in_file(lst, ft_mp, std_mp);
-	else if (res == 1)
+	// if (res == 2)
+		// write_in_file(lst, ft_mp, std_mp);
+	if (res == 1)
 		first_insert();
 }
 
