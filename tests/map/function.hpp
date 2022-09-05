@@ -3,5 +3,6 @@
 
 #include "print.cpp"
 #include "utils.cpp"
+#include "ft_file.cpp"
 
 #endif

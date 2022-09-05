@@ -53,8 +53,8 @@ template<typename List, typename ft_map, typename std_map>
 void	ft_insert(List &lst, ft_map &ft_mp, std_map &std_mp) {
 	std::list<L1>::iterator l_it = lst.begin(), l_ite = lst.end();
 	for (int i = 0; l_it != l_ite; i++, l_it++) {
-		ft_insert_in_map(ft_mp, FT_pair(*l_it, "YO !"));
-		ft_insert_in_map(std_mp, STD_pair(*l_it, "YO !"), 1);
+		ft_insert_in_map(ft_mp, FT_pair(*l_it, WORD));
+		ft_insert_in_map(std_mp, STD_pair(*l_it, WORD), 1);
 	}
 	print(ft_mp, std_mp);
 	ft_compare(ft_mp, std_mp);
@@ -66,12 +66,21 @@ void	first_insert() {
 	std::list<L1> lst = random_list();
 
 	ft_insert(lst, ft_mp, std_mp);
-	if (test_continue())
+
+	int res = test_continue();
+	if (res == 2)
+		write_in_file(lst, ft_mp, std_mp);
+	else if (res == 1)
 		first_insert();
 }
 
 int main () {
 	first_insert();
+	// date_now();
+	// std::ofstream o = create_file();
+	// if (test_print())
+		// std::cout << "lets go impression ! \n";
+
 	// std::cout << std::toupper() << '\n';
 
 	// std::map<T1, T2> std_test;

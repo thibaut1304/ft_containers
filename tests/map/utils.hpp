@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cctype>
+#include <fstream>
+#include <sstream>
 
 #include <map>
 #include <list>
@@ -28,9 +30,9 @@
 #define L1 int
 #define T1 int
 #define T2 std::string
+#define WORD "Yo !"
+
 typedef ft::pair<const T1, T2> FT_pair;
 typedef std::pair<const T1, T2> STD_pair;
-
-#define CONTINUE		PRINT("Do you want to run the test again? y/n"); PRINT("---------------------------"); getchar()
 
 #endif
