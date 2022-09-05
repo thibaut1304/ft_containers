@@ -1,6 +1,10 @@
 
 #include "utils.hpp"
+
+#include "print_in_file.cpp"
 #include "ft_file.cpp"
+#include "print.cpp"
+#include "utils.cpp"
 
 template <typename MAP, typename U, typename V>
 void	ft_erase(MAP &mp, U param, V param2) {
