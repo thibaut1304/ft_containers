@@ -1,6 +1,5 @@
 debug
 srcs/containers_test/
-tests/map/ressource_testing/
 # Prerequisites
 *.d
 
