@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/05 18:45:23 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/05 22:47:57 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,7 @@ _PURPLE=\033[0;95m
 _CYAN=\033[0;36m
 _WHITE=\033[0;37m
 
-# GDMSESSION
-OS 		=  $(shell echo -n ${twat})
+OS 		=  $(shell echo -n ${GDMSESSION})
 
 NAME	=	debug
 
@@ -37,8 +36,6 @@ SRCS_FILES	=
 SRCS_MAIN_L =	map/main_linux.cpp \
 
 SRCS_MAIN_M =	map/main_mac.cpp \
-
-# OBJS		=	$(SRCS_LINUX:.cpp=.o)
 
 RM		= rm -f
 
@@ -57,18 +54,6 @@ endif
 
 
 all:  $(NAME)
-	@echo -n ${OS}
-	echo -n ${GDMSESSION}
-	echo $(OBJS)
-
-
-#FIND_OS:
-#	if [ "${OS}" == "ubnutu" ]; then  OBJS_OS = $(SRCS_LINUX:.cpp=.o); fi; 
-#	if [ "$(OS)" != "ubuntu" ]; then OBJS_OS = $(SRCS_MAC:.cpp=.o) ; fi;
-
-
-# FIND_OS:	
-# 	@echo $(OS)
 
 .cpp.o:
 			@printf "$(_WHITE)Generating $(NAME) objects... %-33.33s\r$(_NC)" $@
