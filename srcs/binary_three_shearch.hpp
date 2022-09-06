@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/06 16:34:09 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:47:52 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #include <stdio.h>
 
 # include "pair.hpp"
-
+#include <stdlib.h>
 // creer ici pair clé / valeur ?
 // ou juste les recup independament ?
 
@@ -156,8 +156,10 @@ namespace ft {
 					nodePtr		succ = successeur(ptr->right);
 					std::cout << _RED << "Successeur : " << succ->_data.first << _NC << std::endl;
 					if (ptr == _root) {
-						if (succ->right != _end)
+						if (succ->right != _end) {
 							succ->parent->left = succ->right;
+							succ->right->parent = succ->parent;
+						}
 						else
 							succ->parent->left = _end;
 
@@ -169,20 +171,47 @@ namespace ft {
 						succ->parent = ptr->parent;
 						succ->left = ptr->left;
 						succ->right = ptr->right;
+						_root = succ;
+
+						// - key: 35 | value: fiesta
+						// - key: 38 | value: 38
+						// - key: 80 | value: hey
+						// - key: 28 | value: diary
+						// - key: 29 | value: 29
+						// - key: 30 | value: buzz
+						// - key: 33 | value: 33
+						// - key: 35 | value: fiesta
+
 					}
 					else {
-						if (succ->right != _end)
+						if (succ->right != _end && ptr->right == succ){
+							ptr->right = succ->right;
+							succ->right->parent = ptr;
+						}
+						else if (succ->right != _end) {
 							succ->parent->left = succ->right;
-						else
+							succ->right->parent = succ->parent;
+						}
+						else if (ptr->right != succ)
 							succ->parent->left = _end;
 							
-						nodePtr child_left_ptr = find(ptr->left->_data);
-						nodePtr child_right_ptr = find(ptr->right->_data);
-						
-						if (child_left_ptr != _end)
-							child_left_ptr->parent = succ;
-						if (child_right_ptr != _end)
-							child_right_ptr->parent = succ;
+						nodePtr child_left_ptr = find(ptr->left->_data);   // 18
+						nodePtr child_right_ptr = find(ptr->right->_data); // 23
+						// if (ptr->right == succ)
+							// child_right_ptr == NULL;
+						// std::cout << _RED << "Enfant gauche ptr : " << ptr->left->_data.first<< _NC << std::endl;
+						// std::cout << _RED << "Enfant droit  ptr : " << ptr->right->_data.first<< _NC << std::endl;
+						if (ptr->left != succ) {
+							if (child_left_ptr != _end)
+								child_left_ptr->parent = succ;
+						}
+						if (ptr->right != succ) {
+							if (child_right_ptr != _end)
+								child_right_ptr->parent = succ;
+						}
+						else if (succ->right != _end) {
+							succ->right->parent = succ;
+						}
 						if (ptr->parent->right == ptr)
 							ptr->parent->right = succ;
 						else if (ptr->parent->left == ptr)
@@ -190,14 +219,8 @@ namespace ft {
 						succ->parent = ptr->parent;
 						succ->left = ptr->left;
 						succ->right = ptr->right;
+						// std::cout << _RED << "Enfant droit  ptr : " << succ->right->_data.first<< _NC << std::endl;
 						
-						nodePtr tmp = find(succ->parent->_data); // (parent succeseur)
-
-						if (succ->right != _end)
-							tmp->left = succ->right;
-						else
-							tmp->left = _end;
-
 					}
 				}
 				else {
@@ -217,11 +240,9 @@ namespace ft {
 						// child->parent = _root;
 					}
 				}
-				if (ptr){
-					// _alloc.destroy(ptr);
+					_alloc.destroy(ptr);
 					_alloc.deallocate(ptr, 1);
 					ptr = NULL;
-				}
 			}
 
 			nodePtr	find(const value_type& data, nodePtr &node) {
