@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/06 00:59:12 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:34:09 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ namespace ft {
 			}
 
 			void		destroy(nodePtr ptr) {
-				if (ptr == _end) {return;}
+				if (ptr == _end || ptr) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				_alloc.destroy(ptr);
@@ -121,18 +121,18 @@ namespace ft {
 				return (curent);
 			}
 
-			// nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
-			// 	if (!ptr) {return (NULL);}
+			// nodePtr	predecesseur (nodePtr ptr) const {
+			// 	if (ptr == _end) {return (_end));}
 
 			// 	nodePtr	curent = ptr;
 			// 	while (curent->right != _end) {
-			// 		parent = curent;
 			// 		curent = curent->droit;
 			// 	}
 			// 	return (curent);
 			// }
 
 			void		toDelete(nodePtr	ptr) {
+				
 				nodePtr padre = ptr->parent;
 
 				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
@@ -154,7 +154,43 @@ namespace ft {
 				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
 					// std::cout << _BLUE << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					nodePtr		succ = successeur(ptr->right);
+					std::cout << _RED << "Successeur : " << succ->_data.first << _NC << std::endl;
 					if (ptr == _root) {
+						if (succ->right != _end)
+							succ->parent->left = succ->right;
+						else
+							succ->parent->left = _end;
+
+						if (ptr->right != _end)
+							ptr->right->parent = succ;
+						if (ptr->left != _end)
+							ptr->left->parent = succ;
+						
+						succ->parent = ptr->parent;
+						succ->left = ptr->left;
+						succ->right = ptr->right;
+					}
+					else {
+						if (succ->right != _end)
+							succ->parent->left = succ->right;
+						else
+							succ->parent->left = _end;
+							
+						nodePtr child_left_ptr = find(ptr->left->_data);
+						nodePtr child_right_ptr = find(ptr->right->_data);
+						
+						if (child_left_ptr != _end)
+							child_left_ptr->parent = succ;
+						if (child_right_ptr != _end)
+							child_right_ptr->parent = succ;
+						if (ptr->parent->right == ptr)
+							ptr->parent->right = succ;
+						else if (ptr->parent->left == ptr)
+							ptr->parent->left = succ;
+						succ->parent = ptr->parent;
+						succ->left = ptr->left;
+						succ->right = ptr->right;
+						
 						nodePtr tmp = find(succ->parent->_data); // (parent succeseur)
 
 						if (succ->right != _end)
@@ -162,47 +198,7 @@ namespace ft {
 						else
 							tmp->left = _end;
 
-						nodePtr child_left_ptr = find(ptr->left->_data);
-						nodePtr child_right_ptr = find(ptr->right->_data);
-
-						if (child_left_ptr != _end)
-							child_left_ptr->parent = succ;
-						if (child_right_ptr != _end)
-							child_right_ptr->parent = succ;
-
-						succ->parent = ptr->parent;
-						succ->left = ptr->left;
-						succ->right = ptr->right;
 					}
-					else if (succ->parent == ptr) {
-						succ->left = ptr->left;
-						// succ->right = ptr->right;
-						if (ptr->left != _end) {
-							ptr->left->parent = succ;
-						}
-						succ->parent = ptr->parent;
-						// succ->right = _end;				--> verifier ca -> voir tableau et -1 1 2 3 4 5 -> normalement good sans ca !
-
-						if (ptr != _root) {        // check cette config --> normalement good maic check tres rapide :)
-							nodePtr papa_succ = succ->parent;
-							if (_comp(succ->_data.first, papa_succ->_data.first))
-								papa_succ->left = succ;
-							else
-								papa_succ->right = succ;
-						}
-					}
-					// else {
-					// 	nodePtr papa_succ = succ->parent;
-
-					// 	if (succ->right != _end)
-					// 			papa_succ->left = succ->right;
-					// 	else
-					// 		papa_succ->left = _end;
-
-					// 	succ->parent = ptr->parent;
-					// 	succ->left = ptr->left;
-					// 	succ->right = ptr->right;
-					// }
 				}
 				else {
 					nodePtr	child = (ptr->left != _end) ? ptr->left : ptr->right;
@@ -221,12 +217,14 @@ namespace ft {
 						// child->parent = _root;
 					}
 				}
-				_alloc.destroy(ptr);
-				_alloc.deallocate(ptr, 1);
-				ptr = NULL;
+				if (ptr){
+					// _alloc.destroy(ptr);
+					_alloc.deallocate(ptr, 1);
+					ptr = NULL;
+				}
 			}
 
-			nodePtr	find(const value_type& data, nodePtr& node) {
+			nodePtr	find(const value_type& data, nodePtr &node) {
 				if (node == _end || !node)
 					return (_end);
 				if (data.first == node->_data.first)
