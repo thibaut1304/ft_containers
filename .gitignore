@@ -1,5 +1,7 @@
 debug
 srcs/containers_test/
+ft_containers
+std_containers
 # Prerequisites
 *.d
 

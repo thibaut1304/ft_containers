@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/07 23:28:16 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/07 23:37:46 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ clean:
 			@echo "$(_GREEN)Deletes objects files $(FT_NAME) and $(STD_NAME)$(_NC)"
 
 fclean: 	clean
-			@$(RM) $(FT_NAME)
+			@$(RM) $(FT_NAME) $(STD_NAME)
 			@echo "$(_GREEN)Delete $(FT_NAME) and $(STD_NAME)$(_NC)"
 
 re:			fclean all
