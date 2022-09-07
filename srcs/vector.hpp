@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/07 21:05:07 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/07 22:53:26 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ namespace ft {
 				// _tab - allouer à n
 				// _tab le remplir avec val
 
-				// std::cout << "Constructeur fill" << std::endl;
+				std::cout << "Constructeur fill" << std::endl;
 				_tab = _alloc.allocate(n);
 				// std::cout << "Adresse     : " << _tab << std::endl;
 				for (size_type i = 0; i < n ; i++) {

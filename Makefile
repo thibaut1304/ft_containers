@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/06 00:08:30 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/07 22:58:02 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,21 +21,17 @@ _WHITE=\033[0;37m
 
 OS 		=  $(shell echo -n ${GDMSESSION})
 
-NAME	=	debug
+FT_NAME		=	ft_containers
 
-HEADER 	=	-I ./srcs/
+STD_NAME	=	std_containers
 
-HEADER_T	= -I ./tests/map/
+HEADER	=	-I ./srcs/
 
-SRCS_LINUX	= 	$(addprefix ./tests/, ${SRCS_FILES}) $(addprefix ./tests/, ${SRCS_MAIN_L})
+STD 	= std
 
-SRCS_MAC	= 	$(addprefix ./tests/, ${SRCS_FILES}) $(addprefix ./tests/, ${SRCS_MAIN_M})
+SRCS		= 	$(addprefix ./test_2/, ${SRCS_FILES})
 
-SRCS_FILES	=
-
-SRCS_MAIN_L =	map/main_linux.cpp \
-
-SRCS_MAIN_M =	map/main_mac.cpp \
+SRCS_FILES	=	vector/main.cpp
 
 RM		= rm -f
 
@@ -43,35 +39,32 @@ CC		=	c++
 
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-OBJS	=	$(OBJS_OS)
+OBJS	=	$(SRCS:.cpp=.o)
 
-ifeq ($(OS), ubuntu)
-	OBJS_OS		=	$(SRCS_LINUX:.cpp=.o)
-	NOTE = Linux
-else
-	OBJS_OS		=	$(SRCS_MAC:.cpp=.o)
-	NOTE = MacOS
-endif
-
-
-all:  $(NAME)
-		@echo "Compile exec ${NOTE}"
+all:  $(FT_NAME) $(STD_NAME)
 
 .cpp.o:
-			@printf "$(_WHITE)Generating $(NAME) objects... %-33.33s\r$(_NC)" $@
-			@$(CC) $(FLAGS) $(HEADER) $(HEADER_T) -c $< -o $(<:.cpp=.o)
+			@printf "$(_WHITE)Generating $(FT_NAME) objects... %-33.33s\r$(_NC)" $@
+			@$(CC) $(FLAGS) $(HEADER) -c $< -o $(<:.cpp=.o)
 
-$(NAME):	 $(OBJS)
+$(FT_NAME):	 $(OBJS)
 			@echo ""
-			@$(CC) $(FLAGS) $(HEADER) $(HEADER_T) $(OBJS) -o $(NAME)
-			@echo "$(_GREEN)Generating $(NAME)$(_NC)"
+			@$(CC) $(FLAGS) $(HEADER) $(OBJS) -o $(FT_NAME)
+			@echo "$(_GREEN)Generating $(FT_NAME)$(_NC)"
+
+$(STD_NAME): FLAGS += -DNM=$(STD)
+
+$(STD_NAME): $(OBJS)
+			@echo ""
+			@$(CC) $(FLAGS) $(HEADER) $(OBJS) -o $(STD_NAME)
+			@echo "$(_GREEN)Generating $(STD_NAME) $(_NC)"
 
 clean:
 			@$(RM) $(OBJS)
-			@echo "$(_GREEN)Deletes objects files $(NAME)$(_NC)"
+			@echo "$(_GREEN)Deletes objects files $(FT_NAME) and $(STD_NAME)$(_NC)"
 
 fclean: 	clean
-			@$(RM) $(NAME)
-			@echo "$(_GREEN)Delete $(NAME)$(_NC)"
+			@$(RM) $(FT_NAME)
+			@echo "$(_GREEN)Delete $(FT_NAME) and $(STD_NAME)$(_NC)"
 
 re:			fclean all
