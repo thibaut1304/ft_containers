@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:42 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/07 23:37:52 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/08 00:54:02 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 
 # include <iostream>
 # include <string>
+# include <ctime>
+# include <vector>
+# include <unistd.h>
 
 #ifndef NM
-#define NM ft
+# define NM ft
+# define USING "FT"
 #endif
 
 #include "vector.hpp"
-#include <vector>
 #include "pair.hpp"
-
 
 # define _NC "\033[0;0m"
 # define _RED "\033[0;31m"
