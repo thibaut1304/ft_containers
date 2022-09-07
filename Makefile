@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/07 22:58:02 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/07 23:28:16 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,11 @@ CC		=	c++
 
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
+OBJS_DIR = obj
+
 OBJS	=	$(SRCS:.cpp=.o)
 
-all:  $(FT_NAME) $(STD_NAME)
+all: $(FT_NAME) $(STD_NAME)
 
 .cpp.o:
 			@printf "$(_WHITE)Generating $(FT_NAME) objects... %-33.33s\r$(_NC)" $@
