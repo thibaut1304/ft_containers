@@ -189,3 +189,73 @@ int main () {
 
 	return (0);
 }
+/*   toutes les combinaisons de tests de erase possible sur l'arbre binaire --> all ok !!!! :) :)
+	mp[42] = "lol";
+
+	mp[50] = "mdr";
+	mp[25] = "funny";
+
+	mp[46] = "bunny";
+	mp[21] = "fizz";
+	mp[30] = "buzz";
+	mp[55] = "fuzzy";
+
+	mp[18] = "bee";
+	mp[23] = "coconut";
+	mp[28] = "diary";
+	mp[35] = "fiesta";
+	mp[44] = "hello";
+	mp[48] = "world";
+	mp[53] = "this is a test";
+	mp[80] = "hey";
+
+	mp[12] = "no";
+	mp[20] = "idea";
+	mp[22] = "123";
+	mp[24] = "345";
+	mp[27] = "27";
+	mp[29] = "29";
+	mp[33] = "33";
+	mp[38] = "38";
+
+	mp[43] = "1";
+	mp[45] = "2";
+	mp[47] = "3";
+	mp[49] = "4";
+	mp[51] = "5";
+	mp[54] = "6";
+	mp[60] = "7";
+	mp[90] = "8";
+
+	ft_erase(mp, 25); // right != NULL; left != NULL
+	ft_erase(mp, 55); // right != NULL; left != NULL
+	ft_erase(mp, 24); // right != NULL; left != NULL  ok
+	ft_erase(mp, 54); // right != NULL; left != NULL  ok
+	ft_erase(mp, 22); // right == NULL; left == NULL  ok
+	ft_erase(mp, 51); // right == NULL; left == NULL  ok
+	ft_erase(mp, 21); // right == NULL; left != NULL
+	ft_erase(mp, 53); // right != NULL; left == NULL
+	ft_erase(mp, 20); // right == NULL; left != NULL  ok
+	ft_erase(mp, 23); // right != NULL; left != NULL ok
+	ft_erase(mp, 42); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 38); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 43); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 35); // rxxight != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 33); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 44); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 50); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 60); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 46); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 47); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 48); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 49); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 45); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 27); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 28); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 18); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 29); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 80); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 30); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 90); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 12); // right != NULL; left != NULL; parent == NULL
+*/

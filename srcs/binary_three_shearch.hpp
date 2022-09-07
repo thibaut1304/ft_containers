@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/06 18:47:52 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:05:58 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ namespace ft {
 			// }
 
 			void		toDelete(nodePtr	ptr) {
-				
+
 				nodePtr padre = ptr->parent;
 
 				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
@@ -154,73 +154,80 @@ namespace ft {
 				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
 					// std::cout << _BLUE << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					nodePtr		succ = successeur(ptr->right);
-					std::cout << _RED << "Successeur : " << succ->_data.first << _NC << std::endl;
+					// std::cout << _YELLOW << "Ptr delete : " << ptr->_data.first << _NC << std::endl;
+					//    std::cout << _RED << "Successeur : " << succ->_data.first << _NC << std::endl;
 					if (ptr == _root) {
-						if (succ->right != _end) {
-							succ->parent->left = succ->right;
-							succ->right->parent = succ->parent;
-						}
-						else
-							succ->parent->left = _end;
-
-						if (ptr->right != _end)
-							ptr->right->parent = succ;
-						if (ptr->left != _end)
-							ptr->left->parent = succ;
-						
-						succ->parent = ptr->parent;
-						succ->left = ptr->left;
-						succ->right = ptr->right;
-						_root = succ;
-
-						// - key: 35 | value: fiesta
-						// - key: 38 | value: 38
-						// - key: 80 | value: hey
-						// - key: 28 | value: diary
-						// - key: 29 | value: 29
-						// - key: 30 | value: buzz
-						// - key: 33 | value: 33
-						// - key: 35 | value: fiesta
-
-					}
-					else {
-						if (succ->right != _end && ptr->right == succ){
-							ptr->right = succ->right;
-							succ->right->parent = ptr;
-						}
-						else if (succ->right != _end) {
+						if (succ->right != _end && ptr->right != succ) {
 							succ->parent->left = succ->right;
 							succ->right->parent = succ->parent;
 						}
 						else if (ptr->right != succ)
 							succ->parent->left = _end;
-							
-						nodePtr child_left_ptr = find(ptr->left->_data);   // 18
-						nodePtr child_right_ptr = find(ptr->right->_data); // 23
-						// if (ptr->right == succ)
-							// child_right_ptr == NULL;
-						// std::cout << _RED << "Enfant gauche ptr : " << ptr->left->_data.first<< _NC << std::endl;
-						// std::cout << _RED << "Enfant droit  ptr : " << ptr->right->_data.first<< _NC << std::endl;
-						if (ptr->left != succ) {
-							if (child_left_ptr != _end)
-								child_left_ptr->parent = succ;
-						}
-						if (ptr->right != succ) {
-							if (child_right_ptr != _end)
-								child_right_ptr->parent = succ;
-						}
-						else if (succ->right != _end) {
-							succ->right->parent = succ;
-						}
-						if (ptr->parent->right == ptr)
-							ptr->parent->right = succ;
-						else if (ptr->parent->left == ptr)
-							ptr->parent->left = succ;
+
+						if (ptr->right != _end && ptr->right != succ)
+							ptr->right->parent = succ;
+						if (ptr->left != _end)
+							ptr->left->parent = succ;
+
 						succ->parent = ptr->parent;
 						succ->left = ptr->left;
-						succ->right = ptr->right;
+						if (ptr->right != succ)
+							succ->right = ptr->right;
+						_root = succ;
+					}
+					else {
+						// if (succ->right != _end && ptr->right == succ){
+							// ptr->right = succ->right;
+							// succ->right->parent = ptr;
+							// si le succeceur et juste a droite de ptr
+							// je met let pointeur right de succ sur right de ptr
+						// } // retirer car voir a -> TO PIZZA
+						if (succ->right != _end && ptr->right != succ) {
+							succ->parent->left = succ->right;
+							succ->right->parent = succ->parent;
+							// si le successeur de right et non vide
+							// le lassigne au parent de succeseur a gauche
+						}
+						else if (ptr->right != succ)
+							succ->parent->left = _end; // sinon si il est vide je met le parent de succ gauche a null
+
+						// nodePtr child_left_ptr = find(ptr->left->_data);   // 21
+						// nodePtr child_right_ptr = find(ptr->right->_data); // 30
+
+						if (ptr->left != _end) {
+							ptr->left->parent = succ; // j'assigne ptr->left-> parent a mon succeseur car ptr degage
+							succ->left = ptr->left;
+						}
+
+						succ->parent = ptr->parent;
+						if (ptr->parent->right == ptr) {
+							ptr->parent->right = succ;
+						}
+						else if (ptr->parent->left == ptr) {
+							ptr->parent->left = succ;
+						}
+						if (ptr->right != succ) {
+							ptr->right->parent = succ;
+							succ->right = ptr->right;
+						}
+
+
+						// if (ptr->right != succ) { // j'assigne ptr->right-> parent a mon succeseur car ptr degage
+						// 	if (child_right_ptr != _end) // si est seulement si le succ n'est pas direct droite de ptr
+						// 		child_right_ptr->parent = succ;
+						// }
+						// else if (succ->right != _end) {
+						// 	succ->right->parent = succ;
+						// }
+						// if (ptr->parent->right == ptr)
+						// 	ptr->parent->right = succ;
+						// else if (ptr->parent->left == ptr)
+						// 	ptr->parent->left = succ;
+						// succ->parent = ptr->parent;
+						// succ->left = ptr->left;
+						// succ->right = ptr->right;
 						// std::cout << _RED << "Enfant droit  ptr : " << succ->right->_data.first<< _NC << std::endl;
-						
+
 					}
 				}
 				else {
