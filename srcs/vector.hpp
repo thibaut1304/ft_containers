@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 20:19:24 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/07 21:05:07 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ namespace ft {
 					}
 				}
 			}
-				
+
 			vector& operator= (const vector& x) {
 				if (this != &x) {
 					size_type current_capacity = this->_capacity;
@@ -242,7 +242,7 @@ namespace ft {
 			reference front() {
 				return *(_tab);
 			}
-			
+
 			const_reference front() const {
 				return *(_tab);
 			}
@@ -471,6 +471,10 @@ namespace ft {
 				size_type tmp_capacity = _capacity;
 				_capacity = x._capacity;
 				x._capacity = tmp_capacity;
+
+				Alloc tmp_alloc = _alloc;
+				_alloc = x._alloc;
+				x._alloc = tmp_alloc;
 			}
 
 			void clear() {
