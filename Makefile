@@ -6,11 +6,10 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/08 14:52:40 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/08 16:59:35 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-_NC=`tput sgr0`
 _RED=\033[0;31m
 _GREEN=\033[0;32m
 _YELLOW=\033[0;33m
@@ -19,65 +18,63 @@ _PURPLE=\033[0;95m
 _CYAN=\033[0;36m
 _WHITE=\033[0;37m
 
-OS 		=  $(shell echo -n ${GDMSESSION})
+OS		=		$(shell echo -n ${GDMSESSION})
 
-FT_NAME		=	ft_containers
+FT_NAME		=		ft_containers
 
 STD_NAME	=	std_containers
 
-HEADER	=	-I ./srcs/
+STD	=	std
 
-STD 	= std
-FT 		= ft
+FT	=	ft
 
-SRCS		= 	$(addprefix test_2/, ${SRCS_FILES})
+RM	=	rm -rf
 
-SRCS_FILES	=	vector/main.cpp
+CC	=	c++
 
-RM		= rm -f
+FLAGS	=	 -Wall -Wextra -Werror -std=c++98
 
-CC		=	c++
+OBJS_DIR = obj
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++98
+DIR_INC     = -I ./srcs/
 
-OBJS_DIR_FT = obj_ft
-OBJS_DIR_STD = obj_std
+SRCS		:= main.cpp
 
-# OBJFT=$(patsubst %.cpp,$(OBJS_DIR_FT)/%.o,$(SRCS))
-# OBJSTD=$(patsubst %.cpp,$(OBJS_DIR_STD)/%.o,$(SRCS))
-OBJSFT		= $(addprefix ${OBJS_DIR_FT}/, ${SRCS:.cpp=.o})
-OBJSSTD		= $(addprefix ${OBJS_DIR_STD}/, ${SRCS:.cpp=.o})
-# OBJSSTD	=	$(SRCS:.cpp=.o)
-# OBJSFT	=	$(SRCS:.cpp=.o)
+DIR_SRCS	:= ./test_2/vector/
 
-all:		$(FT_NAME) $(STD_NAME)
+DIR_OBJ_FT		:= obj_ft
+OBJS_FT		:= \
+				$(addprefix ${DIR_OBJ_FT}/, ${SRCS:.cpp=.o})
 
-$(OBJS_DIR_FT)/%.o	:	$(SRCS)/%.cpp | ${OBJS_DIR_FT} ${HEADER}
-					@${CC} $(FLAGS) ${HEADER} -o $@ -c $<
-# @mkdir -p $(dir $@)
 
-# .cpp.o:
-# 			@printf "$(_WHITE)Generating $(FT_NAME) and $(STD_NAME) objects... %-33.33s\r$(_NC)" $@
-# 			@$(CC) -DNM=ft $(FLAGS) $(HEADER)   -c $< -o $(<:.cpp=.o)
-# 			@$(CC) -DNM=std $(FLAGS) $(HEADER)   -c $< -o $(<:.cpp=.o)
+DIR_OBJ_STD	:= obj_std
+OBJS_STD	:= \
+			$(addprefix ${DIR_OBJ_STD}/, ${SRCS:.cpp=.o})
 
-$(FT_NAME):	 $(OBJSFT)
-			@echo ""
-			@$(CC) $(FLAGS) $(HEADER) $(OBJSFT) -o $(FT_NAME)
-			@echo "$(_GREEN)Generating $(FT_NAME)$(_NC)"
 
-# $(STD_NAME): FLAGS += -DNM=$(STD)
+all: $(FT_NAME) ${STD_NAME}
 
-$(STD_NAME): $(OBJSSTD)
-			@echo ""
-			@$(CC) $(FLAGS) $(HEADER) $(OBJSSTD) -o $(STD_NAME)
-			@echo "$(_GREEN)Generating $(STD_NAME) $(_NC)"
 
+$(DIR_OBJ_FT)/%.o  :	$(DIR_SRCS)/%.cpp
+		@mkdir -p $(dir $@)
+		@${CC} ${FLAGS} ${DIR_INC} -DNM=$(FT) -DUSING="\"FT\"" -o $@ -c $<
+
+$(DIR_OBJ_STD)/%.o:	$(DIR_SRCS)/%.cpp
+		@mkdir -p $(dir $@)
+		@${CC} ${FLAGS} ${DIR_INC} -DNM=$(STD) -DUSING="\"STD\"" -o $@ -c $<
+
+$(FT_NAME):			$(OBJS_FT)
+				 @$(CC) $(FLAGS) ${DIR_INC} $(OBJS_FT) -o $(FT_NAME)
+				@echo "$(_GREEN)Generating $(FT_NAME)$(_NC)"
+
+$(STD_NAME): $(OBJS_STD)
+				@$(CC) $(FLAGS) ${DIR_INC} $(OBJS_STD) -o $(STD_NAME)
+				@echo "$(_GREEN)Generating $(STD_NAME)$(_NC)"
 clean:
-			@$(RM) $(OBJS)
-			@echo "$(_GREEN)Deletes objects files $(FT_NAME) and $(STD_NAME)$(_NC)"
+		@$(RM) $(DIR_OBJ_STD) $(DIR_OBJ_FT)
+		@echo "$(_GREEN)Deletes objects files $(FT_NAME) and $(STD_NAME)$(_NC)"
 
-fclean: 	clean
+fclean:		clean
 			@$(RM) $(FT_NAME) $(STD_NAME)
 			@echo "$(_GREEN)Delete $(FT_NAME) and $(STD_NAME)$(_NC)"
 

@@ -6,17 +6,14 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/08 01:19:33 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:14:51 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
 
-#ifndef USING
-#define USING "STD"
-#endif
-
 void	vector_constructor_and_equal() {
+
 	std::cout << _PURPLE << "CONSTRUCTOR VECTOR and OPERATOR =" << _NC << std::endl;
 	NM::vector<T1> first;
 	NM::vector<T1> second(2, 100);
@@ -82,11 +79,18 @@ void	iterator() {
 	std::cout << std::endl;
 }
 
+// void	capacity() {
+
+// }
+
 int main(void) {
 	int time = 0;
 
 	vector_constructor_and_equal();
 	iterator();
+	// capacity();
+
+	NM::map<T1, T2> mp;
 
 
 	time = clock();
@@ -95,3 +99,4 @@ int main(void) {
 
 	return (0);
 }
+
