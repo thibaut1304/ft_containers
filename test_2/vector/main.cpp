@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/08 23:39:31 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/09 00:15:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,12 +156,12 @@ int main(void) {
 	int time = 0;
 	NM::vector<int>vect;
 	for (int i = 0; i < 10; i++) {
-		vect.push_back(i);
+		vect.push_back(10 - i);
 	}
 	NM::vector<int>::iterator it = vect.begin(), ite = vect.end();
 	print(vect);
 	for (; it != ite; it++) {
-		if (*it == 5)
+		if (*it == 8)
 			vect.insert(it, 100);
 	}
 	print(vect);

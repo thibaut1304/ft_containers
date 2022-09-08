@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/08 19:47:33 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/09 00:17:19 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,45 +258,50 @@ namespace ft {
 			}
 
 			iterator insert (iterator position, const value_type& val) {
-				iterator hina = begin();
+				// iterator hina = begin();
 
-				size_type offset = 0;
-				for (; hina != position; hina++)
-					offset++;
-				if (_size + 1 <= _capacity) {
-					iterator index = begin();
-					size_type ol = 0;
-					for (; ol < _capacity; index++, ol++) {
-						if (index == position) {
-							*index = val;
-						}
-					}
-					_size += 1;
-					return (_tab + offset);
-				}
+				// size_type offset = 0;
+				// for (; hina != position; hina++)
+				// 	offset++;
+				// if (_size + 1 <= _capacity) {
+				// 	iterator index = begin();
+				// 	size_type ol = 0;
+				// 	for (; ol < _capacity; index++, ol++) {
+				// 		if (index == position) {
+				// 			*index = val;
+				// 		}
+				// 	}
+				// 	_size += 1;
+				// 	return (_tab + offset);
+				// insert(position, 1, val);
+				// }
 
-				ft::vector<T> tmp = *this;
+				// ft::vector<T> tmp = *this;
 
-				if (_capacity == 0)
-					tmp.reserve(1);
-				if (_size >= _capacity) {
-					tmp.reserve(_capacity * 2);
-				}
+				// if (_capacity == 0)
+				// 	tmp.reserve(1);
+				// if (_size >= _capacity) {
+				// 	tmp.reserve(_capacity * 2);
+				// }
 
-				iterator ft_it = begin();
-				size_type 	i = 0;
+				// iterator ft_it = begin();
+				// size_type 	i = 0;
 
-				tmp._size += 1;
-				for (; i < tmp.size(); i++, ft_it++) {
-					if (ft_it == position) {
-						_alloc.construct(tmp._tab + i++, val);
-					}
-					if (i < tmp.size())
-						_alloc.construct(tmp._tab + i, *ft_it);
-				}
-				this->~vector();
-				*this = tmp;
-				return (_tab + offset);
+				// tmp._size += 1;
+				// for (; i < tmp.size(); i++, ft_it++) {
+				// 	if (ft_it == position) {
+				// 		_alloc.construct(tmp._tab + i++, val);
+				// 	}
+				// 	if (i < tmp.size())
+				// 		_alloc.construct(tmp._tab + i, *ft_it);
+				// }
+				// this->~vector();
+				// *this = tmp;
+				// return (_tab + offset);
+			difference_type idx = position - begin();
+
+			insert(position, 1, val);
+			return (iterator(this->begin() + idx));
 			}
 
 			void insert (iterator position, size_type n, const value_type& val) {
