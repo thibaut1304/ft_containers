@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/07 23:37:46 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/08 14:52:40 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ STD_NAME	=	std_containers
 HEADER	=	-I ./srcs/
 
 STD 	= std
+FT 		= ft
 
-SRCS		= 	$(addprefix ./test_2/, ${SRCS_FILES})
+SRCS		= 	$(addprefix test_2/, ${SRCS_FILES})
 
 SRCS_FILES	=	vector/main.cpp
 
@@ -39,26 +40,37 @@ CC		=	c++
 
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-OBJS_DIR = obj
+OBJS_DIR_FT = obj_ft
+OBJS_DIR_STD = obj_std
 
-OBJS	=	$(SRCS:.cpp=.o)
+# OBJFT=$(patsubst %.cpp,$(OBJS_DIR_FT)/%.o,$(SRCS))
+# OBJSTD=$(patsubst %.cpp,$(OBJS_DIR_STD)/%.o,$(SRCS))
+OBJSFT		= $(addprefix ${OBJS_DIR_FT}/, ${SRCS:.cpp=.o})
+OBJSSTD		= $(addprefix ${OBJS_DIR_STD}/, ${SRCS:.cpp=.o})
+# OBJSSTD	=	$(SRCS:.cpp=.o)
+# OBJSFT	=	$(SRCS:.cpp=.o)
 
-all: $(FT_NAME) $(STD_NAME)
+all:		$(FT_NAME) $(STD_NAME)
 
-.cpp.o:
-			@printf "$(_WHITE)Generating $(FT_NAME) objects... %-33.33s\r$(_NC)" $@
-			@$(CC) $(FLAGS) $(HEADER) -c $< -o $(<:.cpp=.o)
+$(OBJS_DIR_FT)/%.o	:	$(SRCS)/%.cpp | ${OBJS_DIR_FT} ${HEADER}
+					@${CC} $(FLAGS) ${HEADER} -o $@ -c $<
+# @mkdir -p $(dir $@)
 
-$(FT_NAME):	 $(OBJS)
+# .cpp.o:
+# 			@printf "$(_WHITE)Generating $(FT_NAME) and $(STD_NAME) objects... %-33.33s\r$(_NC)" $@
+# 			@$(CC) -DNM=ft $(FLAGS) $(HEADER)   -c $< -o $(<:.cpp=.o)
+# 			@$(CC) -DNM=std $(FLAGS) $(HEADER)   -c $< -o $(<:.cpp=.o)
+
+$(FT_NAME):	 $(OBJSFT)
 			@echo ""
-			@$(CC) $(FLAGS) $(HEADER) $(OBJS) -o $(FT_NAME)
+			@$(CC) $(FLAGS) $(HEADER) $(OBJSFT) -o $(FT_NAME)
 			@echo "$(_GREEN)Generating $(FT_NAME)$(_NC)"
 
-$(STD_NAME): FLAGS += -DNM=$(STD)
+# $(STD_NAME): FLAGS += -DNM=$(STD)
 
-$(STD_NAME): $(OBJS)
+$(STD_NAME): $(OBJSSTD)
 			@echo ""
-			@$(CC) $(FLAGS) $(HEADER) $(OBJS) -o $(STD_NAME)
+			@$(CC) $(FLAGS) $(HEADER) $(OBJSSTD) -o $(STD_NAME)
 			@echo "$(_GREEN)Generating $(STD_NAME) $(_NC)"
 
 clean:
