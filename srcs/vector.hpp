@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/08 14:13:23 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:47:33 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,15 @@ namespace ft {
 			/****************/
 			/**CONSTRUCTOR***/
 			/****************/
-			// Default Constructs an empty container, with no elements.
-			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {
-				// std::cout << "Constructeur par default" << std::endl;
-			}
-			// fill Constructs a container with n elements. Each element is a copy of val.
-			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
-				// this->assign(n, val);
-				// _tab - allouer à n
-				// _tab le remplir avec val
+			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {}
 
-				std::cout << "Constructeur fill" << std::endl;
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
 				_tab = _alloc.allocate(n);
-				// std::cout << "Adresse     : " << _tab << std::endl;
 				for (size_type i = 0; i < n ; i++) {
 					_alloc.construct(_tab + i, val);
 				}
-				// std::cout << "Adresse : " << _tab << std::endl;
 			}
-			// range Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
+
 			template <class _InputIterator>
 			vector (_InputIterator first, _InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<_InputIterator>::value, _InputIterator>::type* = NULL) : _alloc(alloc), _tab(NULL) {
 
@@ -92,9 +82,8 @@ namespace ft {
 					_alloc.construct(_tab + i, *first++);
 				}
 			}
-			// copy Constructs a container with a copy of each of the elements in x, in the same order.
+
 			vector (const vector& x) :_alloc(x._alloc), _tab(NULL),  _size(x._size), _capacity(x._capacity) {
-				// std::cout << "ololololololol" << std::endl;
 				if (x._capacity == 0)
 					_capacity = x._size;
 				if (_capacity != 0) {
@@ -119,62 +108,40 @@ namespace ft {
 				}
 				return (*this);
 			}
-			// Destructor
-			~vector() { // check capacity and destroys !
-			// allocator::destroy -> destructor(value_type)pas dans vector !
-			// allocator::deallocate
-			// vector::clear -> supprime les donnes sauf la capacite
-			// std::cout << "Destructeur : " << _tab << std::endl;
+
+			~vector() {
 				clear();
 				if (_capacity != 0) {
-					// std::cout << "capacity in destructeur " << _capacity << std::endl;
 					_alloc.deallocate(_tab, _capacity);
 					_capacity = 0;
 				}
 			}
+
 			/****************/
 			/****ITERATOR****/
 			/****************/
-			iterator begin() {
-				return(iterator(_tab));
-			}
+			iterator begin() {return(iterator(_tab));}
 
-			const_iterator begin() const {
-				return(const_iterator(_tab));
-			}
+			const_iterator begin() const {return(const_iterator(_tab));}
 
-			iterator end() {
-				return(iterator(_tab + _size));
-			}
-			const_iterator end() const {
-				return(const_iterator(_tab + _size));
-			}
+			iterator end() {return(iterator(_tab + _size));}
 
-			reverse_iterator rbegin() {
-				return(reverse_iterator(end()));
-			}
-			const_reverse_iterator rbegin() const {
-				return(const_reverse_iterator(end()));
-			}
+			const_iterator end() const {return(const_iterator(_tab + _size));}
 
-			reverse_iterator rend() {
-				return(reverse_iterator(_tab));
-			}
+			reverse_iterator rbegin() {return(reverse_iterator(end()));}
 
-			const_reverse_iterator rend() const {
-				return(const_reverse_iterator(_tab));
-			}
+			const_reverse_iterator rbegin() const {return(const_reverse_iterator(end()));}
+
+			reverse_iterator rend() {return(reverse_iterator(_tab));}
+
+			const_reverse_iterator rend() const {return(const_reverse_iterator(_tab));}
 
 			/****************/
 			/****CAPACITY****/
 			/****************/
-			size_type size() const {
-				return (_size);
-			}
+			size_type size() const {return (_size);}
 
-			size_type max_size() const {
-				return (_alloc.max_size());
-			}
+			size_type max_size() const {return (_alloc.max_size());}
 
 			void resize (size_type n, value_type val = value_type()) {
 				while (_size > n)
@@ -191,9 +158,7 @@ namespace ft {
 				}
 			}
 
-			size_type capacity() const {
-				return (_capacity);
-			}
+			size_type capacity() const {return (_capacity);}
 
 			bool empty() const {
 				if (!_size)
@@ -220,13 +185,9 @@ namespace ft {
 			/****************/
 			/*****ACCESS*****/
 			/****************/
-			reference operator[] (size_type n) {
-				return *(_tab + n);
-			}
+			reference operator[] (size_type n) {return *(_tab + n);}
 
-			const_reference operator[] (size_type n) const {
-				return *(_tab + n);
-			}
+			const_reference operator[] (size_type n) const {return *(_tab + n);}
 
 			reference at (size_type n) {
 				if (n >= _size)
@@ -239,25 +200,18 @@ namespace ft {
 				return *(_tab + n);
 			}
 
-			reference front() {
-				return *(_tab);
-			}
+			reference front() {return *(_tab);}
 
-			const_reference front() const {
-				return *(_tab);
-			}
+			const_reference front() const {return *(_tab);}
 
-			reference back() {
-				return *(_tab + _size - 1);
-			}
-			const_reference back() const {
-				return *(_tab + _size - 1);
-			}
+			reference back() {return *(_tab + _size - 1);}
+
+			const_reference back() const {return *(_tab + _size - 1);}
 
 			/****************/
 			/****MODIFIERS***/
 			/****************/
-			// range
+
 			template <class _InputIterator>
 			void assign(typename ft::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
 				size_type	diff = 0;
@@ -275,7 +229,7 @@ namespace ft {
 				}
 				_size = diff;
 			}
-			// fill
+
 			void assign (size_type n, const value_type& val) {
 				size_type i = 0;
 				if (_capacity < n)
@@ -320,20 +274,18 @@ namespace ft {
 					_size += 1;
 					return (_tab + offset);
 				}
+
 				ft::vector<T> tmp = *this;
 
-				// std::cout << "Adresse tmp : " << tmp._tab << std::endl;
-				// std::cout << "Adresse tab : " << this->_tab << std::endl;
 				if (_capacity == 0)
 					tmp.reserve(1);
 				if (_size >= _capacity) {
-					// Cela provoque une réallocation automatique de l'espace de stockage alloué si -et seulement si- la nouvelle taille du vecteur dépasse la capacité actuelle du vecteur .
 					tmp.reserve(_capacity * 2);
 				}
-				iterator ft_it = begin();
 
-				// tmp._tab = _alloc.allocate(tmp._capacity);
+				iterator ft_it = begin();
 				size_type 	i = 0;
+
 				tmp._size += 1;
 				for (; i < tmp.size(); i++, ft_it++) {
 					if (ft_it == position) {
@@ -363,16 +315,18 @@ namespace ft {
 					_size += n;
 					return ;
 				}
+
 				ft::vector<T> tmp = *this;
 
 				if (_size + n >= _capacity * 2)
 						tmp.reserve(_capacity + n);
 				else if (_size >= _capacity)
 					tmp.reserve(_capacity * 2);
+
 				size_type 	i = 0;
 				size_type 	y = 0;
 				iterator index = begin();
-				// tmp._tab = _alloc.allocate(tmp._capacity);
+
 				tmp._size += n;
 				for (; i < tmp.size(); i++, index++, y++) {
 					if (index == position) {
@@ -407,6 +361,7 @@ namespace ft {
 					_size += diff;
 					return ;
 				}
+
 				ft::vector<T> tmp = *this;
 
 				if (_size + diff >= _capacity * 2)
@@ -419,7 +374,6 @@ namespace ft {
 				size_type 			y = 0;
 				iterator index = 	begin();
 
-				// tmp._tab = _alloc.allocate(tmp._capacity);
 				for(; i < tmp.size() ; i++, index++, y++) {
 					if (index == position) {
 						for(; first != last; first++, i++) {
@@ -459,7 +413,7 @@ namespace ft {
 				return (first);
 			}
 
-			void swap (vector& x) { //suis null mdrr
+			void swap (vector& x) {
 				T*	tmp_tab = _tab;
 				_tab = x._tab;
 				x._tab = tmp_tab;
@@ -485,9 +439,8 @@ namespace ft {
 			/****************/
 			/****ALLOCATOR***/
 			/****************/
-			allocator_type get_allocator() const {
-				return (_alloc);
-			}
+
+			allocator_type get_allocator() const {return (_alloc);}
 
 		protected:
 			Alloc												_alloc;
