@@ -6,25 +6,31 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/08 19:50:20 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/08 23:39:31 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
 
 template <typename VEC>
-void	print(VEC vc) {
+void	print(VEC vc, std::string pp = "NULL") {
 	NM::vector<T1>::iterator it = vc.begin(), ite = vc.end();
-	std::cout << _CYAN << USING << " VECTOR" << _NC << std::endl;
-	std::cout << _CYAN << "SIZE : " << vc.size() << _NC << std::endl;
-	std::cout << _CYAN << "Value : " << _NC;
-	for (;it != ite; it++) {
-		std::cout << *it;
-		if (it != --vc.end())
-			std::cout << ", ";
-		else
-			std::cout << "." << std::endl;
+	if (vc.empty() == 0) {
+		std::cout << _CYAN << USING << " VECTOR" << _NC << std::endl;
+		std::cout << _CYAN << "SIZE : " << vc.size() << _NC << std::endl;
+		if (pp != "NULL")
+			std::cout << _YELLOW << pp << _NC << std::endl;
+		std::cout << _CYAN << "Value : " << _NC;
+		for (;it != ite; it++) {
+			std::cout << *it;
+			if (it != --vc.end())
+				std::cout << ", ";
+			else
+				std::cout << "." << std::endl;
+		}
 	}
+	else
+		std::cout << _CYAN << "Vectos is empty !" << std::endl;
 	std::cout << std::endl;
 }
 
@@ -126,17 +132,44 @@ void	capacity() {
 	std::cout << "SIZE : " << _YELLOW << v3.size() << _NC << "  Is empty ? " << _YELLOW << ((v3.empty() == 0) ? "no" : "yes") << _NC << std::endl;
 	std::cout << "SIZE : " << _YELLOW << v4.size() << _NC << "  Is empty ? " << _YELLOW << ((v4.empty() == 0) ? "no" : "yes") << _NC << std::endl;
 	std::cout << "SIZE : " << _YELLOW << v5.size() << _NC << "  Is empty ? " << _YELLOW << ((v5.empty() == 0) ? "no" : "yes") << _NC << std::endl;
+	std::cout << std::endl;
+}
+
+void	insert() {
+	NM::vector<T1> vec;
+	print(vec);
+	vec.insert(vec.begin(), 10, 10);
+	print(vec);
+	vec.insert(vec.begin()+5, 5);
+	print(vec, "Insert 5 in begin()+5 : ");
+
+	static int size = 5;
+	NM::vector<T1> vec2(size);
+	NM::vector<T1>::iterator cp = vec2.begin();
+	for (int i = 0; i < size; i++)
+			cp[i] = (size * i) - 1;
+	vec.insert(vec.end(), vec2.begin(), vec2.end());
+	print(vec, "Insert -1 4 9 14 19 in vector :");
 }
 
 int main(void) {
 	int time = 0;
-
-	vector_constructor_and_equal();
-	iterator();
-	iterator_end();
-	capacity();
-
-	NM::map<T1, T2> mp;
+	NM::vector<int>vect;
+	for (int i = 0; i < 10; i++) {
+		vect.push_back(i);
+	}
+	NM::vector<int>::iterator it = vect.begin(), ite = vect.end();
+	print(vect);
+	for (; it != ite; it++) {
+		if (*it == 5)
+			vect.insert(it, 100);
+	}
+	print(vect);
+	// vector_constructor_and_equal();
+	// iterator();
+	// iterator_end();
+	// capacity();
+	// insert();
 
 
 	time = clock();
