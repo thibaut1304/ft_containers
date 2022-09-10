@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 18:58:43 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 22:54:20 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,7 @@ void	swap_and_clear() {
 }
 
 void	launch_vector() {
+	vector_constructor_and_equal();
 	iterator();
 	iterator_end();
 	capacity();

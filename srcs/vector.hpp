@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 17:41:36 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 20:55:05 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@
 
 /*********************************/
 
-#include <iostream>
-// #include <type_traits>
-#include <memory> // --> alloc --> construct & allocator
-// #include <cstdlib> --> realloc finlement pas utilisé
-#include <limits> // --> std::numeric_limits
-#include <stdexcept> // --> execption Element access: at !
+#include <memory>
+#include <limits>
+#include <stdexcept>
 
 # include "reverse_iterator.hpp"
 # include "random_access_iterator.hpp"
@@ -401,7 +398,7 @@ namespace ft {
 	bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
 		return (!(lhs < rhs));
 	}
-	
+
 	template <class T, class Allocator>
 	void swap(vector<T, Allocator> &x, vector<T, Allocator> &y) {
 		x.swap(y);

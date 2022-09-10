@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:42 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 19:05:56 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 21:05:51 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 typedef NM::pair<const T1, T2> _pair;
 
 /*************    VECTOR    ****************/
+
 template <typename VEC>
 void	print(VEC &vc, std::string pp = "NULL");
 void	header(std::string name = "NULL", std::ostream &o = std::cout);
@@ -59,11 +60,19 @@ NM::vector<T1>		insert2();
 void	erase(NM::vector<T1> v);
 void	swap_and_clear();
 void	launch_vector();
+
 /*******************************************/
 /*************    STACK    ****************/
+
 void	basic_stack();
-void test_stack();
+void	test_stack();
 void	launch_stack();
+
+/*******************************************/
+/*************     MAP     ****************/
+
+void	launch_map();
+
 /*******************************************/
 
 #endif

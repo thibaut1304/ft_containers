@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/10 18:19:56 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/10 20:55:41 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,12 @@ CC	=	c++
 
 FLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
-OBJS_DIR = obj
-
 DIR_INC		= -I ./srcs/
 
 SRCS		:= 	vector.cpp \
 				main.cpp \
 				stack.cpp \
+				map.cpp \
 
 DIR_SRCS	:= ./test_2/
 

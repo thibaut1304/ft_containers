@@ -10,16 +10,21 @@ void	header(std::string name, std::ostream &o) {
 }
 
 int main(void) {
-	int time = 0;
+	clock_t t;
+	t = clock();
+
+
 
 	header("VECTOR");
 	launch_vector();
 
 	header("STACK");
 	launch_stack();
+	header("MAP");
+	launch_map();
 
-	time = clock();
-	std::cout << _RED << time << _NC << std::endl;
+	t = clock() - t;
+	printf ("\n(%f seconds).\n", ((float)t)/CLOCKS_PER_SEC);
 
 
 	return (0);
