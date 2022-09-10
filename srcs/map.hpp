@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 23:31:41 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:39:11 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ namespace ft {
 
 					class value_compare;
 
-				private:
+				protected:
 						key_compare 	_comp;
 						allocator_type 	_alloc;
 						tree_type 		_tree;
