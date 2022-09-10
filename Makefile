@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/10 22:56:40 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/11 00:33:03 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ RM	=	rm -rf
 
 CC	=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address
+FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 DIR_INC		= -I ./srcs/
 
