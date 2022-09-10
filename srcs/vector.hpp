@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/09 00:17:19 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 03:10:56 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 /***************COLOR*************/
 
-#include "utils.hpp"
+# define _NC "\033[0;0m"
+# define _RED "\033[0;31m"
+# define _GREEN "\033[0;32m"
+# define _YELLOW "\033[0;33m"
+# define _BLUE "\033[0;34m"
+# define _PURPLE "\033[0;95m"
+# define _CYAN "\033[0;36m"
+# define _WHITE "\033[0;37m"
 
 /*********************************/
 
@@ -144,17 +151,17 @@ namespace ft {
 			size_type max_size() const {return (_alloc.max_size());}
 
 			void resize (size_type n, value_type val = value_type()) {
-				while (_size > n)
-					pop_back();
-				if (_size < n) {
-					if (_capacity * 2 < n)
+				if ( _size > n) {
+					while (_size != n)
+						pop_back();
+				}
+				else if (_size < n) {
+					if ((_capacity * 2) < n || _capacity == 0)
 						reserve(n);
-					else if (_capacity * 2 >= n)
+					else if (_capacity < n)
 						reserve(_capacity * 2);
-					for (size_type old_size = _size; old_size != n; old_size++) {
-						_alloc.construct(_tab + old_size, val);
-					}
-					_size = n;
+					while (_size != n)
+						push_back(val);
 				}
 			}
 
@@ -247,7 +254,7 @@ namespace ft {
 				if (_capacity == 0)
 					reserve(1);
 				else if (_size == _capacity)
-					reserve(_capacity + 1);
+					reserve(_capacity * 2);
 				_alloc.construct(_tab + _size, val);
 				_size++;
 			}
@@ -258,138 +265,48 @@ namespace ft {
 			}
 
 			iterator insert (iterator position, const value_type& val) {
-				// iterator hina = begin();
+					difference_type index = position - begin();
 
-				// size_type offset = 0;
-				// for (; hina != position; hina++)
-				// 	offset++;
-				// if (_size + 1 <= _capacity) {
-				// 	iterator index = begin();
-				// 	size_type ol = 0;
-				// 	for (; ol < _capacity; index++, ol++) {
-				// 		if (index == position) {
-				// 			*index = val;
-				// 		}
-				// 	}
-				// 	_size += 1;
-				// 	return (_tab + offset);
-				// insert(position, 1, val);
-				// }
+					insert(position, 1, val);
+					return (iterator(begin() + index));
 
-				// ft::vector<T> tmp = *this;
-
-				// if (_capacity == 0)
-				// 	tmp.reserve(1);
-				// if (_size >= _capacity) {
-				// 	tmp.reserve(_capacity * 2);
-				// }
-
-				// iterator ft_it = begin();
-				// size_type 	i = 0;
-
-				// tmp._size += 1;
-				// for (; i < tmp.size(); i++, ft_it++) {
-				// 	if (ft_it == position) {
-				// 		_alloc.construct(tmp._tab + i++, val);
-				// 	}
-				// 	if (i < tmp.size())
-				// 		_alloc.construct(tmp._tab + i, *ft_it);
-				// }
-				// this->~vector();
-				// *this = tmp;
-				// return (_tab + offset);
-			difference_type idx = position - begin();
-
-			insert(position, 1, val);
-			return (iterator(this->begin() + idx));
 			}
 
-			void insert (iterator position, size_type n, const value_type& val) {
-				if (_size + n <= _capacity) {
-					iterator index = begin();
-					size_type ol = 0;
-					for (; ol < _capacity; index++, ol++) {
-						if (index == position) {
-							size_type nb = -1;
-							while (++nb < n) {
-								*index = val;
-								index++;
-							}
-						}
-					}
-					_size += n;
-					return ;
-				}
+			void insert(iterator position, size_type n, const value_type &val) {
+				difference_type const pos_diff = position - begin();
+				difference_type const old_end_diff = end() - begin();
+				iterator old_end;
+				iterator new_end;
 
-				ft::vector<T> tmp = *this;
-
-				if (_size + n >= _capacity * 2)
-						tmp.reserve(_capacity + n);
-				else if (_size >= _capacity)
-					tmp.reserve(_capacity * 2);
-
-				size_type 	i = 0;
-				size_type 	y = 0;
-				iterator index = begin();
-
-				tmp._size += n;
-				for (; i < tmp.size(); i++, index++, y++) {
-					if (index == position) {
-						size_type nb = -1;
-						while (++nb < n)
-							_alloc.construct(tmp._tab + i++, val);
-					}
-					if (i < tmp.size())
-						_alloc.construct(tmp._tab + i, _tab[y]);
-				}
-				this->~vector();
-				*this = tmp;
+				resize(this->_size + n);
+				new_end = end();
+				position = begin() + pos_diff;
+				old_end = begin() + old_end_diff;
+				while (old_end != position)
+					*--new_end = *--old_end;
+				while (n-- > 0)
+					*position++ = val;
 			}
 
-			template <class _InputIterator>
-			void insert (iterator position, typename ft::enable_if<!std::numeric_limits<_InputIterator>::is_integer, _InputIterator>::type first, _InputIterator last) {
-				size_type	diff = 0;
-				for (_InputIterator tmp = first; tmp != last; tmp++) {
-					diff++;
+			template <class InputIterator>
+			void insert (iterator position, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last) {
+				size_type n = 0;
+				for (InputIterator tmp = first; tmp != last; tmp++) {
+					n++;
 				}
-				if (_size + diff <= _capacity) {
-					iterator it = begin();
-					size_type ol = 0;
-					for (; ol < _capacity; it++, ol++) {
-						if (it == position) {
-							size_type nb = -1;
-							while (++nb < diff) {
-								*it++ = *first++;
-							}
-						}
-					}
-					_size += diff;
-					return ;
-				}
+				difference_type const pos_diff = position - begin();
+				difference_type const old_end_diff = end() - begin();
+				iterator old_end;
+				iterator new_end;
 
-				ft::vector<T> tmp = *this;
-
-				if (_size + diff >= _capacity * 2)
-						tmp.reserve(_capacity + diff);
-				else if (_size >= _capacity)
-					tmp.reserve(_capacity * 2);
-
-				tmp._size += diff;
-				size_type 			i = 0;
-				size_type 			y = 0;
-				iterator index = 	begin();
-
-				for(; i < tmp.size() ; i++, index++, y++) {
-					if (index == position) {
-						for(; first != last; first++, i++) {
-							_alloc.construct(tmp._tab + i, *first);
-						}
-					}
-					if (i < tmp.size())
-						_alloc.construct(tmp._tab + i, _tab[y]);
-				}
-				this->~vector();
-				*this = tmp;
+				resize(_size + n);
+				new_end = end();
+				position = begin() + pos_diff;
+				old_end = begin() + old_end_diff;
+				while (old_end != position)
+					*--new_end = *--old_end;
+				while (first != last)
+					*position++ = *first++;
 			}
 
 			iterator erase (iterator position) {

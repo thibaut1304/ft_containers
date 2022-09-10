@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/09 00:15:17 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:45:34 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	print(VEC vc, std::string pp = "NULL") {
 	if (vc.empty() == 0) {
 		std::cout << _CYAN << USING << " VECTOR" << _NC << std::endl;
 		std::cout << _CYAN << "SIZE : " << vc.size() << _NC << std::endl;
+		std::cout << _CYAN << "CAPA : " << vc.capacity() << _NC << std::endl;
 		if (pp != "NULL")
 			std::cout << _YELLOW << pp << _NC << std::endl;
 		std::cout << _CYAN << "Value : " << _NC;
@@ -158,13 +159,23 @@ int main(void) {
 	for (int i = 0; i < 10; i++) {
 		vect.push_back(10 - i);
 	}
+	print(vect);
+	// vect.resize(20);
+	// vect.reserve(20);
+	print(vect);
 	NM::vector<int>::iterator it = vect.begin(), ite = vect.end();
-	print(vect);
 	for (; it != ite; it++) {
-		if (*it == 8)
+		std::cout << *it << ", ";
+		if (*it == 10) {
 			vect.insert(it, 100);
+			// std::cout << *it << std::endl;
+			// break;
+		}
 	}
+	std::cout << std::endl;
 	print(vect);
+
+
 	// vector_constructor_and_equal();
 	// iterator();
 	// iterator_end();
