@@ -6,25 +6,12 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 20:55:05 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:39:11 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _VECTOR_HPP_
 # define _VECTOR_HPP_
-
-/***************COLOR*************/
-
-# define _NC "\033[0;0m"
-# define _RED "\033[0;31m"
-# define _GREEN "\033[0;32m"
-# define _YELLOW "\033[0;33m"
-# define _BLUE "\033[0;34m"
-# define _PURPLE "\033[0;95m"
-# define _CYAN "\033[0;36m"
-# define _WHITE "\033[0;37m"
-
-/*********************************/
 
 #include <memory>
 #include <limits>
@@ -63,6 +50,7 @@ namespace ft {
 			/****************/
 			/**CONSTRUCTOR***/
 			/****************/
+
 			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _tab(NULL), _size(0), _capacity(0) {}
 
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),  _tab(NULL), _size(n), _capacity(n) {
@@ -124,6 +112,7 @@ namespace ft {
 			/****************/
 			/****ITERATOR****/
 			/****************/
+
 			iterator begin() {return(iterator(_tab));}
 
 			const_iterator begin() const {return(const_iterator(_tab));}
@@ -143,6 +132,7 @@ namespace ft {
 			/****************/
 			/****CAPACITY****/
 			/****************/
+
 			size_type size() const {return (_size);}
 
 			size_type max_size() const {return (_alloc.max_size());}
@@ -189,6 +179,7 @@ namespace ft {
 			/****************/
 			/*****ACCESS*****/
 			/****************/
+			
 			reference operator[] (size_type n) {return *(_tab + n);}
 
 			const_reference operator[] (size_type n) const {return *(_tab + n);}

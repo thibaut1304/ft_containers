@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:08:16 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 18:24:35 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:38:29 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,27 @@ namespace ft {
 			/****************/
 			/* CONSTRUCTEUR */
 			/****************/
-			// 3 constructeur : default,  initalization, copy
 			reverse_iterator() : _current() {}
+
 			explicit reverse_iterator(iterator_type it) : _current(it) {}
-			// it : An iterator, whose sense of iteration is inverted in the constructed object.
-			// it : Member type iterator_type is the underlying bidirectional iterator type (the class template parameter: Iterator).
+
 			template<typename _It>
 			reverse_iterator(const reverse_iterator<_It> &rev_it) : _current(rev_it.base()) {}
+
 			template<typename _It>
-			reverse_iterator &operator=(reverse_iterator const &rhs)
-			{
+			reverse_iterator &operator=(reverse_iterator const &rhs) {
 				if (this != &rhs) {
 					_current = rhs._current;
 				}
 				return (*this);
 			}
-			// rev_it : An iterator of a reverse_iterator type, whose sense of iteration is preserved.
+
 			virtual ~reverse_iterator() {};
+
 			/****************/
 			/***** BASE *****/
 			/****************/
+
 			iterator_type base() const {
 				return (this->_current);
 			}
@@ -56,6 +57,7 @@ namespace ft {
 			/****************/
 			/**** OPERATOR **/
 			/****************/
+
 			reference operator*() const {
 				_Iterator newref(this->_current);
 				newref--;
@@ -63,41 +65,39 @@ namespace ft {
 			};
 
 			reverse_iterator operator+ (difference_type n) const {
-				return(reverse_iterator<_Iterator>(_current - n));		// il doit etre un random access
+				return(reverse_iterator<_Iterator>(_current - n));
 			}
 
-			reverse_iterator& operator++() {  // --> pré-incrementation
+			reverse_iterator& operator++() {
 				--_current;
 				return (*this);
 			}
-			reverse_iterator  operator++(int) {	// post incrementation
+			reverse_iterator  operator++(int) {
 				reverse_iterator<_Iterator>	temp = *this;
 				_current--;
 				return (temp);
 			}
 
 			reverse_iterator& operator+= (difference_type n) {
-				// faut que l'iterateur soir un random access
 				_current -= n;
 				return (*this);
 			}
 
 			reverse_iterator operator- (difference_type n) const {
-				// faut que l'iterateur soir un random access
 				return (reverse_iterator<_Iterator>(_current + n));
 			}
 
-			reverse_iterator& operator--() { // --> pré-incrementation
+			reverse_iterator& operator--() {
 				++_current;
 				return (*this);
 			}
-			reverse_iterator  operator--(int) {	// post incrementation
+			reverse_iterator  operator--(int) {
 				reverse_iterator<_Iterator> temp = *this;
 				_current++;
 				return (temp);
 			}
 
-			reverse_iterator& operator-= (difference_type n) { // itérateur de base soit un itérateur à accès aléatoire .
+			reverse_iterator& operator-= (difference_type n) {
 				_current += n;
 				return (*this);
 			}
@@ -142,9 +142,10 @@ namespace ft {
 	/****************/
 	/** OVERLOADS ***/
 	/****************/
+
 	template <class _It>
 	bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_It> &rhs) {
-		return (lhs.base() == rhs.base());			// --> coder BASE ! renvoie l'iterateur courant !
+		return (lhs.base() == rhs.base());
 	}
 
 	template <class _It>
@@ -172,10 +173,9 @@ namespace ft {
 		return (rhs.base() >= lhs.base());
 	}
 
-	/*                      NON FIRENDS               */
 	template <class _It, class _Iter>
 	bool operator==(const reverse_iterator<_It> &lhs, const reverse_iterator<_Iter> &rhs) {
-		return (lhs.base() == rhs.base());			// --> coder BASE ! renvoie l'iterateur courant !
+		return (lhs.base() == rhs.base());
 	}
 
 	template <class _It, class _Iter>
@@ -215,15 +215,12 @@ namespace ft {
 
 	template <class _It>
 	typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_It>& rhs) {
-		// return (lhs - rhs);
 		return (lhs.substract(rhs));
 	}
 
 	template <class _It, typename _Iter>
 	typename reverse_iterator<_It>::difference_type operator- (const reverse_iterator<_It>& lhs, const reverse_iterator<_Iter>& rhs) {
-		// return (lhs - rhs);
 		return (lhs.substract(rhs));
 	}
-
 }
 #endif

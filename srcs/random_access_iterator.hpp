@@ -6,14 +6,14 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:11:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 18:24:31 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:36:01 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _RANDOM_ACCESS_ITERATOR_HPP_
 # define _RANDOM_ACCESS_ITERATOR_HPP_
 
-#include <cstddef> // ptrdiff_t
+#include <cstddef>
 
 #include "iterator_traits.hpp"
 
@@ -30,12 +30,11 @@ namespace ft {
 			typedef const T&						const_reference;
 
 			random_access_iterator() : _ptr(NULL) {}
+
 			random_access_iterator(pointer ptr) : _ptr(ptr) {}
-			random_access_iterator(random_access_iterator  const &rhs) : _ptr(rhs._ptr) {
-				// std::cout << "copy constru called\n";
-				// if (*this == rhs)
-					// std::cout << "Coucou hina ! " << std::endl;
-				}
+
+			random_access_iterator(random_access_iterator  const &rhs) : _ptr(rhs._ptr) {}
+
 			random_access_iterator &operator=(random_access_iterator const &rhs) {
 				if (this != &rhs) {
 					this->_ptr = rhs._ptr;
@@ -43,12 +42,12 @@ namespace ft {
 				return (*this);
 			}
 
-			//a check
 			operator random_access_iterator<value_type const>() const {
 				return random_access_iterator<value_type const>(_ptr);
 			}
 
 			virtual ~random_access_iterator() {}
+
 			template<typename _Iterator>
 			friend bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs);
 
@@ -147,43 +146,42 @@ namespace ft {
 	};
 
 	template<typename _Iterator>
-	bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs){
-		// std::cout << "comparing : " << lhs._ptr << " and " << rhs._ptr << "\n";
+	bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs) {
 		return (lhs._ptr == rhs._ptr);
 	}
 
 	template<typename _Iterator, typename _Iter>
-	bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs){
+	bool operator==(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs) {
 		return (lhs._ptr == rhs._ptr);
 	}
 
 	template<typename _Iterator>
-	bool operator!=(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs){
+	bool operator!=(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs) {
 		return (lhs._ptr != rhs._ptr);
 	}
 
 	template<typename _Iterator, typename _Iter>
-	bool operator!=(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs){
+	bool operator!=(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs) {
 		return (lhs._ptr != rhs._ptr);
 	}
 
 	template<typename _Iterator>
-	bool operator<(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs){
+	bool operator<(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs) {
 		return (lhs._ptr < rhs._ptr);
 	}
 
 	template<typename _Iterator, typename _Iter>
-	bool operator<(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs){
+	bool operator<(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs) {
 		return (lhs._ptr < rhs._ptr);
 	}
 
 	template<typename _Iterator>
-	bool operator>(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs){
+	bool operator>(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iterator> const &rhs) {
 		return (lhs._ptr > rhs._ptr);
 	}
 
 	template<typename _Iterator, typename _Iter>
-	bool operator>(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs){
+	bool operator>(random_access_iterator<_Iterator> const &lhs, random_access_iterator<_Iter> const &rhs) {
 		return (lhs._ptr > rhs._ptr);
 	}
 

@@ -6,35 +6,16 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/07 17:05:58 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:30:17 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _BINARY_THREE_SHEARCH_
 # define _BINARY_THREE_SHEARCH_
 
-#define _NC "\033[0;0m"
-#define _RED "\033[0;31m"
-#define _GREEN "\033[0;32m"
-#define _YELLOW "\033[0;33m"
-#define _BLUE "\033[0;34m"
-#define _PURPLE "\033[0;95m"
-#define _CYAN "\033[0;36m"
-#define _WHITE "\033[0;37m"
-
-# define FEUILLE NULL
-# include <iostream>
 # include <memory>
 
-#include <stdio.h>
-
 # include "pair.hpp"
-#include <stdlib.h>
-// creer ici pair clé / valeur ?
-// ou juste les recup independament ?
-
-
-// alouer avec _alloc en premier pair et apres s_node
 
 namespace ft {
 
@@ -58,8 +39,6 @@ namespace ft {
 			typedef typename Alloc::template rebind<s_node<T> >::other 									allocator_type;
 			typedef	typename allocator_type::size_type 													size_type;
 			typedef Compare																				key_compare;
-			// typedef std::size_t																			size_type;
-
 
 		private:
 			allocator_type		_alloc;
@@ -102,9 +81,9 @@ namespace ft {
 			void		infixe(nodePtr ptr) const {
 				if (ptr == _end || !ptr) {return ;}
 				infixe(ptr->left);
-				std::cout << _YELLOW << "ptr  : " << ptr << " - " << ptr->left << " - " << ptr->right << _NC;
-				std::cout << " - KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n";
-				std::cout << _YELLOW << "papa : " << ptr->parent << _NC << std::endl << std::endl;
+				// std::cout << _YELLOW << "ptr  : " << ptr << " - " << ptr->left << " - " << ptr->right << _NC;
+				// std::cout << " - KEY : " << ptr->_data.first << " - T : " << ptr->_data.second << "\n";
+				// std::cout << _YELLOW << "papa : " << ptr->parent << _NC << std::endl << std::endl;
 				infixe(ptr->right);
 			}
 
@@ -113,31 +92,15 @@ namespace ft {
 
 				nodePtr curent = ptr;
 				while (curent->left != _end) {
-					// parent = curent;
 					curent = curent->left;
 				}
-				// std::cout << curent->_data.first << std::endl;
-				// std::cout << curent->right->_data.first << std::endl;
 				return (curent);
 			}
 
-			// nodePtr	predecesseur (nodePtr ptr) const {
-			// 	if (ptr == _end) {return (_end));}
-
-			// 	nodePtr	curent = ptr;
-			// 	while (curent->right != _end) {
-			// 		curent = curent->droit;
-			// 	}
-			// 	return (curent);
-			// }
-
 			void		toDelete(nodePtr	ptr) {
-
 				nodePtr padre = ptr->parent;
 
-				if (ptr->left == _end && ptr->right == _end) { // Dans le cas ou le noeuds n'a pas d'enfants, est une feuille !
-					// std::cout << _YELLOW << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
-					// std::cout << "Value key : " << ptr->_data->first << " - Value key parent : " << parent->_data->first << std::endl;
+				if (ptr->left == _end && ptr->right == _end) {
 					if (ptr != _root) {
 						if (padre->left == ptr) {
 							padre->left = _end;
@@ -148,14 +111,10 @@ namespace ft {
 					}
 					else {
 						_root = _end;
-						// _root->parent = _end;
 					}
 				}
-				else if (ptr->left != _end && ptr->right != _end) { // Dans le cas ou left et right est pas null
-					// std::cout << _BLUE << "HERE ! " << ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
+				else if (ptr->left != _end && ptr->right != _end) {
 					nodePtr		succ = successeur(ptr->right);
-					// std::cout << _YELLOW << "Ptr delete : " << ptr->_data.first << _NC << std::endl;
-					//    std::cout << _RED << "Successeur : " << succ->_data.first << _NC << std::endl;
 					if (ptr == _root) {
 						if (succ->right != _end && ptr->right != succ) {
 							succ->parent->left = succ->right;
@@ -176,26 +135,15 @@ namespace ft {
 						_root = succ;
 					}
 					else {
-						// if (succ->right != _end && ptr->right == succ){
-							// ptr->right = succ->right;
-							// succ->right->parent = ptr;
-							// si le succeceur et juste a droite de ptr
-							// je met let pointeur right de succ sur right de ptr
-						// } // retirer car voir a -> TO PIZZA
 						if (succ->right != _end && ptr->right != succ) {
 							succ->parent->left = succ->right;
 							succ->right->parent = succ->parent;
-							// si le successeur de right et non vide
-							// le lassigne au parent de succeseur a gauche
 						}
 						else if (ptr->right != succ)
-							succ->parent->left = _end; // sinon si il est vide je met le parent de succ gauche a null
-
-						// nodePtr child_left_ptr = find(ptr->left->_data);   // 21
-						// nodePtr child_right_ptr = find(ptr->right->_data); // 30
+							succ->parent->left = _end;
 
 						if (ptr->left != _end) {
-							ptr->left->parent = succ; // j'assigne ptr->left-> parent a mon succeseur car ptr degage
+							ptr->left->parent = succ;
 							succ->left = ptr->left;
 						}
 
@@ -210,30 +158,10 @@ namespace ft {
 							ptr->right->parent = succ;
 							succ->right = ptr->right;
 						}
-
-
-						// if (ptr->right != succ) { // j'assigne ptr->right-> parent a mon succeseur car ptr degage
-						// 	if (child_right_ptr != _end) // si est seulement si le succ n'est pas direct droite de ptr
-						// 		child_right_ptr->parent = succ;
-						// }
-						// else if (succ->right != _end) {
-						// 	succ->right->parent = succ;
-						// }
-						// if (ptr->parent->right == ptr)
-						// 	ptr->parent->right = succ;
-						// else if (ptr->parent->left == ptr)
-						// 	ptr->parent->left = succ;
-						// succ->parent = ptr->parent;
-						// succ->left = ptr->left;
-						// succ->right = ptr->right;
-						// std::cout << _RED << "Enfant droit  ptr : " << succ->right->_data.first<< _NC << std::endl;
-
 					}
 				}
 				else {
 					nodePtr	child = (ptr->left != _end) ? ptr->left : ptr->right;
-						// std::cout << _BLUE << ptr->parent->_data.first << _NC << std::endl;
-					// std::cout << _RED << "HERE ! " <<  ptr->_data.first << " Papa : " << ptr->parent->_data.first << _NC << std::endl;
 					if (ptr != _root) {
 						if (ptr == padre->left)
 							padre->left = child;
@@ -244,7 +172,6 @@ namespace ft {
 					else {
 						_root = child;
 						_root->parent = _end;
-						// child->parent = _root;
 					}
 				}
 					_alloc.destroy(ptr);
@@ -278,6 +205,10 @@ namespace ft {
 				}
 			}
 
+			void		infixe() {
+				infixe(_root);
+			}
+
 		public:
 			tree(const key_compare &comp = key_compare(), const allocator_type alloc = allocator_type()) :  _alloc(alloc), _compteur(0), _comp(comp) {
 				_end = _alloc.allocate(1);
@@ -295,7 +226,7 @@ namespace ft {
 			nodePtr		getEnd() const {return (_end);}
 			nodePtr		getRoot() const {return (_root);}
 
-			nodePtr		getMin(nodePtr node = NULL, bool test = 0) const {
+			nodePtr		getMin(nodePtr node = NULL) const {
 				if (!node) {
 					if (_root == _end)
 						return (_root);
@@ -303,12 +234,6 @@ namespace ft {
 				}
 				while (node->left != _end)
 					node = node->left;
-				if (test) {
-					std::cout << "ARBRE : " << std::endl;
-					std::cout << node << std::endl;
-					std::cout << node->left << std::endl;
-					std::cout << node->right << std::endl << std::endl;
-				}
 				return (node);
 			}
 
@@ -322,28 +247,6 @@ namespace ft {
 					node = node->right;
 				return (node);
 			}
-
-			// nodePtr	lowerBound(const value_type& data) {
-			// 	nodePtr node = getMin();
-            //     while (node != _end)
-            //     {
-            //         if (!_comp(node->_data.first, data.first))
-            //             return (node);
-            //         node = successeur(node);
-            //     }
-            //     return (NULL);
-			// }
-
-			// nodePtr	upperBound(const value_type& data) {
-			// 	nodePtr node = getMin();
-            //     while (node != _end)
-            //     {
-            //         if (_comp(data.first, node->_data.first))
-            //             return (node);
-            //         node = successeur(node);
-            //     }
-            //     return (NULL);
-			// }
 
 			void	swap(tree& Tree) {
 				nodePtr			root = _root;
@@ -387,32 +290,15 @@ namespace ft {
 
 			void		erase(const value_type& data) {
 				nodePtr	del = find(data, _root);
-				// nodePtr	parent = del->parent;
-				// std::cout << _RED << del->_data.first << _NC << std::endl;
-				if (del == _end) {
-					// std::cout << "Le noeud n'appartient pas a l'arbre" << std::endl;
+
+				if (del == _end)
 					return ;
-				}
 				else {
-					// if (_root != _end)
-						// _root->parent = _end;
 					toDelete(del);
 					_compteur--;
-					// std::cout << _compteur << std::endl;
 				}
 				return ;
 			}
-
-			void		infixe() {
-				std::cout << _CYAN << _end << _NC << std::endl;
-				infixe(_root);
-				// clear();
-			}
-
-			// void	print_node_find(const KEY& key) {
-				// s_node<M>	*node = find(key, _root, _root);
-				// std::cout << "Clé : " << node->_data->first << " Valeur : " << node->_data->second << std::endl;
-			// }
 
 			size_type		size() const {return (_compteur);}
 			bool			empty() const {return (_compteur == 0);}

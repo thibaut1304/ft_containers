@@ -6,23 +6,14 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 21:04:00 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:31:41 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _MAP_HPP_
 # define _MAP_HPP_
 
-
-
-/***************COLOR*************/
-
-#include "utils.hpp"
-
-/*********************************/
-
 # include <functional>
-
 # include "reverse_iterator.hpp"
 # include "bidirectional_iterator.hpp"
 # include "binary_three_shearch.hpp"
@@ -38,30 +29,30 @@ namespace ft {
 			class map {
 				public:
 
-					typedef	Key 														key_type;
-					typedef	T															mapped_type;
-					typedef	ft::pair<const key_type,mapped_type>						value_type;
-					typedef	Compare														key_compare;
+					typedef	Key 																key_type;
+					typedef	T																	mapped_type;
+					typedef	ft::pair<const key_type,mapped_type>								value_type;
+					typedef	Compare																key_compare;
 
-					typedef Alloc														allocator_type;
+					typedef Alloc																allocator_type;
 
-					typedef ft::tree<const key_type, value_type, key_compare, allocator_type>			tree_type;
+					typedef ft::tree<const key_type, value_type, key_compare, allocator_type>	tree_type;
 
-					typedef s_node<value_type>											nodeType;
-					typedef typename tree_type::nodePtr									nodePtr;
+					typedef s_node<value_type>													nodeType;
+					typedef typename tree_type::nodePtr											nodePtr;
 
-					typedef typename allocator_type::reference							reference;
-					typedef typename allocator_type::const_reference					const_reference;
-					typedef typename allocator_type::pointer							pointer;
-					typedef typename allocator_type::const_pointer						const_pointer;
-					typedef ft::bidirectional_iterator<value_type, nodeType>				iterator;
+					typedef typename allocator_type::reference									reference;
+					typedef typename allocator_type::const_reference							const_reference;
+					typedef typename allocator_type::pointer									pointer;
+					typedef typename allocator_type::const_pointer								const_pointer;
+					typedef ft::bidirectional_iterator<value_type, nodeType>					iterator;
 					typedef ft::bidirectional_iterator<const value_type, const nodeType>		const_iterator;
-					typedef ft::reverse_iterator<iterator>							reverse_iterator;
-					typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
-					typedef typename allocator_type::difference_type					difference_type;
-					typedef typename allocator_type::size_type							size_type;
+					typedef ft::reverse_iterator<iterator>										reverse_iterator;
+					typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
+					typedef typename allocator_type::difference_type							difference_type;
+					typedef typename allocator_type::size_type									size_type;
 
-		class value_compare;
+					class value_compare;
 
 				private:
 						key_compare 	_comp;
@@ -185,6 +176,11 @@ namespace ft {
 					}
 
 					void erase (iterator position) {
+						if (position == end()) {
+							nodePtr data = _tree.getMax();
+							_tree.erase(data->_data);
+							return ;
+						}
 						ft::pair<const Key, T> _pair_ = ft::make_pair(position->first, position->second);
 						_tree.erase(_pair_);
 					}
@@ -292,7 +288,6 @@ namespace ft {
 					}
 
 					allocator_type get_allocator() const { return (_alloc);}
-
 			};
 
 	template <class Key, class T, class Compare, class Alloc>

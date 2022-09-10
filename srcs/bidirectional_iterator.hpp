@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:53 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/04 00:05:08 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:29:47 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "iterator_traits.hpp"
 # include "binary_three_shearch.hpp"
-#include <iostream>
 
 namespace ft {
 	template <class T, class nodeType>
@@ -23,18 +22,12 @@ namespace ft {
 		public:
 			typedef std::bidirectional_iterator_tag					iterator_category;
 			typedef	nodeType*										nodePtr;
-			// typedef typename iterator_traits<T>::value_type			value_type;
-			// typedef typename iterator_traits<T>::difference_type	difference_type;
-			// typedef	typename iterator_traits<T>::pointer			pointer;
-			// typedef typename iterator_traits<T>::reference			reference;
-			// typedef typename iterator_traits<const T>::pointer 						const_pointer;
-			typedef T				                        value_type;
-			typedef std::ptrdiff_t	                        difference_type;
-			typedef T&						reference;
-			typedef const T&						const_reference;
-			// typedef typename iterator_traits<const T>::reference			const_reference;
-			typedef T*						pointer;
-			typedef const T*						const_pointer;
+			typedef T												value_type;
+			typedef std::ptrdiff_t									difference_type;
+			typedef T&												reference;
+			typedef const T&										const_reference;
+			typedef T*												pointer;
+			typedef const T*										const_pointer;
 
 		protected:
 			nodePtr	_node;
@@ -47,9 +40,6 @@ namespace ft {
 			bidirectional_iterator(nodePtr ptr, nodePtr root, nodePtr end) : _node(ptr), _root(root), _end(end) {}
 
 			bidirectional_iterator(bidirectional_iterator const &rhs) : _node(rhs._node), _root(rhs._root), _end(rhs._end) {}
-
-			// template <class Iter, class nodeptr>
-			// bidirectional_iterator (const bidirectional_iterator<Iter, nodeptr>& it) : _node(it._node) {}
 
 			bidirectional_iterator& operator=(bidirectional_iterator const &lhs) {
 				if (this == &lhs)
@@ -88,31 +78,8 @@ namespace ft {
 			const_reference	operator*() const {return (_node->_data);}
 
 			bidirectional_iterator &operator++() {
-				// std::cout << "BI : ";
-				// std::cout << _node << std::endl;
-					// std::cout << _node->right << std::endl;
-					// std::cout << _node->left << std::endl;
-				// std::cout << "Node right : ";
-				// std::cout << _node->right << std::endl;
-				// std::cout << "Node left  : ";
-				// std::cout << _node->left << std::endl;
-				// --(*this);
-				// nodePtr tmp = _node;
-				// _node = _node->parent;
-				// bidirectional_iterator tmp(*this);
-				// --_node;
-				// this = (--_node);
-				// std::cout << _node->_data.first << std::endl;
-				// std::cout << "BI : " << _node << std::endl;
-				// std::cout << _node << std::endl;
-				// if (_node)
-					// _node = successeur(_node->parent, _node);
-				// std::cout << _node << std::endl;
-				// _node = _node->right;
-				// std::cout << "Racine : " << root() << std::endl;
 				if (_node != _end)
 					_node = successor(_node);
-				// std::cout << _YELLOW << "inc max : " << _node->_data.first << _NC<< std::endl;
 				return (*this);
 			}
 
@@ -122,25 +89,12 @@ namespace ft {
 				return (tmp);
 			}
 
-			// nodePtr root() {
-			// 	nodePtr node = _node;
-
-			// 	while (node->parent != _end && node->parent) {
-			// 		node = node->parent;
-			// 	}
-			// 	std::cout << node << std::endl;
-			// 	return (node);
-			// }
-
 			bidirectional_iterator &operator--() {
 				if (_node == _end) {
 					_node = maximum(_root);
-					// std::cout << _RED << _node->_data.first << _NC << std::endl;
 				}
 				else
 					_node = predecessor(_node);
-
-				// std::cout << _RED << _node->_data.first << _NC << std::endl;
 				return (*this);
 			}
 
@@ -165,7 +119,6 @@ namespace ft {
 			}
 
 			nodePtr predecessor(nodePtr x) {
-				// if the left subtree is not null the predecessor is the rightmost node in the left subtree
 				if (x->left != _end)
 				{
 					return maximum(x->left);
@@ -180,10 +133,8 @@ namespace ft {
 			}
 
 			nodePtr successor(nodePtr x) {
-				// if the right subtree is not null the successor is the leftmost node in the sright subtree
 				if (x->right != _end)
 					return minimum(x->right);
-				// else it is the lowest ancestor of x whose left child is also an ancestor of x
 				nodePtr y = x->parent;
 				while (y != NULL && x == y->right)
 				{
@@ -194,29 +145,6 @@ namespace ft {
 					return _end;
 				return y;
 			}
-
-			// nodePtr	successeur(nodePtr ptr, nodePtr &parent) const {
-			// 	if (ptr == _end) {return (NULL);}
-
-			// 	nodePtr curent = ptr;
-			// 	while (curent->left != 0) {
-			// 		parent = curent;
-			// 		curent = curent->left;
-			// 	}
-			// 	return (curent);
-			// }
-
-			// nodePtr	predecesseur (nodePtr ptr, nodePtr& parent) const {
-			// 	if (ptr == _end) {return (NULL);}
-
-			// 	nodePtr	curent = ptr;
-			// 	while (curent->right != 0) {
-			// 		parent = curent;
-			// 		curent = curent->right;
-			// 	}
-			// 	return (curent);
-			// }
-
 	};
 
 	template<class Iterator, class Iter>

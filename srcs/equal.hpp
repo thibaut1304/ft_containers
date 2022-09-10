@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 19:31:04 by thhusser          #+#    #+#             */
-/*   Updated: 2022/07/06 19:41:07 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:32:10 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ namespace ft {
 	}
 
 	template <class InputIt1, class InputIt2, class BinaryPredicate>
-	bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, BinaryPredicate p)
-	{
+	bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, BinaryPredicate p) {
 		while (first1 != last1)
 		{
 			if (!p(*first1, *first2))

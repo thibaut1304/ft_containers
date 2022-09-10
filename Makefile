@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/10 20:55:41 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/10 22:56:40 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRCS		:= 	vector.cpp \
 				stack.cpp \
 				map.cpp \
 
-DIR_SRCS	:= ./test_2/
+DIR_SRCS	:= ./test/
 
 DIR_OBJ_FT		:= obj_ft
 OBJS_FT		:= \
