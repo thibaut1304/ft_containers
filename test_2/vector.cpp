@@ -1,44 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   vector.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:24 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 17:40:11 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 18:58:43 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
 
 template <typename VEC>
-void	print_char(VEC &vc, std::string pp = "NULL") {
-	NM::vector<char>::iterator it = vc.begin(), ite = vc.end();
-	if (vc.empty() == 0) {
-		std::cout << _CYAN << USING << " VECTOR" << _NC << std::endl;
-		std::cout << _CYAN << "SIZE : " << vc.size() << _NC << std::endl;
-		std::cout << _CYAN << "CAPA : " << vc.capacity() << _NC << std::endl;
-		if (pp != "NULL")
-			std::cout << _YELLOW << pp << _NC << std::endl;
-		std::cout << _CYAN << "Value : " << _NC;
-		for (;it != ite; it++) {
-			std::cout << *it;
-			if (it != --vc.end())
-				std::cout << ", ";
-			else
-				std::cout << "." << std::endl;
-		}
-	}
-	else {
-		std::cout << _YELLOW << pp << _NC << std::endl;
-		std::cout << _CYAN << "Vectos is empty !" << std::endl;
-	}
-	std::cout << std::endl;
-}
-
-template <typename VEC>
-void	print(VEC &vc, std::string pp = "NULL") {
+void	print(VEC &vc, std::string pp) {
 	NM::vector<T1>::iterator it = vc.begin(), ite = vc.end();
 	if (vc.empty() == 0) {
 		std::cout << _CYAN << USING << " VECTOR" << _NC << std::endl;
@@ -56,19 +31,11 @@ void	print(VEC &vc, std::string pp = "NULL") {
 		}
 	}
 	else {
-		std::cout << _YELLOW << pp << _NC << std::endl;
-		std::cout << _CYAN << "Vectos is empty !" << std::endl;
+		if (pp != "NULL")
+			std::cout << _YELLOW << pp << _NC << std::endl;
+		std::cout << _CYAN << "Vector is empty !" << std::endl;
 	}
 	std::cout << std::endl;
-}
-
-void	header(std::string name = "NULL", std::ostream &o = std::cout) {
-	std::string enter = "Press enter to continue tests !";
-	o << _GREEN << "|" << std::setfill('-') << std::setw(100) << "|" << _NC << std::setfill(' ') << std::endl;
-	o << _GREEN << std::setw(50) << name << " - TESTS !" << _NC << std::endl;
-	o << _GREEN << "|" << std::setfill('-') << std::setw(100) << "|" << _NC << std::setfill(' ') << std::endl;
-	o << _WHITE << "|" << std::setw(100 - enter.length()) << enter << _NC << std::endl;
-	while (std::cin.get() != '\n') {}
 }
 
 void	vector_constructor_and_equal() {
@@ -88,7 +55,7 @@ void	vector_constructor_and_equal() {
 }
 
 void	iterator() {
-	std::string name = "ITERATOR VECTOR";
+	std::string name = "ITERATOR";
 	std::cout << std::setw(40 - (name.length() / 2)) << _PURPLE << name << _NC << std::endl;
 	NM::vector<T1> vec;
 	static int i = 10;
@@ -247,10 +214,7 @@ void	swap_and_clear() {
 	print(v2, "Clear Second");
 }
 
-int main(void) {
-	int time = 0;
-
-
+void	launch_vector() {
 	iterator();
 	iterator_end();
 	capacity();
@@ -259,11 +223,5 @@ int main(void) {
 	V = insert2();
 	erase(V);
 	swap_and_clear();
-
-	time = clock();
-	std::cout << _RED << time << _NC << std::endl;
-
-
-	return (0);
 }
 

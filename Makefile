@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/10 15:42:38 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/10 18:19:56 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,15 +32,17 @@ RM	=	rm -rf
 
 CC	=	c++
 
-FLAGS	=	 -Wall -Wextra -Werror -std=c++98 -fsanitize=address
+FLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 OBJS_DIR = obj
 
-DIR_INC     = -I ./srcs/
+DIR_INC		= -I ./srcs/
 
-SRCS		:= main.cpp
+SRCS		:= 	vector.cpp \
+				main.cpp \
+				stack.cpp \
 
-DIR_SRCS	:= ./test_2/vector/
+DIR_SRCS	:= ./test_2/
 
 DIR_OBJ_FT		:= obj_ft
 OBJS_FT		:= \
@@ -57,11 +59,11 @@ all: $(FT_NAME) ${STD_NAME}
 
 $(DIR_OBJ_FT)/%.o  :	$(DIR_SRCS)/%.cpp
 		@mkdir -p $(dir $@)
-		@${CC} ${FLAGS} ${DIR_INC} -DNM=$(FT) -DUSING="\"FT\"" -o $@ -c $<
+		@${CC} ${FLAGS} ${DIR_INC} -DNM=$(FT) -o $@ -c $<
 
 $(DIR_OBJ_STD)/%.o:	$(DIR_SRCS)/%.cpp
 		@mkdir -p $(dir $@)
-		@${CC} ${FLAGS} ${DIR_INC} -DNM=$(STD) -DUSING="\"STD\"" -o $@ -c $<
+		@${CC} ${FLAGS} ${DIR_INC} -DNM=$(STD) -DUSE=0 -o $@ -c $<
 
 $(FT_NAME):			$(OBJS_FT)
 				 @$(CC) $(FLAGS) ${DIR_INC} $(OBJS_FT) -o $(FT_NAME)
