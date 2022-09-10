@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:11:20 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 03:10:56 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:41:36 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,6 +401,11 @@ namespace ft {
 	bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
 		return (!(lhs < rhs));
 	}
+	
+	template <class T, class Allocator>
+	void swap(vector<T, Allocator> &x, vector<T, Allocator> &y) {
+		x.swap(y);
+	};
 }
 
 #endif

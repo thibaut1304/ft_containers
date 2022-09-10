@@ -6,7 +6,7 @@
 #    By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 09:48:37 by thhusser          #+#    #+#              #
-#    Updated: 2022/09/09 16:13:26 by thhusser         ###   ########.fr        #
+#    Updated: 2022/09/10 15:42:38 by thhusser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ RM	=	rm -rf
 
 CC	=	c++
 
-FLAGS	=	 -Wall -Wextra -Werror -std=c++98
+FLAGS	=	 -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 OBJS_DIR = obj
 
