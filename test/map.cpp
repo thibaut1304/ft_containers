@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:52:18 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 23:23:24 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/11 04:17:31 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	constructor() {
 	for (int i = 0; i < size; i++) {
 		m[tab[i]] = text[i];
 	}
+	mprint(m);
 
 	NM::map<T1, T2> rm(m.begin(), m.end());
 	mprint(rm, "Range constructor");

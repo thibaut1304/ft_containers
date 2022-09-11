@@ -13,19 +13,16 @@ int main(void) {
 	clock_t t;
 	t = clock();
 
-
-
 	header("VECTOR");
 	launch_vector();
 
 	header("STACK");
 	launch_stack();
+
 	header("MAP");
 	launch_map();
 
 	t = clock() - t;
 	printf ("\n(%f seconds).\n", ((float)t)/CLOCKS_PER_SEC);
-
-
 	return (0);
 }

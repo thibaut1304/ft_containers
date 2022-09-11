@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:04:00 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/11 00:39:11 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/11 04:05:33 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ namespace ft {
 
 					mapped_type& operator[] (const key_type& k) {
 						ft::pair<const Key, T> _pair_ = ft::make_pair(k, T());
-
 						nodePtr res = _tree.find(_pair_);
 
 						if (res != _tree.getEnd())

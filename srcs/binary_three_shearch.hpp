@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:12:37 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 23:30:17 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/11 04:16:13 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ namespace ft {
 				return (tmp);
 			}
 
-			void		destroy(nodePtr ptr) {
-				if (ptr == _end || ptr) {return;}
+			void		destroy(nodePtr &ptr) {
+				if (ptr == _end) {return;}
 				destroy(ptr->left);
 				destroy(ptr->right);
 				_alloc.destroy(ptr);
 				_alloc.deallocate(ptr, 1);
+				_compteur--;
 			}
 
-			void		insert(const value_type& data, nodePtr &ptr, nodePtr &old) {
+			void		insert(const value_type& data, nodePtr &ptr, nodePtr old) {
 				if (ptr == _end || !ptr) {
 					ptr = createNode(data, old);
 					return ;
@@ -174,12 +175,12 @@ namespace ft {
 						_root->parent = _end;
 					}
 				}
-					_alloc.destroy(ptr);
-					_alloc.deallocate(ptr, 1);
-					ptr = NULL;
+				_alloc.destroy(ptr);
+				_alloc.deallocate(ptr, 1);
+				ptr = NULL;
 			}
 
-			nodePtr	find(const value_type& data, nodePtr &node) {
+			nodePtr	find(const value_type& data, nodePtr node) {
 				if (node == _end || !node)
 					return (_end);
 				if (data.first == node->_data.first)
@@ -192,7 +193,7 @@ namespace ft {
 				}
 			}
 
-			nodePtr	find_key(const key_type& k, const nodePtr& node) const {
+			nodePtr	find_key(const key_type& k, const nodePtr node) const {
 				if (node == _end || !node)
 					return (_end);
 				if (k == node->_data.first)
@@ -216,7 +217,7 @@ namespace ft {
 				_root = _end;
 			}
 
-			~tree() {
+			virtual ~tree() {
 				destroy(_root);
 				_alloc.destroy(_end);
 				_alloc.deallocate(_end, 1);
@@ -269,6 +270,7 @@ namespace ft {
 			}
 
 			void	clear() {
+				infixe(_root);
 				destroy(_root);
 				_root = _end;
 				_compteur = 0;

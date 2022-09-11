@@ -6,7 +6,7 @@
 /*   By: thhusser <thhusser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 21:14:42 by thhusser          #+#    #+#             */
-/*   Updated: 2022/09/10 21:05:51 by thhusser         ###   ########.fr       */
+/*   Updated: 2022/09/11 03:08:45 by thhusser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <ctime>
 # include <unistd.h>
 # include <iomanip>
+#include <cstdio>
 
 #ifdef USE
 	# include <vector>
